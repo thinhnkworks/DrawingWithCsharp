@@ -31,6 +31,7 @@
 			drawing = new PictureBox();
 			label1 = new Label();
 			label2 = new Label();
+			pointButton = new Button();
 			((System.ComponentModel.ISupportInitialize)drawing).BeginInit();
 			SuspendLayout();
 			// 
@@ -43,6 +44,8 @@
 			drawing.Size = new Size(954, 486);
 			drawing.TabIndex = 0;
 			drawing.TabStop = false;
+			drawing.Paint += drawing_Paint;
+			drawing.MouseDown += drawing_MouseDown;
 			drawing.MouseMove += drawing_MouseMove;
 			// 
 			// label1
@@ -63,12 +66,24 @@
 			label2.TabIndex = 2;
 			label2.Text = "label2";
 			// 
+			// pointButton
+			// 
+			pointButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			pointButton.Location = new Point(1022, 51);
+			pointButton.Name = "pointButton";
+			pointButton.Size = new Size(75, 23);
+			pointButton.TabIndex = 3;
+			pointButton.Text = "Point";
+			pointButton.UseVisualStyleBackColor = true;
+			pointButton.Click += pointButton_Click;
+			// 
 			// Form1
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
 			BackColor = SystemColors.ControlLight;
 			ClientSize = new Size(1184, 669);
+			Controls.Add(pointButton);
 			Controls.Add(label2);
 			Controls.Add(label1);
 			Controls.Add(drawing);
@@ -85,5 +100,6 @@
 		private PictureBox drawing;
 		private Label label1;
 		private Label label2;
+		private Button pointButton;
 	}
 }
