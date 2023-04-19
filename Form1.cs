@@ -12,6 +12,8 @@ namespace DrawingWithC_
 
 		}
 
+		Pen pen = new Pen(Color.Blue, 0.1f);
+
 		private List<Entities.Point> points = new List<Entities.Point>();
 
 		private List<Entities.Line> lines = new List<Entities.Line>();
@@ -29,21 +31,13 @@ namespace DrawingWithC_
 		#region drawing panel events
 		private void drawing_MouseMove(object sender, MouseEventArgs e)
 		{
-			// when mouse moving through drawing panel
-			// assign currentPosition to mouse location
+			// when mouse moving through drawing panel,
+			// assign mouseLocation to currentPosition
 			currentPosition = PointToCartesian(e.Location);
 			label1.Text = string.Format("{0}, {1}", e.Location.X, e.Location.Y);
 			label2.Text = string.Format("{0,0:F3}, {1,0:F3}", currentPosition.X, currentPosition.Y);
-		}
-		// convert system point to world point
-		private Vector3 PointToCartesian(Point point)
-		{
-			return new Vector3(PixelToMl(point.X), PixelToMl(this.drawing.Height - point.Y));
-		}
-		// convert pixels to milimeters
-		private float PixelToMl(float pixel)
-		{
-			return pixel * 25.4f / DPI;
+			// refresh drawing panel when moving mouse
+			drawing.Refresh();
 		}
 
 		private void drawing_MouseDown(object sender, MouseEventArgs e)
@@ -87,7 +81,7 @@ namespace DrawingWithC_
 		private void drawing_Paint(object sender, PaintEventArgs e)
 		{
 			e.Graphics.SetParameters(PixelToMl(drawing.Height));
-			Pen pen = new Pen(Color.Blue, 0.1f);
+
 			// draw all points in list points
 			if (points.Count > 0)
 			{
@@ -103,6 +97,18 @@ namespace DrawingWithC_
 				{
 					e.Graphics.DrawLine(pen, line);
 				}
+			}
+			// draw extended line
+			// show gray line when first click to simulate drawing line
+			switch (DrawIndex)
+			{
+				case 1:
+					if (clickNum == 2)
+					{
+						Entities.Line line = new Entities.Line(firstPoint, currentPosition);
+						e.Graphics.DrawLine(new Pen(Color.Gray, 0.1f), line);
+					}
+					break;
 			}
 		}
 		#endregion
@@ -125,6 +131,7 @@ namespace DrawingWithC_
 		}
 		#endregion
 
+		#region convert units
 		// get screen DPI
 		private float DPI
 		{
@@ -133,5 +140,16 @@ namespace DrawingWithC_
 				using (var g = CreateGraphics()) return g.DpiX;
 			}
 		}
+		// convert system point to world point
+		private Vector3 PointToCartesian(Point point)
+		{
+			return new Vector3(PixelToMl(point.X), PixelToMl(this.drawing.Height - point.Y));
+		}
+		// convert pixels to milimeters
+		private float PixelToMl(float pixel)
+		{
+			return pixel * 25.4f / DPI;
+		}
+		#endregion
 	}
 }
