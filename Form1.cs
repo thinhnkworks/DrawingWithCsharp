@@ -13,19 +13,17 @@ namespace DrawingWithC_
 		}
 
 		Pen pen = new Pen(Color.Blue, 0.1f);
+		Pen grayPen = new Pen(Color.Gray, 0.1f);
 
 		private List<Entities.Point> points = new List<Entities.Point>();
-
 		private List<Entities.Line> lines = new List<Entities.Line>();
+		private List<Entities.Circle> circles = new List<Entities.Circle>();
 
 		private Vector3 currentPosition;
-
 		private Vector3 firstPoint;
 
 		private int DrawIndex = -1;
-
 		private bool active_drawing = false;
-
 		private int clickNum = 1;
 
 		#region drawing panel events
@@ -50,6 +48,7 @@ namespace DrawingWithC_
 					{
 						// 0: for drawing point
 						// 1: for drawing line
+						// 2: for drawing circle
 						case 0:
 							points.Add(new Entities.Point(currentPosition));
 							break;
@@ -67,6 +66,22 @@ namespace DrawingWithC_
 									lines.Add(new Entities.Line(firstPoint, currentPosition));
 									points.Add(new Entities.Point(currentPosition));
 									firstPoint = currentPosition;
+									clickNum = 1;
+									break;
+							}
+							break;
+						case 2:
+							switch (clickNum)
+							{
+								// 1: firstPoint => center of circle
+								// 2: currentPosition => calculate radius
+								case 1:
+									firstPoint = currentPosition;
+									clickNum++;
+									break;
+								case 2:
+									double r = firstPoint.DistanceFrom(currentPosition);
+									circles.Add(new Entities.Circle(firstPoint, r));
 									clickNum = 1;
 									break;
 							}
@@ -99,16 +114,34 @@ namespace DrawingWithC_
 				}
 			}
 			// draw extended line
-			// show gray line when first click to simulate drawing line
+			// show gray line when first click to simulate drawing 
 			switch (DrawIndex)
 			{
 				case 1:
 					if (clickNum == 2)
 					{
 						Entities.Line line = new Entities.Line(firstPoint, currentPosition);
-						e.Graphics.DrawLine(new Pen(Color.Gray, 0.1f), line);
+						e.Graphics.DrawLine(grayPen, line);
 					}
 					break;
+				case 2:
+					if (clickNum == 2)
+					{
+						Entities.Line line = new Entities.Line(firstPoint, currentPosition);
+						e.Graphics.DrawLine(grayPen, line);
+						double r = firstPoint.DistanceFrom(currentPosition);
+						Entities.Circle circle = new Entities.Circle(firstPoint, r);
+						e.Graphics.DrawCircle(grayPen, circle);
+					}
+					break;
+			}
+			// draw all circles
+			if (circles.Count > 0)
+			{
+				foreach (Entities.Circle circle in circles)
+				{
+					e.Graphics.DrawCircle(pen, circle);
+				}
 			}
 		}
 		#endregion
@@ -121,11 +154,17 @@ namespace DrawingWithC_
 			active_drawing = true;
 			drawing.Cursor = Cursors.Cross;
 		}
-
 		private void lineBtn_Click(object sender, EventArgs e)
 		{
 			// index 1 for drawing line
 			DrawIndex = 1;
+			active_drawing = true;
+			drawing.Cursor = Cursors.Cross;
+		}
+		private void circleBtn_Click(object sender, EventArgs e)
+		{
+			// index 2 for drawing circle
+			DrawIndex = 2;
 			active_drawing = true;
 			drawing.Cursor = Cursors.Cross;
 		}
@@ -151,5 +190,6 @@ namespace DrawingWithC_
 			return pixel * 25.4f / DPI;
 		}
 		#endregion
+
 	}
 }

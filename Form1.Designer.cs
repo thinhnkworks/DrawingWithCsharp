@@ -33,6 +33,7 @@
 			label2 = new Label();
 			pointButton = new Button();
 			lineBtn = new Button();
+			circleBtn = new Button();
 			((System.ComponentModel.ISupportInitialize)drawing).BeginInit();
 			SuspendLayout();
 			// 
@@ -94,12 +95,25 @@
 			lineBtn.UseVisualStyleBackColor = true;
 			lineBtn.Click += lineBtn_Click;
 			// 
+			// circleBtn
+			// 
+			circleBtn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			circleBtn.Location = new Point(1460, 300);
+			circleBtn.Margin = new Padding(4, 5, 4, 5);
+			circleBtn.Name = "circleBtn";
+			circleBtn.Size = new Size(107, 38);
+			circleBtn.TabIndex = 5;
+			circleBtn.Text = "Circle";
+			circleBtn.UseVisualStyleBackColor = true;
+			circleBtn.Click += circleBtn_Click;
+			// 
 			// Form1
 			// 
 			AutoScaleDimensions = new SizeF(10F, 25F);
 			AutoScaleMode = AutoScaleMode.Font;
 			BackColor = SystemColors.ControlLight;
 			ClientSize = new Size(1691, 1115);
+			Controls.Add(circleBtn);
 			Controls.Add(lineBtn);
 			Controls.Add(pointButton);
 			Controls.Add(label2);
@@ -121,5 +135,6 @@
 		private Label label2;
 		private Button pointButton;
 		private Button lineBtn;
+		private Button circleBtn;
 	}
 }
