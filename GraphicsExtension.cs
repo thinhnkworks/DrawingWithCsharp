@@ -34,5 +34,15 @@ namespace DrawingWithC_
 			g.DrawLine(pen, line.StartPoint.ToPointF, line.EndPoint.ToPointF);
 			g.ResetTransform();
 		}
+		public static void DrawCircle(this Graphics g, Pen pen, Entities.Circle circle)
+		{
+			float x = (float)(circle.Center.X - circle.Radius);
+			float y = (float)(circle.Center.Y - circle.Radius);
+			float d = (float)(circle.Diameter);
+
+			g.SetTransform();
+			g.DrawEllipse(pen, x, y, d, d);
+			g.ResetTransform();
+		}
 	}
 }
