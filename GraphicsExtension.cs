@@ -28,5 +28,11 @@ namespace DrawingWithC_
 			g.DrawEllipse(pen, p.X - 1, p.Y - 1, 2, 2);
 			g.ResetTransform();
 		}
+		public static void DrawLine(this Graphics g, Pen pen, Entities.Line line)
+		{
+			g.SetTransform();
+			g.DrawLine(pen, line.StartPoint.ToPointF, line.EndPoint.ToPointF);
+			g.ResetTransform();
+		}
 	}
 }

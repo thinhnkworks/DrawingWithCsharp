@@ -32,6 +32,7 @@
 			label1 = new Label();
 			label2 = new Label();
 			pointButton = new Button();
+			lineBtn = new Button();
 			((System.ComponentModel.ISupportInitialize)drawing).BeginInit();
 			SuspendLayout();
 			// 
@@ -40,8 +41,9 @@
 			drawing.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
 			drawing.BackColor = Color.White;
 			drawing.Location = new Point(0, 0);
+			drawing.Margin = new Padding(4, 5, 4, 5);
 			drawing.Name = "drawing";
-			drawing.Size = new Size(954, 486);
+			drawing.Size = new Size(1363, 810);
 			drawing.TabIndex = 0;
 			drawing.TabStop = false;
 			drawing.Paint += drawing_Paint;
@@ -51,42 +53,59 @@
 			// label1
 			// 
 			label1.AutoSize = true;
-			label1.Location = new Point(22, 509);
+			label1.Location = new Point(31, 848);
+			label1.Margin = new Padding(4, 0, 4, 0);
 			label1.Name = "label1";
-			label1.Size = new Size(38, 15);
+			label1.Size = new Size(59, 25);
 			label1.TabIndex = 1;
 			label1.Text = "label1";
 			// 
 			// label2
 			// 
 			label2.AutoSize = true;
-			label2.Location = new Point(22, 552);
+			label2.Location = new Point(31, 920);
+			label2.Margin = new Padding(4, 0, 4, 0);
 			label2.Name = "label2";
-			label2.Size = new Size(38, 15);
+			label2.Size = new Size(59, 25);
 			label2.TabIndex = 2;
 			label2.Text = "label2";
 			// 
 			// pointButton
 			// 
 			pointButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-			pointButton.Location = new Point(1022, 51);
+			pointButton.Location = new Point(1460, 85);
+			pointButton.Margin = new Padding(4, 5, 4, 5);
 			pointButton.Name = "pointButton";
-			pointButton.Size = new Size(75, 23);
+			pointButton.Size = new Size(107, 38);
 			pointButton.TabIndex = 3;
 			pointButton.Text = "Point";
 			pointButton.UseVisualStyleBackColor = true;
 			pointButton.Click += pointButton_Click;
 			// 
+			// lineBtn
+			// 
+			lineBtn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			lineBtn.Location = new Point(1460, 190);
+			lineBtn.Margin = new Padding(4, 5, 4, 5);
+			lineBtn.Name = "lineBtn";
+			lineBtn.Size = new Size(107, 38);
+			lineBtn.TabIndex = 4;
+			lineBtn.Text = "Line";
+			lineBtn.UseVisualStyleBackColor = true;
+			lineBtn.Click += lineBtn_Click;
+			// 
 			// Form1
 			// 
-			AutoScaleDimensions = new SizeF(7F, 15F);
+			AutoScaleDimensions = new SizeF(10F, 25F);
 			AutoScaleMode = AutoScaleMode.Font;
 			BackColor = SystemColors.ControlLight;
-			ClientSize = new Size(1184, 669);
+			ClientSize = new Size(1691, 1115);
+			Controls.Add(lineBtn);
 			Controls.Add(pointButton);
 			Controls.Add(label2);
 			Controls.Add(label1);
 			Controls.Add(drawing);
+			Margin = new Padding(4, 5, 4, 5);
 			Name = "Form1";
 			Text = "Form1";
 			Load += Form1_Load;
@@ -101,5 +120,6 @@
 		private Label label1;
 		private Label label2;
 		private Button pointButton;
+		private Button lineBtn;
 	}
 }
