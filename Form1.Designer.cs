@@ -34,6 +34,7 @@
 			pointButton = new Button();
 			lineBtn = new Button();
 			circleBtn = new Button();
+			ellipseBtn = new Button();
 			((System.ComponentModel.ISupportInitialize)drawing).BeginInit();
 			SuspendLayout();
 			// 
@@ -107,12 +108,25 @@
 			circleBtn.UseVisualStyleBackColor = true;
 			circleBtn.Click += circleBtn_Click;
 			// 
+			// ellipseBtn
+			// 
+			ellipseBtn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			ellipseBtn.Location = new Point(1460, 411);
+			ellipseBtn.Margin = new Padding(4, 5, 4, 5);
+			ellipseBtn.Name = "ellipseBtn";
+			ellipseBtn.Size = new Size(107, 38);
+			ellipseBtn.TabIndex = 6;
+			ellipseBtn.Text = "Ellipse";
+			ellipseBtn.UseVisualStyleBackColor = true;
+			ellipseBtn.Click += ellipseBtn_Click;
+			// 
 			// Form1
 			// 
 			AutoScaleDimensions = new SizeF(10F, 25F);
 			AutoScaleMode = AutoScaleMode.Font;
 			BackColor = SystemColors.ControlLight;
 			ClientSize = new Size(1691, 1115);
+			Controls.Add(ellipseBtn);
 			Controls.Add(circleBtn);
 			Controls.Add(lineBtn);
 			Controls.Add(pointButton);
@@ -136,5 +150,6 @@
 		private Button pointButton;
 		private Button lineBtn;
 		private Button circleBtn;
+		private Button ellipseBtn;
 	}
 }
