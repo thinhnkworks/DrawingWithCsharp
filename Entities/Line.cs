@@ -38,5 +38,16 @@ namespace DrawingWithC_.Entities
 			set { startPoint = value; }
 		}
 
+		public double Length
+		{
+			get
+			{
+				double dx = endPoint.X - startPoint.X;
+				double dy = endPoint.Y - startPoint.Y;
+				double dz = endPoint.Z - startPoint.Z;
+
+				return Math.Sqrt(dx * dx + dy * dy + dz * dz);
+			}
+		}
 	}
 }
