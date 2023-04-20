@@ -127,6 +127,7 @@ namespace DrawingWithC_
 					e.Graphics.DrawPoint(new Pen(Color.Red, 0), p);
 				}
 			}
+
 			// draw all lines in list lines
 			if (lines.Count > 0)
 			{
@@ -135,6 +136,7 @@ namespace DrawingWithC_
 					e.Graphics.DrawLine(pen, line);
 				}
 			}
+
 			// draw extended line
 			// show gray line when first click to simulate drawing 
 			switch (DrawIndex)
@@ -173,6 +175,7 @@ namespace DrawingWithC_
 					}
 					break;
 			}
+
 			// draw all circles
 			if (circles.Count > 0)
 			{
@@ -181,6 +184,8 @@ namespace DrawingWithC_
 					e.Graphics.DrawCircle(pen, circle);
 				}
 			}
+
+			// draw all ellipses
 			if (ellipses.Count > 0)
 			{
 				foreach (Entities.Ellipse elp in ellipses)
