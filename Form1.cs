@@ -12,8 +12,8 @@ namespace DrawingWithC_
 
 		}
 
-		Pen pen = new Pen(Color.Blue, 0.1f);
-		Pen grayPen = new Pen(Color.Gray, 0.1f);
+		Pen pen = new Pen(Color.Blue, 1.0f);
+		Pen grayPen = new Pen(Color.Gray, 1.0f);
 
 		private List<Entities.Point> points = new List<Entities.Point>();
 		private List<Entities.Line> lines = new List<Entities.Line>();
@@ -68,7 +68,7 @@ namespace DrawingWithC_
 									lines.Add(new Entities.Line(firstPoint, currentPosition));
 									points.Add(new Entities.Point(currentPosition));
 									firstPoint = currentPosition;
-									clickNum = 1;
+									//clickNum = 1
 									break;
 							}
 							break;
@@ -127,6 +127,7 @@ namespace DrawingWithC_
 					e.Graphics.DrawPoint(new Pen(Color.Red, 0), p);
 				}
 			}
+
 			// draw all lines in list lines
 			if (lines.Count > 0)
 			{
@@ -135,6 +136,7 @@ namespace DrawingWithC_
 					e.Graphics.DrawLine(pen, line);
 				}
 			}
+
 			// draw extended line
 			// show gray line when first click to simulate drawing 
 			switch (DrawIndex)
@@ -173,6 +175,21 @@ namespace DrawingWithC_
 					}
 					break;
 			}
+
+			// test line line intersection
+			if (lines.Count > 0)
+			{
+				foreach (Entities.Line l1 in lines)
+				{
+					foreach (Entities.Line l2 in lines)
+					{
+						Vector3 v = Methods.Method.LineLineIntersection(l1, l2);
+						Entities.Point p = new Entities.Point(v);
+						e.Graphics.DrawPoint(new Pen(Color.Red, 0), p);
+					}
+				}
+			}
+
 			// draw all circles
 			if (circles.Count > 0)
 			{
@@ -181,6 +198,8 @@ namespace DrawingWithC_
 					e.Graphics.DrawCircle(pen, circle);
 				}
 			}
+
+			// draw all ellipses
 			if (ellipses.Count > 0)
 			{
 				foreach (Entities.Ellipse elp in ellipses)
@@ -241,6 +260,16 @@ namespace DrawingWithC_
 			return pixel * 25.4f / DPI;
 		}
 		#endregion
-
+		private void CancelAll()
+		{
+			DrawIndex = -1;
+			active_drawing = false;
+			drawing.Cursor = Cursors.Default;
+			clickNum = 1;
+		}
+		private void cancelToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			CancelAll();
+		}
 	}
 }
