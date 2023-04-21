@@ -71,5 +71,24 @@ namespace DrawingWithC_
 			g.DrawArc(pen, rect, (float)arc.StartAngle, (float)arc.EndAngle);
 			g.ResetTransform();
 		}
+		public static void DrawPolyline(this Graphics g, Pen pen, Entities.LwPolyline polyline)
+		{
+			PointF[] vertexes = new PointF[polyline.Vertexes.Count];
+
+			if (polyline.IsClosed)
+			{
+				vertexes = new PointF[polyline.Vertexes.Count + 1];
+				vertexes[polyline.Vertexes.Count] = polyline.Vertexes[0].Position.ToPointF;
+			}
+
+			for (int i = 0; i < polyline.Vertexes.Count; i++)
+			{
+				vertexes[i] = polyline.Vertexes[i].Position.ToPointF;
+			}
+
+			g.SetTransform();
+			g.DrawLines(pen, vertexes);
+			g.ResetTransform();
+		}
 	}
 }

@@ -40,5 +40,10 @@ namespace DrawingWithC_
 			double dy = v.Y - Y;
 			return Math.Sqrt(dx * dx + dy * dy);
 		}
+
+		public PointF ToPointF
+		{
+			get { return new PointF((float)x, (float)y); }
+		}
 	}
 }

@@ -32,6 +32,7 @@
 			drawing = new PictureBox();
 			menuStrip = new ContextMenuStrip(components);
 			cancelToolStripMenuItem = new ToolStripMenuItem();
+			btnCloseBoundary = new ToolStripMenuItem();
 			label2 = new Label();
 			btnPoint = new Button();
 			btnLine = new Button();
@@ -40,6 +41,7 @@
 			btnArc = new Button();
 			vScrollbar = new VScrollBar();
 			hScrollBar = new HScrollBar();
+			btnPolyline = new Button();
 			((System.ComponentModel.ISupportInitialize)drawing).BeginInit();
 			menuStrip.SuspendLayout();
 			SuspendLayout();
@@ -62,9 +64,9 @@
 			// menuStrip
 			// 
 			menuStrip.ImageScalingSize = new Size(24, 24);
-			menuStrip.Items.AddRange(new ToolStripItem[] { cancelToolStripMenuItem });
+			menuStrip.Items.AddRange(new ToolStripItem[] { cancelToolStripMenuItem, btnCloseBoundary });
 			menuStrip.Name = "menuStrip";
-			menuStrip.Size = new Size(136, 36);
+			menuStrip.Size = new Size(136, 68);
 			// 
 			// cancelToolStripMenuItem
 			// 
@@ -72,6 +74,13 @@
 			cancelToolStripMenuItem.Size = new Size(135, 32);
 			cancelToolStripMenuItem.Text = "Cancel";
 			cancelToolStripMenuItem.Click += cancelToolStripMenuItem_Click;
+			// 
+			// btnCloseBoundary
+			// 
+			btnCloseBoundary.Name = "btnCloseBoundary";
+			btnCloseBoundary.Size = new Size(135, 32);
+			btnCloseBoundary.Text = "Close";
+			btnCloseBoundary.Click += btnCloseBoundary_Click;
 			// 
 			// label2
 			// 
@@ -161,12 +170,25 @@
 			hScrollBar.TabIndex = 9;
 			hScrollBar.Scroll += hScrollBar_Scroll;
 			// 
+			// btnPolyline
+			// 
+			btnPolyline.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			btnPolyline.Location = new Point(778, 42);
+			btnPolyline.Margin = new Padding(4, 5, 4, 5);
+			btnPolyline.Name = "btnPolyline";
+			btnPolyline.Size = new Size(100, 100);
+			btnPolyline.TabIndex = 10;
+			btnPolyline.Text = "Polyline";
+			btnPolyline.UseVisualStyleBackColor = true;
+			btnPolyline.Click += btnPolyline_Click;
+			// 
 			// GraphicsForm
 			// 
 			AutoScaleDimensions = new SizeF(10F, 25F);
 			AutoScaleMode = AutoScaleMode.Font;
 			BackColor = SystemColors.ControlLight;
 			ClientSize = new Size(1678, 912);
+			Controls.Add(btnPolyline);
 			Controls.Add(hScrollBar);
 			Controls.Add(vScrollbar);
 			Controls.Add(btnArc);
@@ -199,5 +221,7 @@
 		private Button btnArc;
 		private VScrollBar vScrollbar;
 		private HScrollBar hScrollBar;
+		private ToolStripMenuItem btnCloseBoundary;
+		private Button btnPolyline;
 	}
 }

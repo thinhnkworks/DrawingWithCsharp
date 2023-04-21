@@ -50,6 +50,10 @@ namespace DrawingWithC_
 		{
 			get { return new Vector3(0.0, 0.0, 0.0); }
 		}
+		public Vector2 ToVector2
+		{
+			get { return new Vector2(X, Y); }
+		}
 		public double DistanceFrom(Vector3 v)
 		{
 			double dx = v.X - X;
