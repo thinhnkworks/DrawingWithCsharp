@@ -336,7 +336,7 @@ namespace DrawingWithC_
 		// convert system point to world point
 		private Vector3 PointToCartesian(Point point)
 		{
-			return new Vector3(PixelToMl(point.X + XScroll) / ScaleFactor, (PixelToMl(this.drawing.Height - point.Y) - YScroll) / ScaleFactor);
+			return new Vector3((PixelToMl(point.X) + XScroll) / ScaleFactor, (PixelToMl(this.drawing.Height - point.Y) - YScroll) / ScaleFactor);
 		}
 		// convert pixels to milimeters
 		private float PixelToMl(float pixel)
