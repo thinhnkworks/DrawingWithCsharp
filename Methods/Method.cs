@@ -152,5 +152,31 @@ namespace DrawingWithC_.Methods
 		{
 			return (v.X - line.StartPoint.X) * (line.EndPoint.Y - line.StartPoint.Y) - (v.Y - line.StartPoint.Y) * (line.EndPoint.X - line.StartPoint.X);
 		}
+
+		public static Entities.LwPolyline PointToRect(Vector3 firstCorner, Vector3 secondCorner, out int dir)
+		{
+			double x = Math.Min(firstCorner.X, secondCorner.X);
+			double y = Math.Min(firstCorner.Y, secondCorner.Y);
+
+			double width = Math.Abs(secondCorner.X - firstCorner.X);
+			double height = Math.Abs(secondCorner.Y - firstCorner.Y);
+
+			double dx = secondCorner.X - firstCorner.X;
+
+			List<Entities.LwPolylineVertex> vertexes = new List<Entities.LwPolylineVertex>();
+			vertexes.Add(new Entities.LwPolylineVertex(x, y)); ;
+			vertexes.Add(new Entities.LwPolylineVertex(x + width, y));
+			vertexes.Add(new Entities.LwPolylineVertex(x + width, y + height));
+			vertexes.Add(new Entities.LwPolylineVertex(x, y + height));
+
+			if (dx > 0)
+				dir = 1;
+			else if (dx < 0)
+				dir = 2;
+			else
+				dir = -1;
+
+			return new LwPolyline(vertexes, true);
+		}
 	}
 }
