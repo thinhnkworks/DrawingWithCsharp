@@ -1,3 +1,6 @@
+using System.Drawing;
+using System.Drawing.Drawing2D;
+
 namespace DrawingWithC_
 {
 	public partial class GraphicsForm : Form
@@ -12,8 +15,8 @@ namespace DrawingWithC_
 
 		}
 
-		Pen pen = new Pen(Color.Blue, 1.0f);
-		Pen grayPen = new Pen(Color.Gray, 1.0f);
+		public static Pen pen = new Pen(Color.Blue, 1.0f);
+		public static Pen grayPen = new Pen(Color.Gray, 1.0f);
 
 		private List<Entities.Point> points = new List<Entities.Point>();
 		private List<Entities.Line> lines = new List<Entities.Line>();
@@ -25,8 +28,12 @@ namespace DrawingWithC_
 		private Vector3 currentPosition;
 		private Vector3 firstPoint;
 		private Vector3 secondPoint;
-		private int direction;
 		private Entities.LwPolyline tempPolyline = new Entities.LwPolyline();
+
+		// polygon settings
+		public static int direction;
+		public static int sidesQty = 5;
+		public static int inscribed = 1;
 
 		// enable and disable drawing
 		private int DrawIndex = -1;
@@ -55,24 +62,23 @@ namespace DrawingWithC_
 			{
 				if (active_drawing)
 				{
+					// 0: for drawing point
+					// 1: for drawing line
+					// 2: for drawing circle
+					// 3: for drawing ellipse
+					// 4: for drawing circle with 3 points
+					// 5: for drawing arc
+					// 6: for drawing polyline
+					// 7: for drawing rectangle
+					// 8: for drawing polygon
 					switch (DrawIndex)
 					{
-						// 0: for drawing point
-						// 1: for drawing line
-						// 2: for drawing circle
-						// 3: for drawing ellipse
-						// 4: for drawing circle with 3 points
-						// 5: for drawing arc
-						// 6: for drawing polyline
-						// 7: for drawing rectangle
 						case 0:
 							points.Add(new Entities.Point(currentPosition));
 							break;
-						case 1:
+						case 1: // line
 							switch (clickNum)
 							{
-								// 1: firstPoint of line
-								// 2: endPoint of line
 								case 1:
 									firstPoint = currentPosition;
 									points.Add(new Entities.Point(currentPosition));
@@ -86,11 +92,9 @@ namespace DrawingWithC_
 									break;
 							}
 							break;
-						case 2:
+						case 2: // circle
 							switch (clickNum)
 							{
-								// 1: firstPoint => center of circle
-								// 2: currentPosition => calculate radius
 								case 1:
 									firstPoint = currentPosition;
 									clickNum++;
@@ -102,7 +106,7 @@ namespace DrawingWithC_
 									break;
 							}
 							break;
-						case 3:
+						case 3: // ellipse
 							switch (clickNum)
 							{
 								case 1:
@@ -122,7 +126,7 @@ namespace DrawingWithC_
 									break;
 							}
 							break;
-						case 5:
+						case 5: // arc
 							switch (clickNum)
 							{
 								case 1:
@@ -140,12 +144,12 @@ namespace DrawingWithC_
 									break;
 							}
 							break;
-						case 6:
+						case 6: // polyline
 							firstPoint = currentPosition;
 							tempPolyline.Vertexes.Add(new Entities.LwPolylineVertex(firstPoint.ToVector2));
 							clickNum = 2;
 							break;
-						case 7:
+						case 7: // rectangle
 							switch (clickNum)
 							{
 								case 1:
@@ -154,6 +158,19 @@ namespace DrawingWithC_
 									break;
 								case 2:
 									polylines.Add(Methods.Method.PointToRect(firstPoint, currentPosition, out direction));
+									CancelAll();
+									break;
+							}
+							break;
+						case 8: // polygon
+							switch (clickNum)
+							{
+								case 1:
+									firstPoint = currentPosition;
+									clickNum++;
+									break;
+								case 2:
+									polylines.Add(Methods.Method.GetPolygon(firstPoint, currentPosition, sidesQty, inscribed)); ;
 									CancelAll();
 									break;
 							}
@@ -198,13 +215,6 @@ namespace DrawingWithC_
 						e.Graphics.DrawLine(grayPen, line);
 					}
 					break;
-				case 7: // rect
-					if (clickNum == 2)
-					{
-						Entities.LwPolyline lw = Methods.Method.PointToRect(firstPoint, currentPosition, out direction);
-						e.Graphics.DrawPolyline(grayPen, lw);
-					}
-					break;
 				case 2:
 					if (clickNum == 2)
 					{
@@ -242,6 +252,22 @@ namespace DrawingWithC_
 							Entities.Arc a = Methods.Method.GetArcWith3Points(firstPoint, secondPoint, currentPosition);
 							e.Graphics.DrawArc(grayPen, a);
 							break;
+					}
+					break;
+				case 7: // rect
+					if (clickNum == 2)
+					{
+						Entities.LwPolyline lw = Methods.Method.PointToRect(firstPoint, currentPosition, out direction);
+						e.Graphics.DrawPolyline(grayPen, lw);
+					}
+					break;
+				case 8: // polygon
+					if (clickNum == 2)
+					{
+						Entities.Line line = new Entities.Line(firstPoint, currentPosition);
+						e.Graphics.DrawLine(grayPen, line);
+						Entities.LwPolyline lw = Methods.Method.GetPolygon(firstPoint, currentPosition, sidesQty, inscribed);
+						e.Graphics.DrawPolyline(grayPen, lw);
 					}
 					break;
 			}
@@ -300,6 +326,7 @@ namespace DrawingWithC_
 			{
 				e.Graphics.DrawPolyline(pen, tempPolyline);
 			}
+
 		}
 
 		#endregion
@@ -352,6 +379,13 @@ namespace DrawingWithC_
 		{
 			// index 7 for drawing rectangle
 			DrawIndex = 7;
+			active_drawing = true;
+			drawing.Cursor = Cursors.Cross;
+		}
+		private void btnPolygon_Click(object sender, EventArgs e)
+		{
+			// index 8 for drawing polygon
+			DrawIndex = 8;
 			active_drawing = true;
 			drawing.Cursor = Cursors.Cross;
 		}
@@ -454,5 +488,10 @@ namespace DrawingWithC_
 			tempPolyline.Vertexes.Clear();
 		}
 
+		private void btnSettings_Click(object sender, EventArgs e)
+		{
+			var settings = new SettingsForm();
+			settings.Show();
+		}
 	}
 }

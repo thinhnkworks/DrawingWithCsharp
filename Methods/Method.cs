@@ -178,5 +178,32 @@ namespace DrawingWithC_.Methods
 
 			return new LwPolyline(vertexes, true);
 		}
+
+		public static Entities.LwPolyline GetPolygon(Vector3 center, Vector3 secondPoint, int sidesQty, int inscribed)
+		{
+			List<Entities.LwPolylineVertex> vertexes = new List<Entities.LwPolylineVertex>();
+			double sides_angle = 360.0 / sidesQty;
+			double radius = center.DistanceFrom(secondPoint);
+			double lineAngle = LineAngle(center, secondPoint);
+
+			if (inscribed == 1)
+			{
+				lineAngle -= sides_angle / 2.0;
+				radius /= Math.Cos(sides_angle / 180.0 * Math.PI / 2.0);
+			}
+
+			for (int i = 0; i < sidesQty; i++)
+			{
+				double x = center.X + radius * Math.Cos(lineAngle / 180.0 * Math.PI);
+				double y = center.Y + radius * Math.Sin(lineAngle / 180.0 * Math.PI);
+
+				vertexes.Add(new Entities.LwPolylineVertex(x, y));
+				lineAngle += sides_angle;
+			}
+
+			return new Entities.LwPolyline(vertexes, true);
+		}
+
+
 	}
 }
