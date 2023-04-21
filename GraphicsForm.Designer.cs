@@ -43,6 +43,8 @@
 			hScrollBar = new HScrollBar();
 			btnPolyline = new Button();
 			btnRectangle = new Button();
+			btnPolygon = new Button();
+			btnSettings = new Button();
 			((System.ComponentModel.ISupportInitialize)drawing).BeginInit();
 			menuStrip.SuspendLayout();
 			SuspendLayout();
@@ -174,26 +176,51 @@
 			// btnPolyline
 			// 
 			btnPolyline.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			btnPolyline.Image = Properties.Resources.polyline;
 			btnPolyline.Location = new Point(772, 42);
 			btnPolyline.Margin = new Padding(4, 5, 4, 5);
 			btnPolyline.Name = "btnPolyline";
 			btnPolyline.Size = new Size(100, 100);
 			btnPolyline.TabIndex = 10;
-			btnPolyline.Text = "Polyline";
 			btnPolyline.UseVisualStyleBackColor = true;
 			btnPolyline.Click += btnPolyline_Click;
 			// 
 			// btnRectangle
 			// 
 			btnRectangle.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			btnRectangle.Image = Properties.Resources.rectangle;
 			btnRectangle.Location = new Point(925, 42);
 			btnRectangle.Margin = new Padding(4, 5, 4, 5);
 			btnRectangle.Name = "btnRectangle";
 			btnRectangle.Size = new Size(100, 100);
 			btnRectangle.TabIndex = 11;
-			btnRectangle.Text = "Rectangle";
 			btnRectangle.UseVisualStyleBackColor = true;
 			btnRectangle.Click += btnRectangle_Click;
+			// 
+			// btnPolygon
+			// 
+			btnPolygon.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			btnPolygon.Image = Properties.Resources.polygon;
+			btnPolygon.Location = new Point(1080, 42);
+			btnPolygon.Margin = new Padding(4, 5, 4, 5);
+			btnPolygon.Name = "btnPolygon";
+			btnPolygon.Size = new Size(100, 100);
+			btnPolygon.TabIndex = 12;
+			btnPolygon.UseVisualStyleBackColor = true;
+			btnPolygon.Click += btnPolygon_Click;
+			// 
+			// btnSettings
+			// 
+			btnSettings.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			btnSettings.Cursor = Cursors.Hand;
+			btnSettings.Image = Properties.Resources.settings;
+			btnSettings.Location = new Point(1551, 42);
+			btnSettings.Margin = new Padding(4, 5, 4, 5);
+			btnSettings.Name = "btnSettings";
+			btnSettings.Size = new Size(100, 100);
+			btnSettings.TabIndex = 13;
+			btnSettings.UseVisualStyleBackColor = true;
+			btnSettings.Click += btnSettings_Click;
 			// 
 			// GraphicsForm
 			// 
@@ -201,6 +228,8 @@
 			AutoScaleMode = AutoScaleMode.Font;
 			BackColor = SystemColors.ControlLight;
 			ClientSize = new Size(1678, 912);
+			Controls.Add(btnSettings);
+			Controls.Add(btnPolygon);
 			Controls.Add(btnRectangle);
 			Controls.Add(btnPolyline);
 			Controls.Add(hScrollBar);
@@ -214,7 +243,7 @@
 			Controls.Add(drawing);
 			Margin = new Padding(4, 5, 4, 5);
 			Name = "GraphicsForm";
-			Text = "Form1";
+			Text = "Graphics Form";
 			Load += Form1_Load;
 			((System.ComponentModel.ISupportInitialize)drawing).EndInit();
 			menuStrip.ResumeLayout(false);
@@ -238,5 +267,7 @@
 		private ToolStripMenuItem btnCloseBoundary;
 		private Button btnPolyline;
 		private Button btnRectangle;
+		private Button btnPolygon;
+		private Button btnSettings;
 	}
 }
