@@ -304,7 +304,8 @@ namespace DrawingWithC_
 
 		#endregion
 
-		#region button shapes
+		#region SHAPES BUTTON
+
 		private void btnPoint_Click(object sender, EventArgs e)
 		{
 			// index 0 for drawing point
@@ -328,24 +329,28 @@ namespace DrawingWithC_
 		}
 		private void btnEllipse_Click(object sender, EventArgs e)
 		{
+			// index 3 for drawing ellipse
 			DrawIndex = 3;
 			active_drawing = true;
 			drawing.Cursor = Cursors.Cross;
 		}
 		private void btnArc_Click(object sender, EventArgs e)
 		{
+			// index 5 for drawing arc
 			DrawIndex = 5;
 			active_drawing = true;
 			drawing.Cursor = Cursors.Cross;
 		}
 		private void btnPolyline_Click(object sender, EventArgs e)
 		{
+			// index 6 for drawing polyline
 			DrawIndex = 6;
 			active_drawing = true;
 			drawing.Cursor = Cursors.Cross;
 		}
 		private void btnRectangle_Click(object sender, EventArgs e)
 		{
+			// index 7 for drawing rectangle
 			DrawIndex = 7;
 			active_drawing = true;
 			drawing.Cursor = Cursors.Cross;
@@ -353,7 +358,8 @@ namespace DrawingWithC_
 
 		#endregion
 
-		#region convert units
+		#region CONVERT UNIT
+
 		// get screen DPI
 		private float DPI
 		{
@@ -372,9 +378,11 @@ namespace DrawingWithC_
 		{
 			return pixel * 25.4f / DPI;
 		}
+
 		#endregion
 
-		#region Cancel Functions
+		#region CUSTOM FUNCTIONS
+
 		private void CancelAll(int index = 1)
 		{
 			DrawIndex = -1;
@@ -398,9 +406,11 @@ namespace DrawingWithC_
 					break;
 			}
 		}
+
 		#endregion
 
-		#region scroll settings
+		#region SCROLL SETTINGS
+
 		private void vScrollbar_Scroll(object sender, ScrollEventArgs e)
 		{
 			YScroll = (sender as VScrollBar).Value;
@@ -412,8 +422,8 @@ namespace DrawingWithC_
 			XScroll = (sender as HScrollBar).Value;
 			drawing.Refresh();
 		}
-		#endregion
 
+		#endregion
 
 		private void LwPolylineCloseStatus(int index)
 		{
