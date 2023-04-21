@@ -38,6 +38,8 @@
 			btnCircle = new Button();
 			btnEllipse = new Button();
 			btnArc = new Button();
+			vScrollbar = new VScrollBar();
+			hScrollBar = new HScrollBar();
 			((System.ComponentModel.ISupportInitialize)drawing).BeginInit();
 			menuStrip.SuspendLayout();
 			SuspendLayout();
@@ -50,7 +52,7 @@
 			drawing.Location = new Point(0, 172);
 			drawing.Margin = new Padding(4, 5, 4, 5);
 			drawing.Name = "drawing";
-			drawing.Size = new Size(1676, 738);
+			drawing.Size = new Size(1651, 703);
 			drawing.TabIndex = 0;
 			drawing.TabStop = false;
 			drawing.Paint += drawing_Paint;
@@ -74,7 +76,7 @@
 			// label2
 			// 
 			label2.AutoSize = true;
-			label2.Location = new Point(13, 869);
+			label2.Location = new Point(10, 876);
 			label2.Margin = new Padding(4, 0, 4, 0);
 			label2.Name = "label2";
 			label2.Size = new Size(59, 25);
@@ -141,12 +143,32 @@
 			btnArc.UseVisualStyleBackColor = true;
 			btnArc.Click += btnArc_Click;
 			// 
+			// vScrollbar
+			// 
+			vScrollbar.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+			vScrollbar.Location = new Point(1652, 172);
+			vScrollbar.Name = "vScrollbar";
+			vScrollbar.Size = new Size(22, 700);
+			vScrollbar.TabIndex = 8;
+			vScrollbar.Scroll += vScrollbar_Scroll;
+			// 
+			// hScrollBar
+			// 
+			hScrollBar.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+			hScrollBar.Location = new Point(1302, 876);
+			hScrollBar.Name = "hScrollBar";
+			hScrollBar.Size = new Size(345, 22);
+			hScrollBar.TabIndex = 9;
+			hScrollBar.Scroll += hScrollBar_Scroll;
+			// 
 			// GraphicsForm
 			// 
 			AutoScaleDimensions = new SizeF(10F, 25F);
 			AutoScaleMode = AutoScaleMode.Font;
 			BackColor = SystemColors.ControlLight;
 			ClientSize = new Size(1678, 912);
+			Controls.Add(hScrollBar);
+			Controls.Add(vScrollbar);
 			Controls.Add(btnArc);
 			Controls.Add(btnEllipse);
 			Controls.Add(btnCircle);
@@ -175,5 +197,7 @@
 		private ContextMenuStrip menuStrip;
 		private ToolStripMenuItem cancelToolStripMenuItem;
 		private Button btnArc;
+		private VScrollBar vScrollbar;
+		private HScrollBar hScrollBar;
 	}
 }

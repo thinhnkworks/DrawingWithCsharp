@@ -9,9 +9,15 @@ namespace DrawingWithC_
 	public static class GraphicsExtension
 	{
 		private static float Height;
+		private static float XScroll;
+		private static float YScroll;
+		private static float ScaleFactor;
 
-		public static void SetParameters(this Graphics g, float height)
+		public static void SetParameters(this Graphics g, float xscroll, float yscroll, float scalefactor, float height)
 		{
+			XScroll = xscroll;
+			YScroll = yscroll;
+			ScaleFactor = scalefactor;
 			Height = height;
 		}
 
@@ -19,7 +25,8 @@ namespace DrawingWithC_
 		{
 			g.PageUnit = GraphicsUnit.Millimeter;
 			g.TranslateTransform(0, Height);
-			g.ScaleTransform(1.0f, -1.0f);
+			g.ScaleTransform(ScaleFactor, -ScaleFactor);
+			g.TranslateTransform(-XScroll / ScaleFactor, YScroll / ScaleFactor);
 		}
 		public static void DrawPoint(this Graphics g, Pen pen, Entities.Point point)
 		{

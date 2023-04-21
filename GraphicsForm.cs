@@ -25,9 +25,15 @@ namespace DrawingWithC_
 		private Vector3 firstPoint;
 		private Vector3 secondPoint;
 
+		// enable and disable drawing
 		private int DrawIndex = -1;
 		private bool active_drawing = false;
 		private int clickNum = 1;
+
+		// scroll settings
+		private float XScroll;
+		private float YScroll;
+		private float ScaleFactor = 1.0f;
 
 		#region drawing panel events
 		private void drawing_MouseMove(object sender, MouseEventArgs e)
@@ -138,7 +144,7 @@ namespace DrawingWithC_
 
 		private void drawing_Paint(object sender, PaintEventArgs e)
 		{
-			e.Graphics.SetParameters(PixelToMl(drawing.Height));
+			e.Graphics.SetParameters(XScroll, YScroll, ScaleFactor, PixelToMl(drawing.Height));
 
 			// draw all points in list points
 			if (points.Count > 0)
@@ -281,6 +287,12 @@ namespace DrawingWithC_
 			active_drawing = true;
 			drawing.Cursor = Cursors.Cross;
 		}
+		private void btnArc_Click(object sender, EventArgs e)
+		{
+			DrawIndex = 5;
+			active_drawing = true;
+			drawing.Cursor = Cursors.Cross;
+		}
 		#endregion
 
 		#region convert units
@@ -295,7 +307,7 @@ namespace DrawingWithC_
 		// convert system point to world point
 		private Vector3 PointToCartesian(Point point)
 		{
-			return new Vector3(PixelToMl(point.X), PixelToMl(this.drawing.Height - point.Y));
+			return new Vector3(PixelToMl(point.X + XScroll) / ScaleFactor, (PixelToMl(this.drawing.Height - point.Y) - YScroll) / ScaleFactor);
 		}
 		// convert pixels to milimeters
 		private float PixelToMl(float pixel)
@@ -304,6 +316,7 @@ namespace DrawingWithC_
 		}
 		#endregion
 
+		#region Cancel Functions
 		private void CancelAll()
 		{
 			DrawIndex = -1;
@@ -315,12 +328,21 @@ namespace DrawingWithC_
 		{
 			CancelAll();
 		}
+		#endregion
 
-		private void btnArc_Click(object sender, EventArgs e)
+		#region scroll settings
+		private void vScrollbar_Scroll(object sender, ScrollEventArgs e)
 		{
-			DrawIndex = 5;
-			active_drawing = true;
-			drawing.Cursor = Cursors.Cross;
+			YScroll = (sender as VScrollBar).Value;
+			drawing.Refresh();
 		}
+
+		private void hScrollBar_Scroll(object sender, ScrollEventArgs e)
+		{
+			XScroll = (sender as HScrollBar).Value;
+			drawing.Refresh();
+		}
+		#endregion
+
 	}
 }
