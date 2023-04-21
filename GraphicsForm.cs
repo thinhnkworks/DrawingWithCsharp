@@ -20,10 +20,12 @@ namespace DrawingWithC_
 		private List<Entities.Circle> circles = new List<Entities.Circle>();
 		private List<Entities.Ellipse> ellipses = new List<Entities.Ellipse>();
 		private List<Entities.Arc> arcs = new List<Entities.Arc>();
+		private List<Entities.LwPolyline> polylines = new List<Entities.LwPolyline>();
 
 		private Vector3 currentPosition;
 		private Vector3 firstPoint;
 		private Vector3 secondPoint;
+		private Entities.LwPolyline tempPolyline = new Entities.LwPolyline();
 
 		// enable and disable drawing
 		private int DrawIndex = -1;
@@ -60,6 +62,7 @@ namespace DrawingWithC_
 						// 3: for drawing ellipse
 						// 4: for drawing circle with 3 points
 						// 5: for drawing arc
+						// 6: for drawing polyline
 						case 0:
 							points.Add(new Entities.Point(currentPosition));
 							break;
@@ -135,6 +138,11 @@ namespace DrawingWithC_
 									break;
 							}
 							break;
+						case 6:
+							firstPoint = currentPosition;
+							tempPolyline.Vertexes.Add(new Entities.LwPolylineVertex(firstPoint.ToVector2));
+							clickNum = 2;
+							break;
 					}
 					// refresh drawing panel after mouse left-click
 					drawing.Refresh();
@@ -168,6 +176,7 @@ namespace DrawingWithC_
 			// show gray line when first click to simulate drawing 
 			switch (DrawIndex)
 			{
+				case 6:
 				case 1:
 					if (clickNum == 2)
 					{
@@ -256,6 +265,20 @@ namespace DrawingWithC_
 					e.Graphics.DrawArc(pen, arc);
 				}
 			}
+
+			// draw all LwPolyline
+			if (polylines.Count > 0)
+			{
+				foreach (Entities.LwPolyline lw in polylines)
+				{
+					e.Graphics.DrawPolyline(pen, lw);
+				}
+			}
+			// draw tempPolyline
+			if (tempPolyline.Vertexes.Count > 1)
+			{
+				e.Graphics.DrawPolyline(pen, tempPolyline);
+			}
 		}
 		#endregion
 
@@ -293,6 +316,12 @@ namespace DrawingWithC_
 			active_drawing = true;
 			drawing.Cursor = Cursors.Cross;
 		}
+		private void btnPolyline_Click(object sender, EventArgs e)
+		{
+			DrawIndex = 6;
+			active_drawing = true;
+			drawing.Cursor = Cursors.Cross;
+		}
 		#endregion
 
 		#region convert units
@@ -317,16 +346,28 @@ namespace DrawingWithC_
 		#endregion
 
 		#region Cancel Functions
-		private void CancelAll()
+		private void CancelAll(int index = 1)
 		{
 			DrawIndex = -1;
 			active_drawing = false;
 			drawing.Cursor = Cursors.Default;
 			clickNum = 1;
+			LwPolylineCloseStatus(index);
 		}
 		private void cancelToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			CancelAll();
+		}
+		private void btnCloseBoundary_Click(object sender, EventArgs e)
+		{
+			switch (DrawIndex)
+			{
+				case 2: // line
+					break;
+				case 6: // polyline
+					CancelAll(2);
+					break;
+			}
 		}
 		#endregion
 
@@ -343,6 +384,36 @@ namespace DrawingWithC_
 			drawing.Refresh();
 		}
 		#endregion
+
+
+		private void LwPolylineCloseStatus(int index)
+		{
+			List<Entities.LwPolylineVertex> vertexes = new List<Entities.LwPolylineVertex>();
+			foreach (Entities.LwPolylineVertex lw in tempPolyline.Vertexes)
+			{
+				vertexes.Add(lw);
+			}
+			if (vertexes.Count > 1)
+			{
+				switch (index)
+				{
+					case 1:
+						if (vertexes.Count > 2)
+						{
+							polylines.Add(new Entities.LwPolyline(vertexes, true));
+						}
+						else
+						{
+							polylines.Add(new Entities.LwPolyline(vertexes, false));
+						}
+						break;
+					case 2:
+						polylines.Add(new Entities.LwPolyline(vertexes, true));
+						break;
+				}
+			}
+			tempPolyline.Vertexes.Clear();
+		}
 
 	}
 }
