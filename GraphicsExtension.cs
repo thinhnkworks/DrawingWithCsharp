@@ -52,5 +52,17 @@ namespace DrawingWithC_
 			g.DrawEllipse(pen, -(float)ellipse.MajorAxis, -(float)ellipse.MinorAxis, (float)ellipse.MajorAxis * 2, (float)ellipse.MinorAxis * 2);
 			g.ResetTransform();
 		}
+		public static void DrawArc(this Graphics g, Pen pen, Entities.Arc arc)
+		{
+			float x = (float)(arc.Center.X - arc.Radius);
+			float y = (float)(arc.Center.Y - arc.Radius);
+			float d = (float)(arc.Diameter);
+
+			System.Drawing.RectangleF rect = new System.Drawing.RectangleF(x, y, d, d);
+
+			g.SetTransform();
+			g.DrawArc(pen, rect, (float)arc.StartAngle, (float)arc.EndAngle);
+			g.ResetTransform();
+		}
 	}
 }

@@ -19,12 +19,12 @@ namespace DrawingWithC_.Methods
 			return angle;
 		}
 
-		public static Entities.Ellipse GetEllipse(Vector3 center, Vector3 firstPoint, Vector3 secondPoint)
+		public static Ellipse GetEllipse(Vector3 center, Vector3 firstPoint, Vector3 secondPoint)
 		{
 			double major = center.DistanceFrom(firstPoint);
 			double minor = center.DistanceFrom(secondPoint);
 			double angle = LineAngle(center, firstPoint);
-			Entities.Ellipse elp = new Entities.Ellipse(center, major, minor);
+			Ellipse elp = new Ellipse(center, major, minor);
 			elp.Rotation = angle;
 			return elp;
 		}
@@ -114,6 +114,43 @@ namespace DrawingWithC_.Methods
 			double radius = Math.Sqrt(dx * dx + dy * dy);
 
 			return new Circle(center, radius);
+		}
+
+		public static Arc GetArcWith3Points(Vector3 p1, Vector3 p2, Vector3 p3)
+		{
+			double start, end;
+			Arc result = new Arc();
+
+			Circle c = GetCircleWith3Points(p1, p2, p3);
+
+			if (c.Radius > 0)
+			{
+				if (DeterminePointOfLine(new Line(p1, p3), p2) < 0)
+				{
+					start = LineAngle(c.Center, p3);
+					end = LineAngle(c.Center, p1);
+				}
+				else
+				{
+					start = LineAngle(c.Center, p1);
+					end = LineAngle(c.Center, p3);
+				}
+				if (end > start)
+				{
+					end -= start;
+				}
+				else
+				{
+					end += 360 - start;
+				}
+				result = new Arc(c.Center, c.Radius, start, end);
+			}
+			return result;
+		}
+
+		private static double DeterminePointOfLine(Line line, Vector3 v)
+		{
+			return (v.X - line.StartPoint.X) * (line.EndPoint.Y - line.StartPoint.Y) - (v.Y - line.StartPoint.Y) * (line.EndPoint.X - line.StartPoint.X);
 		}
 	}
 }

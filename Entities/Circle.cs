@@ -20,7 +20,6 @@ namespace DrawingWithC_.Entities
 			this.Thickness = 0.0;
 		}
 
-
 		public double Thickness
 		{
 			get { return thickness; }
