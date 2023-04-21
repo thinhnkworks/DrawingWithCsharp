@@ -12,12 +12,16 @@ namespace DrawingWithC_.Entities
 		private double bulge;
 
 		public LwPolylineVertex() : this(Vector2.Zero, 0.0) { }
+
 		public LwPolylineVertex(Vector2 position) : this(position, 0.0) { }
+
 		public LwPolylineVertex(Vector2 position, double bulge)
 		{
 			this.position = position;
 			this.bulge = bulge;
 		}
+
+		public LwPolylineVertex(double x, double y) : this(new Vector2(x, y), 0.0) { }
 
 		public double Bulge
 		{

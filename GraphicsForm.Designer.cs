@@ -42,6 +42,7 @@
 			vScrollbar = new VScrollBar();
 			hScrollBar = new HScrollBar();
 			btnPolyline = new Button();
+			btnRectangle = new Button();
 			((System.ComponentModel.ISupportInitialize)drawing).BeginInit();
 			menuStrip.SuspendLayout();
 			SuspendLayout();
@@ -173,7 +174,7 @@
 			// btnPolyline
 			// 
 			btnPolyline.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-			btnPolyline.Location = new Point(778, 42);
+			btnPolyline.Location = new Point(772, 42);
 			btnPolyline.Margin = new Padding(4, 5, 4, 5);
 			btnPolyline.Name = "btnPolyline";
 			btnPolyline.Size = new Size(100, 100);
@@ -182,12 +183,25 @@
 			btnPolyline.UseVisualStyleBackColor = true;
 			btnPolyline.Click += btnPolyline_Click;
 			// 
+			// btnRectangle
+			// 
+			btnRectangle.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			btnRectangle.Location = new Point(925, 42);
+			btnRectangle.Margin = new Padding(4, 5, 4, 5);
+			btnRectangle.Name = "btnRectangle";
+			btnRectangle.Size = new Size(100, 100);
+			btnRectangle.TabIndex = 11;
+			btnRectangle.Text = "Rectangle";
+			btnRectangle.UseVisualStyleBackColor = true;
+			btnRectangle.Click += btnRectangle_Click;
+			// 
 			// GraphicsForm
 			// 
 			AutoScaleDimensions = new SizeF(10F, 25F);
 			AutoScaleMode = AutoScaleMode.Font;
 			BackColor = SystemColors.ControlLight;
 			ClientSize = new Size(1678, 912);
+			Controls.Add(btnRectangle);
 			Controls.Add(btnPolyline);
 			Controls.Add(hScrollBar);
 			Controls.Add(vScrollbar);
@@ -223,5 +237,6 @@
 		private HScrollBar hScrollBar;
 		private ToolStripMenuItem btnCloseBoundary;
 		private Button btnPolyline;
+		private Button btnRectangle;
 	}
 }

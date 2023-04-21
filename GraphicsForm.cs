@@ -25,6 +25,7 @@ namespace DrawingWithC_
 		private Vector3 currentPosition;
 		private Vector3 firstPoint;
 		private Vector3 secondPoint;
+		private int direction;
 		private Entities.LwPolyline tempPolyline = new Entities.LwPolyline();
 
 		// enable and disable drawing
@@ -63,6 +64,7 @@ namespace DrawingWithC_
 						// 4: for drawing circle with 3 points
 						// 5: for drawing arc
 						// 6: for drawing polyline
+						// 7: for drawing rectangle
 						case 0:
 							points.Add(new Entities.Point(currentPosition));
 							break;
@@ -143,6 +145,19 @@ namespace DrawingWithC_
 							tempPolyline.Vertexes.Add(new Entities.LwPolylineVertex(firstPoint.ToVector2));
 							clickNum = 2;
 							break;
+						case 7:
+							switch (clickNum)
+							{
+								case 1:
+									firstPoint = currentPosition;
+									clickNum++;
+									break;
+								case 2:
+									polylines.Add(Methods.Method.PointToRect(firstPoint, currentPosition, out direction));
+									CancelAll();
+									break;
+							}
+							break;
 					}
 					// refresh drawing panel after mouse left-click
 					drawing.Refresh();
@@ -172,16 +187,22 @@ namespace DrawingWithC_
 				}
 			}
 
-			// draw extended line
-			// show gray line when first click to simulate drawing 
+			// draw gray extended line
 			switch (DrawIndex)
 			{
-				case 6:
-				case 1:
+				case 6: // polyline
+				case 1: // line
 					if (clickNum == 2)
 					{
 						Entities.Line line = new Entities.Line(firstPoint, currentPosition);
 						e.Graphics.DrawLine(grayPen, line);
+					}
+					break;
+				case 7: // rect
+					if (clickNum == 2)
+					{
+						Entities.LwPolyline lw = Methods.Method.PointToRect(firstPoint, currentPosition, out direction);
+						e.Graphics.DrawPolyline(grayPen, lw);
 					}
 					break;
 				case 2:
@@ -280,6 +301,7 @@ namespace DrawingWithC_
 				e.Graphics.DrawPolyline(pen, tempPolyline);
 			}
 		}
+
 		#endregion
 
 		#region button shapes
@@ -322,6 +344,13 @@ namespace DrawingWithC_
 			active_drawing = true;
 			drawing.Cursor = Cursors.Cross;
 		}
+		private void btnRectangle_Click(object sender, EventArgs e)
+		{
+			DrawIndex = 7;
+			active_drawing = true;
+			drawing.Cursor = Cursors.Cross;
+		}
+
 		#endregion
 
 		#region convert units
