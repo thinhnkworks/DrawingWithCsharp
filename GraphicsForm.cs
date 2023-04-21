@@ -1,8 +1,8 @@
 namespace DrawingWithC_
 {
-	public partial class Form1 : Form
+	public partial class GraphicsForm : Form
 	{
-		public Form1()
+		public GraphicsForm()
 		{
 			InitializeComponent();
 		}
@@ -35,7 +35,6 @@ namespace DrawingWithC_
 			// when mouse moving through drawing panel,
 			// assign mouseLocation to currentPosition
 			currentPosition = PointToCartesian(e.Location);
-			label1.Text = string.Format("{0}, {1}", e.Location.X, e.Location.Y);
 			label2.Text = string.Format("{0,0:F3}, {1,0:F3}", currentPosition.X, currentPosition.Y);
 			// refresh drawing panel when moving mouse
 			drawing.Refresh();
@@ -255,28 +254,28 @@ namespace DrawingWithC_
 		#endregion
 
 		#region button shapes
-		private void pointButton_Click(object sender, EventArgs e)
+		private void btnPoint_Click(object sender, EventArgs e)
 		{
 			// index 0 for drawing point
 			DrawIndex = 0;
 			active_drawing = true;
 			drawing.Cursor = Cursors.Cross;
 		}
-		private void lineBtn_Click(object sender, EventArgs e)
+		private void btnLine_Click(object sender, EventArgs e)
 		{
 			// index 1 for drawing line
 			DrawIndex = 1;
 			active_drawing = true;
 			drawing.Cursor = Cursors.Cross;
 		}
-		private void circleBtn_Click(object sender, EventArgs e)
+		private void btnCircle_Click(object sender, EventArgs e)
 		{
 			// index 2 for drawing circle
 			DrawIndex = 2;
 			active_drawing = true;
 			drawing.Cursor = Cursors.Cross;
 		}
-		private void ellipseBtn_Click(object sender, EventArgs e)
+		private void btnEllipse_Click(object sender, EventArgs e)
 		{
 			DrawIndex = 3;
 			active_drawing = true;
@@ -317,7 +316,7 @@ namespace DrawingWithC_
 			CancelAll();
 		}
 
-		private void arcButton_Click(object sender, EventArgs e)
+		private void btnArc_Click(object sender, EventArgs e)
 		{
 			DrawIndex = 5;
 			active_drawing = true;
