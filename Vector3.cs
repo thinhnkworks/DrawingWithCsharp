@@ -24,7 +24,6 @@ namespace DrawingWithC_
 			this.Z = z;
 		}
 
-
 		public double Z
 		{
 			get { return z; }

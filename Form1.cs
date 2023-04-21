@@ -19,6 +19,7 @@ namespace DrawingWithC_
 		private List<Entities.Line> lines = new List<Entities.Line>();
 		private List<Entities.Circle> circles = new List<Entities.Circle>();
 		private List<Entities.Ellipse> ellipses = new List<Entities.Ellipse>();
+		private List<Entities.Arc> arcs = new List<Entities.Arc>();
 
 		private Vector3 currentPosition;
 		private Vector3 firstPoint;
@@ -51,6 +52,9 @@ namespace DrawingWithC_
 						// 0: for drawing point
 						// 1: for drawing line
 						// 2: for drawing circle
+						// 3: for drawing ellipse
+						// 4: for drawing circle with 3 points
+						// 5: for drawing arc
 						case 0:
 							points.Add(new Entities.Point(currentPosition));
 							break;
@@ -105,6 +109,24 @@ namespace DrawingWithC_
 									clickNum = 1;
 									active_drawing = false;
 									drawing.Cursor = Cursors.Default;
+									break;
+							}
+							break;
+						case 5:
+							switch (clickNum)
+							{
+								case 1:
+									firstPoint = currentPosition;
+									clickNum++;
+									break;
+								case 2:
+									secondPoint = currentPosition;
+									clickNum++;
+									break;
+								case 3:
+									Entities.Arc a = Methods.Method.GetArcWith3Points(firstPoint, secondPoint, currentPosition);
+									arcs.Add(a);
+									CancelAll();
 									break;
 							}
 							break;
@@ -174,6 +196,19 @@ namespace DrawingWithC_
 							break;
 					}
 					break;
+				case 5:
+					switch (clickNum)
+					{
+						case 2:
+							Entities.Line line = new Entities.Line(firstPoint, currentPosition);
+							e.Graphics.DrawLine(grayPen, line);
+							break;
+						case 3:
+							Entities.Arc a = Methods.Method.GetArcWith3Points(firstPoint, secondPoint, currentPosition);
+							e.Graphics.DrawArc(grayPen, a);
+							break;
+					}
+					break;
 			}
 
 			// test line line intersection
@@ -205,6 +240,15 @@ namespace DrawingWithC_
 				foreach (Entities.Ellipse elp in ellipses)
 				{
 					e.Graphics.DrawEllipse(pen, elp);
+				}
+			}
+
+			// draw all arcs
+			if (arcs.Count > 0)
+			{
+				foreach (Entities.Arc arc in arcs)
+				{
+					e.Graphics.DrawArc(pen, arc);
 				}
 			}
 		}
@@ -260,6 +304,7 @@ namespace DrawingWithC_
 			return pixel * 25.4f / DPI;
 		}
 		#endregion
+
 		private void CancelAll()
 		{
 			DrawIndex = -1;
@@ -270,6 +315,13 @@ namespace DrawingWithC_
 		private void cancelToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			CancelAll();
+		}
+
+		private void arcButton_Click(object sender, EventArgs e)
+		{
+			DrawIndex = 5;
+			active_drawing = true;
+			drawing.Cursor = Cursors.Cross;
 		}
 	}
 }
