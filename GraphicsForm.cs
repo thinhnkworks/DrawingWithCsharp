@@ -389,6 +389,11 @@ namespace DrawingWithC_
 			active_drawing = true;
 			drawing.Cursor = Cursors.Cross;
 		}
+		private void btnSettings_Click(object sender, EventArgs e)
+		{
+			var settings = new SettingsForm();
+			settings.Show();
+		}
 
 		#endregion
 
@@ -488,10 +493,5 @@ namespace DrawingWithC_
 			tempPolyline.Vertexes.Clear();
 		}
 
-		private void btnSettings_Click(object sender, EventArgs e)
-		{
-			var settings = new SettingsForm();
-			settings.Show();
-		}
 	}
 }
