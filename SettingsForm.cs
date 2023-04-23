@@ -51,6 +51,7 @@ namespace DrawingWithC_
 
 			cbbPenStyle.SelectedIndex = cbbPenStyle.FindString(Convert.ToString(GraphicsForm.pen.DashStyle));
 			cbbPolygonStatus.SelectedIndex = GraphicsForm.inscribed;
+			nudPolygonSides.Value = GraphicsForm.sidesQty;
 		}
 
 		private void btnPenColorWheel_Click(object sender, EventArgs e)
@@ -117,5 +118,6 @@ namespace DrawingWithC_
 				picBrushColor.BackColor = colorDialog.Color;
 			}
 		}
+
 	}
 }

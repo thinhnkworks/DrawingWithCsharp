@@ -43,23 +43,23 @@
 			lbPenColor = new Label();
 			lbPenSize = new Label();
 			panelBrushSettings = new Panel();
+			btnBrushColorWheel = new Button();
+			picBrushColor = new PictureBox();
+			lbBrushFillColor = new Label();
 			panelPolygonSettings = new Panel();
 			cbbPolygonStatus = new ComboBox();
 			lbPolygonStatus = new Label();
 			nudPolygonSides = new NumericUpDown();
 			lbSides = new Label();
-			btnBrushColorWheel = new Button();
-			picBrushColor = new PictureBox();
-			lbBrushFillColor = new Label();
 			colorDialog1 = new ColorDialog();
 			panel1.SuspendLayout();
 			panelPenSettings.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)picPenColor).BeginInit();
 			((System.ComponentModel.ISupportInitialize)nudPenSize).BeginInit();
 			panelBrushSettings.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)picBrushColor).BeginInit();
 			panelPolygonSettings.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)nudPolygonSides).BeginInit();
-			((System.ComponentModel.ISupportInitialize)picBrushColor).BeginInit();
 			SuspendLayout();
 			// 
 			// panel1
@@ -227,6 +227,39 @@
 			panelBrushSettings.Size = new Size(722, 687);
 			panelBrushSettings.TabIndex = 0;
 			// 
+			// btnBrushColorWheel
+			// 
+			btnBrushColorWheel.Cursor = Cursors.Hand;
+			btnBrushColorWheel.FlatAppearance.BorderSize = 0;
+			btnBrushColorWheel.FlatStyle = FlatStyle.Flat;
+			btnBrushColorWheel.Image = Properties.Resources.colorwheel;
+			btnBrushColorWheel.Location = new Point(411, 254);
+			btnBrushColorWheel.Name = "btnBrushColorWheel";
+			btnBrushColorWheel.Size = new Size(150, 150);
+			btnBrushColorWheel.TabIndex = 2;
+			btnBrushColorWheel.UseVisualStyleBackColor = true;
+			btnBrushColorWheel.Click += btnBrushColorWheel_Click;
+			// 
+			// picBrushColor
+			// 
+			picBrushColor.BackColor = Color.Blue;
+			picBrushColor.BorderStyle = BorderStyle.Fixed3D;
+			picBrushColor.Location = new Point(295, 288);
+			picBrushColor.Name = "picBrushColor";
+			picBrushColor.Size = new Size(75, 75);
+			picBrushColor.TabIndex = 1;
+			picBrushColor.TabStop = false;
+			// 
+			// lbBrushFillColor
+			// 
+			lbBrushFillColor.AutoSize = true;
+			lbBrushFillColor.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+			lbBrushFillColor.Location = new Point(56, 311);
+			lbBrushFillColor.Name = "lbBrushFillColor";
+			lbBrushFillColor.Size = new Size(108, 32);
+			lbBrushFillColor.TabIndex = 0;
+			lbBrushFillColor.Text = "Fill Color";
+			// 
 			// panelPolygonSettings
 			// 
 			panelPolygonSettings.Controls.Add(cbbPolygonStatus);
@@ -275,39 +308,6 @@
 			lbSides.TabIndex = 0;
 			lbSides.Text = "Sides";
 			// 
-			// btnBrushColorWheel
-			// 
-			btnBrushColorWheel.Cursor = Cursors.Hand;
-			btnBrushColorWheel.FlatAppearance.BorderSize = 0;
-			btnBrushColorWheel.FlatStyle = FlatStyle.Flat;
-			btnBrushColorWheel.Image = Properties.Resources.colorwheel;
-			btnBrushColorWheel.Location = new Point(411, 254);
-			btnBrushColorWheel.Name = "btnBrushColorWheel";
-			btnBrushColorWheel.Size = new Size(150, 150);
-			btnBrushColorWheel.TabIndex = 2;
-			btnBrushColorWheel.UseVisualStyleBackColor = true;
-			btnBrushColorWheel.Click += btnBrushColorWheel_Click;
-			// 
-			// picBrushColor
-			// 
-			picBrushColor.BackColor = Color.Blue;
-			picBrushColor.BorderStyle = BorderStyle.Fixed3D;
-			picBrushColor.Location = new Point(295, 288);
-			picBrushColor.Name = "picBrushColor";
-			picBrushColor.Size = new Size(75, 75);
-			picBrushColor.TabIndex = 1;
-			picBrushColor.TabStop = false;
-			// 
-			// lbBrushFillColor
-			// 
-			lbBrushFillColor.AutoSize = true;
-			lbBrushFillColor.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-			lbBrushFillColor.Location = new Point(56, 311);
-			lbBrushFillColor.Name = "lbBrushFillColor";
-			lbBrushFillColor.Size = new Size(108, 32);
-			lbBrushFillColor.TabIndex = 0;
-			lbBrushFillColor.Text = "Fill Color";
-			// 
 			// SettingsForm
 			// 
 			AutoScaleDimensions = new SizeF(10F, 25F);
@@ -328,10 +328,10 @@
 			((System.ComponentModel.ISupportInitialize)nudPenSize).EndInit();
 			panelBrushSettings.ResumeLayout(false);
 			panelBrushSettings.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)picBrushColor).EndInit();
 			panelPolygonSettings.ResumeLayout(false);
 			panelPolygonSettings.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)nudPolygonSides).EndInit();
-			((System.ComponentModel.ISupportInitialize)picBrushColor).EndInit();
 			ResumeLayout(false);
 		}
 
