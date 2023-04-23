@@ -30,20 +30,30 @@ namespace DrawingWithC_
 		private void btnPenSettings_Click(object sender, EventArgs e)
 		{
 			panelPenSettings.BringToFront();
+			btnPenSettings.ForeColor = Color.Gray;
+			btnBrushSettings.ForeColor = Color.Black;
+			btnPolygonSettings.ForeColor = Color.Black;
 		}
 
 		private void btnBrushSettings_Click(object sender, EventArgs e)
 		{
 			panelBrushSettings.BringToFront();
+			btnPenSettings.ForeColor = Color.Black;
+			btnBrushSettings.ForeColor = Color.Gray;
+			btnPolygonSettings.ForeColor = Color.Black;
 		}
 
 		private void btnPolygonSettings_Click(object sender, EventArgs e)
 		{
+			btnPenSettings.ForeColor = Color.Black;
+			btnBrushSettings.ForeColor = Color.Black;
+			btnPolygonSettings.ForeColor = Color.Gray;
 			panelPolygonSettings.BringToFront();
 		}
 
 		private void SettingsForm_Load(object sender, EventArgs e)
 		{
+			btnPenSettings.ForeColor = Color.Gray;
 			panelPenSettings.BringToFront();
 
 			picPenColor.BackColor = GraphicsForm.pen.Color;
@@ -97,11 +107,18 @@ namespace DrawingWithC_
 			GraphicsForm.pen.Width = PenSize;
 			GraphicsForm.pen.DashStyle = PenStyle;
 
-			// update polygon settings
-			GraphicsForm.sidesQty = SidesQty;
-			GraphicsForm.inscribed = Inscribed;
-
-			Close();
+			if (SidesQty < 3)
+			{
+				MessageBox.Show("So canh phai nhieu hon 3", "Warning");
+				nudPolygonSides.Focus();
+			}
+			else
+			{
+				// update polygon settings
+				GraphicsForm.sidesQty = SidesQty;
+				GraphicsForm.inscribed = Inscribed;
+				Close();
+			}
 		}
 
 		private void btnCancelSettings_Click(object sender, EventArgs e)

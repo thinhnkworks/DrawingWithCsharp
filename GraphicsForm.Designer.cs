@@ -39,12 +39,14 @@
 			btnCircle = new Button();
 			btnEllipse = new Button();
 			btnArc = new Button();
-			vScrollbar = new VScrollBar();
+			vScrollBar = new VScrollBar();
 			hScrollBar = new HScrollBar();
 			btnPolyline = new Button();
 			btnRectangle = new Button();
 			btnPolygon = new Button();
 			btnSettings = new Button();
+			btnZoomIn = new Button();
+			btnZoomOut = new Button();
 			((System.ComponentModel.ISupportInitialize)drawing).BeginInit();
 			menuStrip.SuspendLayout();
 			SuspendLayout();
@@ -155,14 +157,14 @@
 			btnArc.UseVisualStyleBackColor = true;
 			btnArc.Click += btnArc_Click;
 			// 
-			// vScrollbar
+			// vScrollBar
 			// 
-			vScrollbar.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-			vScrollbar.Location = new Point(1652, 172);
-			vScrollbar.Name = "vScrollbar";
-			vScrollbar.Size = new Size(22, 700);
-			vScrollbar.TabIndex = 8;
-			vScrollbar.Scroll += vScrollbar_Scroll;
+			vScrollBar.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+			vScrollBar.Location = new Point(1652, 172);
+			vScrollBar.Name = "vScrollBar";
+			vScrollBar.Size = new Size(22, 700);
+			vScrollBar.TabIndex = 8;
+			vScrollBar.Scroll += vScrollBar_Scroll;
 			// 
 			// hScrollBar
 			// 
@@ -222,18 +224,40 @@
 			btnSettings.UseVisualStyleBackColor = true;
 			btnSettings.Click += btnSettings_Click;
 			// 
+			// btnZoomIn
+			// 
+			btnZoomIn.Location = new Point(1236, 42);
+			btnZoomIn.Name = "btnZoomIn";
+			btnZoomIn.Size = new Size(112, 34);
+			btnZoomIn.TabIndex = 14;
+			btnZoomIn.Text = "Zoom in";
+			btnZoomIn.UseVisualStyleBackColor = true;
+			btnZoomIn.Click += btnZoomIn_Click;
+			// 
+			// btnZoomOut
+			// 
+			btnZoomOut.Location = new Point(1236, 108);
+			btnZoomOut.Name = "btnZoomOut";
+			btnZoomOut.Size = new Size(112, 34);
+			btnZoomOut.TabIndex = 15;
+			btnZoomOut.Text = "Zoom out";
+			btnZoomOut.UseVisualStyleBackColor = true;
+			btnZoomOut.Click += btnZoomOut_Click;
+			// 
 			// GraphicsForm
 			// 
 			AutoScaleDimensions = new SizeF(10F, 25F);
 			AutoScaleMode = AutoScaleMode.Font;
 			BackColor = SystemColors.ControlLight;
 			ClientSize = new Size(1678, 912);
+			Controls.Add(btnZoomOut);
+			Controls.Add(btnZoomIn);
 			Controls.Add(btnSettings);
 			Controls.Add(btnPolygon);
 			Controls.Add(btnRectangle);
 			Controls.Add(btnPolyline);
 			Controls.Add(hScrollBar);
-			Controls.Add(vScrollbar);
+			Controls.Add(vScrollBar);
 			Controls.Add(btnArc);
 			Controls.Add(btnEllipse);
 			Controls.Add(btnCircle);
@@ -262,12 +286,14 @@
 		private ContextMenuStrip menuStrip;
 		private ToolStripMenuItem cancelToolStripMenuItem;
 		private Button btnArc;
-		private VScrollBar vScrollbar;
+		private VScrollBar vScrollBar;
 		private HScrollBar hScrollBar;
 		private ToolStripMenuItem btnCloseBoundary;
 		private Button btnPolyline;
 		private Button btnRectangle;
 		private Button btnPolygon;
 		private Button btnSettings;
+		private Button btnZoomIn;
+		private Button btnZoomOut;
 	}
 }
