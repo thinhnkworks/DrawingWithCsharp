@@ -65,6 +65,7 @@
 			drawing.Paint += drawing_Paint;
 			drawing.MouseDown += drawing_MouseDown;
 			drawing.MouseMove += drawing_MouseMove;
+			drawing.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.drawing_MouseWheel);
 			// 
 			// menuStrip
 			// 

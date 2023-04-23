@@ -49,9 +49,10 @@ namespace DrawingWithC_
 		// zoom settings
 		private bool active_zoom = false;
 		private int zoomClick = 1;
+		private float x1, y1, x2, y2;
 
 		// canvas size
-		private SizeF drawingSize = new SizeF(1651, 703);
+		private SizeF drawingSize = new SizeF(290, 123);
 
 		#region DRAWING PANEL EVENTS
 
@@ -61,6 +62,12 @@ namespace DrawingWithC_
 			// assign mouseLocation to currentPosition
 			currentPosition = PointToCartesian(e.Location);
 			label2.Text = string.Format("{0,0:F3}, {1,0:F3}", currentPosition.X, currentPosition.Y);
+
+			x1 = e.Location.X;
+			x2 = drawing.ClientSize.Width - x1;
+			y1 = e.Location.Y;
+			y2 = drawing.ClientSize.Height - y1;
+
 			// refresh drawing panel when moving mouse
 			drawing.Refresh();
 		}
@@ -348,7 +355,29 @@ namespace DrawingWithC_
 			}
 
 		}
+		private void drawing_MouseWheel(object sender, MouseEventArgs e)
+		{
+			float cx = drawing.ClientSize.Width / 2.0f;
+			float cy = drawing.ClientSize.Height / 2.0f;
 
+			float w = (x1 < cx) ? Math.Min(x1, x2) * 2.0f : Math.Max(x1, x2) * 2.0f;
+			float h = (y1 < cy) ? Math.Max(y1, y2) * 2.0f : Math.Min(y1, y2) * 2.0f;
+
+			float scale = (e.Delta < 0) ? 1 / 1.25f : 1.25f;
+
+			ScaleFactor *= scale;
+
+			float width = w * scale;
+			float height = h * scale;
+
+			float wl = (w - width) / 2;
+			float hl = (h - height) / 2;
+
+			XScroll = XScroll * scale - PixelToMl(wl);
+			YScroll = YScroll * scale + PixelToMl(hl);
+
+			SetScrollbarValues();
+		}
 		#endregion
 
 		#region SHAPES BUTTON
@@ -510,12 +539,12 @@ namespace DrawingWithC_
 		private void SetScrollbarValues()
 		{
 			float width = Math.Max(0, drawingSize.Width * ScaleFactor - PixelToMl(drawing.ClientSize.Width)) + 50 * ScaleFactor;
-			float height = Math.Max(0, drawingSize.Height * ScaleFactor - PixelToMl(drawing.ClientSize.Height)) + 59 * ScaleFactor;
+			float height = Math.Max(0, drawingSize.Height * ScaleFactor - PixelToMl(drawing.ClientSize.Height)) + 50 * ScaleFactor;
 
 			hScrollBar.Maximum = (int)width;
 			hScrollBar.Minimum = -(int)(50 * ScaleFactor);
 
-			vScrollBar.Maximum = (int)(59 * ScaleFactor);
+			vScrollBar.Maximum = (int)(50 * ScaleFactor);
 			vScrollBar.Minimum = -(int)height;
 
 			try
