@@ -28,6 +28,7 @@ namespace DrawingWithC_
 		private Vector3 currentPosition;
 		private Vector3 firstPoint;
 		private Vector3 secondPoint;
+		private Point firstCorner;
 		private Entities.LwPolyline tempPolyline = new Entities.LwPolyline();
 
 		// polygon settings
@@ -45,7 +46,15 @@ namespace DrawingWithC_
 		private float YScroll;
 		private float ScaleFactor = 1.0f;
 
-		#region drawing panel events
+		// zoom settings
+		private bool active_zoom = false;
+		private int zoomClick = 1;
+
+		// canvas size
+		private SizeF drawingSize = new SizeF(1651, 703);
+
+		#region DRAWING PANEL EVENTS
+
 		private void drawing_MouseMove(object sender, MouseEventArgs e)
 		{
 			// when mouse moving through drawing panel,
@@ -55,12 +64,26 @@ namespace DrawingWithC_
 			// refresh drawing panel when moving mouse
 			drawing.Refresh();
 		}
-
 		private void drawing_MouseDown(object sender, MouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Left)
 			{
-				if (active_drawing)
+				if (active_zoom)
+				{
+					switch (zoomClick)
+					{
+						case 1:
+							firstCorner = e.Location;
+							zoomClick++;
+							break;
+						case 2:
+							SetZoomWin(firstCorner, e.Location);
+							active_zoom = false;
+							zoomClick = 1;
+							break;
+					}
+				}
+				if (active_drawing && !active_zoom)
 				{
 					// 0: for drawing point
 					// 1: for drawing line
@@ -88,7 +111,7 @@ namespace DrawingWithC_
 									lines.Add(new Entities.Line(firstPoint, currentPosition));
 									points.Add(new Entities.Point(currentPosition));
 									firstPoint = currentPosition;
-									//clickNum = 1
+									clickNum = 1;
 									break;
 							}
 							break;
@@ -121,8 +144,6 @@ namespace DrawingWithC_
 									Entities.Ellipse ellipse = Methods.Method.GetEllipse(firstPoint, secondPoint, currentPosition);
 									ellipses.Add(ellipse);
 									clickNum = 1;
-									active_drawing = false;
-									drawing.Cursor = Cursors.Default;
 									break;
 							}
 							break;
@@ -140,7 +161,7 @@ namespace DrawingWithC_
 								case 3:
 									Entities.Arc a = Methods.Method.GetArcWith3Points(firstPoint, secondPoint, currentPosition);
 									arcs.Add(a);
-									CancelAll();
+									clickNum = 1;
 									break;
 							}
 							break;
@@ -158,7 +179,7 @@ namespace DrawingWithC_
 									break;
 								case 2:
 									polylines.Add(Methods.Method.PointToRect(firstPoint, currentPosition, out direction));
-									CancelAll();
+									clickNum = 1;
 									break;
 							}
 							break;
@@ -171,7 +192,7 @@ namespace DrawingWithC_
 									break;
 								case 2:
 									polylines.Add(Methods.Method.GetPolygon(firstPoint, currentPosition, sidesQty, inscribed)); ;
-									CancelAll();
+									clickNum = 1;
 									break;
 							}
 							break;
@@ -181,7 +202,6 @@ namespace DrawingWithC_
 				}
 			}
 		}
-
 		private void drawing_Paint(object sender, PaintEventArgs e)
 		{
 			e.Graphics.SetParameters(XScroll, YScroll, ScaleFactor, PixelToMl(drawing.Height));
@@ -338,56 +358,56 @@ namespace DrawingWithC_
 			// index 0 for drawing point
 			DrawIndex = 0;
 			active_drawing = true;
-			drawing.Cursor = Cursors.Cross;
+			ActiveCursor(1);
 		}
 		private void btnLine_Click(object sender, EventArgs e)
 		{
 			// index 1 for drawing line
 			DrawIndex = 1;
 			active_drawing = true;
-			drawing.Cursor = Cursors.Cross;
+			ActiveCursor(1);
 		}
 		private void btnCircle_Click(object sender, EventArgs e)
 		{
 			// index 2 for drawing circle
 			DrawIndex = 2;
 			active_drawing = true;
-			drawing.Cursor = Cursors.Cross;
+			ActiveCursor(1);
 		}
 		private void btnEllipse_Click(object sender, EventArgs e)
 		{
 			// index 3 for drawing ellipse
 			DrawIndex = 3;
 			active_drawing = true;
-			drawing.Cursor = Cursors.Cross;
+			ActiveCursor(1);
 		}
 		private void btnArc_Click(object sender, EventArgs e)
 		{
 			// index 5 for drawing arc
 			DrawIndex = 5;
 			active_drawing = true;
-			drawing.Cursor = Cursors.Cross;
+			ActiveCursor(1);
 		}
 		private void btnPolyline_Click(object sender, EventArgs e)
 		{
 			// index 6 for drawing polyline
 			DrawIndex = 6;
 			active_drawing = true;
-			drawing.Cursor = Cursors.Cross;
+			ActiveCursor(1);
 		}
 		private void btnRectangle_Click(object sender, EventArgs e)
 		{
 			// index 7 for drawing rectangle
 			DrawIndex = 7;
 			active_drawing = true;
-			drawing.Cursor = Cursors.Cross;
+			ActiveCursor(1);
 		}
 		private void btnPolygon_Click(object sender, EventArgs e)
 		{
 			// index 8 for drawing polygon
 			DrawIndex = 8;
 			active_drawing = true;
-			drawing.Cursor = Cursors.Cross;
+			ActiveCursor(1);
 		}
 		private void btnSettings_Click(object sender, EventArgs e)
 		{
@@ -417,6 +437,11 @@ namespace DrawingWithC_
 		{
 			return pixel * 25.4f / DPI;
 		}
+		// convert milimeters to pixels
+		private float MlToPixel(float millimeter)
+		{
+			return millimeter / 25.4f * DPI;
+		}
 
 		#endregion
 
@@ -426,7 +451,7 @@ namespace DrawingWithC_
 		{
 			DrawIndex = -1;
 			active_drawing = false;
-			drawing.Cursor = Cursors.Default;
+			ActiveCursor(0);
 			clickNum = 1;
 			LwPolylineCloseStatus(index);
 		}
@@ -445,25 +470,15 @@ namespace DrawingWithC_
 					break;
 			}
 		}
-
-		#endregion
-
-		#region SCROLL SETTINGS
-
-		private void vScrollbar_Scroll(object sender, ScrollEventArgs e)
+		private void ActiveCursor(int index, float size = 12)
 		{
-			YScroll = (sender as VScrollBar).Value;
-			drawing.Refresh();
+			Cursor cursor = Cursors.Default;
+			if (index > 0)
+			{
+				cursor = new Cursor(Methods.Method.SetCursor(index, MlToPixel(size), Color.Red).GetHicon());
+			}
+			drawing.Cursor = cursor;
 		}
-
-		private void hScrollBar_Scroll(object sender, ScrollEventArgs e)
-		{
-			XScroll = (sender as HScrollBar).Value;
-			drawing.Refresh();
-		}
-
-		#endregion
-
 		private void LwPolylineCloseStatus(int index)
 		{
 			List<Entities.LwPolylineVertex> vertexes = new List<Entities.LwPolylineVertex>();
@@ -492,6 +507,114 @@ namespace DrawingWithC_
 			}
 			tempPolyline.Vertexes.Clear();
 		}
+		private void SetScrollbarValues()
+		{
+			float width = Math.Max(0, drawingSize.Width * ScaleFactor - PixelToMl(drawing.ClientSize.Width)) + 50 * ScaleFactor;
+			float height = Math.Max(0, drawingSize.Height * ScaleFactor - PixelToMl(drawing.ClientSize.Height)) + 59 * ScaleFactor;
+
+			hScrollBar.Maximum = (int)width;
+			hScrollBar.Minimum = -(int)(50 * ScaleFactor);
+
+			vScrollBar.Maximum = (int)(59 * ScaleFactor);
+			vScrollBar.Minimum = -(int)height;
+
+			try
+			{
+				hScrollBar.Minimum = (int)Math.Min(XScroll, hScrollBar.Minimum);
+				hScrollBar.Maximum = (int)Math.Max(XScroll, hScrollBar.Maximum);
+				vScrollBar.Minimum = (int)Math.Min(YScroll, vScrollBar.Minimum);
+				vScrollBar.Maximum = (int)Math.Max(YScroll, vScrollBar.Maximum);
+
+				hScrollBar.Value = (int)XScroll;
+				vScrollBar.Value = (int)YScroll;
+			}
+			catch { }
+			drawing.Refresh();
+		}
+
+		#endregion
+
+		#region SCROLL SETTINGS
+
+		private void vScrollBar_Scroll(object sender, ScrollEventArgs e)
+		{
+			YScroll = (sender as VScrollBar).Value;
+			drawing.Refresh();
+		}
+		private void hScrollBar_Scroll(object sender, ScrollEventArgs e)
+		{
+			XScroll = (sender as HScrollBar).Value;
+			drawing.Refresh();
+		}
+
+		#endregion
+
+		#region ZOOM FUNCTIONS
+
+		private void SetZoomWin(Point firstCorner, Point secondCorner)
+		{
+			Vector3 p1 = PointToCartesian(firstCorner);
+			Vector3 p2 = PointToCartesian(secondCorner);
+
+			float minX = Math.Min(p1.ToPointF.X, p2.ToPointF.X);
+			float minY = Math.Min(p1.ToPointF.Y, p2.ToPointF.Y);
+
+			float w = Math.Abs(firstCorner.X - secondCorner.X);
+			float h = Math.Abs(firstCorner.Y - secondCorner.Y);
+
+			float width = drawing.ClientSize.Width / w;
+			float height = drawing.ClientSize.Height / h;
+
+			float min = Math.Min(width, height);
+
+			ScaleFactor *= min;
+
+			float wl = (drawing.ClientSize.Width - w * min) / 2;
+			float hl = (drawing.ClientSize.Height - h * min) / 2;
+
+			XScroll = ScaleFactor * minX - PixelToMl(wl);
+			YScroll = -ScaleFactor * minY - PixelToMl(hl);
+
+			SetScrollbarValues();
+		}
+		private void SetZoomInOut(int index)
+		{
+			float scale = (index == 0) ? 1 / 1.25f : 1.25f;
+
+			ScaleFactor *= scale;
+
+			float width = drawing.ClientSize.Width * scale;
+			float height = drawing.ClientSize.Height * scale;
+
+			float wl = (drawing.ClientSize.Width - width) / 2;
+			float hl = (drawing.ClientSize.Height - height) / 2;
+
+			XScroll = XScroll * scale - PixelToMl(wl);
+			YScroll = YScroll * scale + PixelToMl(hl);
+		}
+		private void ZoomEvents(int index)
+		{
+			switch (index)
+			{
+				case 0: // zoom out
+				case 1: // zoom in
+					SetZoomInOut(index);
+					break;
+			}
+		}
+		private void btnZoomIn_Click(object sender, EventArgs e)
+		{
+			ZoomEvents(1);
+			drawing.Refresh();
+		}
+		private void btnZoomOut_Click(object sender, EventArgs e)
+		{
+			ZoomEvents(0);
+			drawing.Refresh();
+		}
+
+		#endregion
+
 
 	}
 }

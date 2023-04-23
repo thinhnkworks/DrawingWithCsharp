@@ -204,6 +204,45 @@ namespace DrawingWithC_.Methods
 			return new Entities.LwPolyline(vertexes, true);
 		}
 
+		public static Bitmap SetCursor(int index, float size, Color color)
+		{
+			Bitmap bitmap = new Bitmap((int)size + 1, (int)size + 1);
+			float cx = size / 2;
+			float cy = size / 2;
+			PointF[] points;
+
+			using (Graphics gr = Graphics.FromImage(bitmap))
+			{
+				gr.Clear(Color.Transparent);
+				switch (index)
+				{
+					case 0: // default cursor
+						break;
+					case 1: // drawing cursor
+						points = new PointF[]
+						{
+							new PointF(cx,0),
+							new PointF(2*cx, cy),
+							new PointF(cx, 2*cy),
+							new PointF(0,cy)
+						};
+						gr.DrawLine(new Pen(color, 2.0f), points[0], points[2]);
+						gr.DrawLine(new Pen(color, 2.0f), points[1], points[3]);
+						break;
+					case 2: // editing cursor
+						points = new PointF[]
+						{
+							new PointF(1,1),
+							new PointF(2*cx-1, 1),
+							new PointF(2*cx-1, 2*cy-1),
+							new PointF(1, 2*cy-1),
+						};
+						gr.DrawPolygon(new Pen(color, 2.0f), points);
+						break;
+				}
+				return bitmap;
+			}
+		}
 
 	}
 }
