@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DrawingWithC_.Entities
 {
-	public class LwPolylineVertex
+	public class LwPolylineVertex : EntityObject
 	{
 		private Vector2 position;
 		private double bulge;
@@ -15,7 +15,7 @@ namespace DrawingWithC_.Entities
 
 		public LwPolylineVertex(Vector2 position) : this(position, 0.0) { }
 
-		public LwPolylineVertex(Vector2 position, double bulge)
+		public LwPolylineVertex(Vector2 position, double bulge) : base(EntityType.LwPolylineVertex)
 		{
 			this.position = position;
 			this.bulge = bulge;
@@ -35,5 +35,13 @@ namespace DrawingWithC_.Entities
 			set { position = value; }
 		}
 
+		public override object Clone()
+		{
+			return new LwPolylineVertex
+			{
+				Position = this.position,
+				Bulge = this.bulge,
+			};
+		}
 	}
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DrawingWithC_.Entities
 {
-	public class LwPolyline
+	public class LwPolyline : EntityObject
 	{
 		private List<LwPolylineVertex> vertexes;
 		private PolylineTypeFlags flags;
@@ -14,7 +14,7 @@ namespace DrawingWithC_.Entities
 
 		public LwPolyline() : this(new List<LwPolylineVertex>(), false) { }
 
-		public LwPolyline(List<LwPolylineVertex> vertexes, bool IsClosed)
+		public LwPolyline(List<LwPolylineVertex> vertexes, bool IsClosed) : base(EntityType.LwPolyline)
 		{
 			if (vertexes == null)
 			{
@@ -56,5 +56,21 @@ namespace DrawingWithC_.Entities
 			set { thickness = value; }
 		}
 
+		public override object Clone()
+		{
+			List<LwPolylineVertex> vertexes_copy = new List<LwPolylineVertex>();
+			foreach (LwPolylineVertex vertex in this.vertexes)
+			{
+				vertexes_copy.Add((LwPolylineVertex)vertex.Clone());
+			}
+			return new LwPolyline
+			{
+				Vertexes = vertexes_copy,
+				Flags = this.flags,
+				Thickness = this.thickness,
+				// entity object properties
+				IsVisible = this.IsVisible
+			};
+		}
 	}
 }

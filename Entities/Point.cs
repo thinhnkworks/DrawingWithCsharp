@@ -6,16 +6,14 @@ using System.Threading.Tasks;
 
 namespace DrawingWithC_.Entities
 {
-	public class Point
+	public class Point : EntityObject
 	{
 		private Vector3 vector3;
 		private double thickness;
-		public Point()
+		public Point() : this(Vector3.Zero)
 		{
-			this.Position = Vector3.Zero;
-			this.Thickness = 0.0;
 		}
-		public Point(Vector3 position)
+		public Point(Vector3 position) : base(EntityType.Point)
 		{
 			this.Position = position;
 			this.Thickness = 0.0;
@@ -32,5 +30,15 @@ namespace DrawingWithC_.Entities
 			set { vector3 = value; }
 		}
 
+		public override object Clone()
+		{
+			return new Entities.Point
+			{
+				Position = this.Position,
+				Thickness = this.Thickness,
+				// entity object properties
+				IsVisible = this.IsVisible
+			};
+		}
 	}
 }

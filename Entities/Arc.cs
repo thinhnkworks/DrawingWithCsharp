@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DrawingWithC_.Entities
 {
-	public class Arc
+	public class Arc : EntityObject
 	{
 		private Vector3 center;
 		private double radius;
@@ -15,7 +15,7 @@ namespace DrawingWithC_.Entities
 		private double thickness;
 
 		public Arc() : this(Vector3.Zero, 1.0, 0.0, 180.0) { }
-		public Arc(Vector3 center, double radius, double startAngle, double endAngle)
+		public Arc(Vector3 center, double radius, double startAngle, double endAngle) : base(EntityType.Arc)
 		{
 			this.Center = center;
 			this.Radius = radius;
@@ -57,6 +57,20 @@ namespace DrawingWithC_.Entities
 		public double Diameter
 		{
 			get { return this.Radius * 2; }
+		}
+
+		public override object Clone()
+		{
+			return new Arc
+			{
+				Center = this.Center,
+				Radius = this.Radius,
+				StartAngle = this.StartAngle,
+				EndAngle = this.EndAngle,
+				Thickness = this.Thickness,
+				// entity object properties
+				IsVisible = this.IsVisible,
+			};
 		}
 	}
 }

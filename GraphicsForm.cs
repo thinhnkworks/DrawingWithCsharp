@@ -18,12 +18,8 @@ namespace DrawingWithC_
 		public static Pen pen = new Pen(Color.Blue, 1.0f);
 		public static Pen grayPen = new Pen(Color.Gray, 1.0f);
 
-		private List<Entities.Point> points = new List<Entities.Point>();
-		private List<Entities.Line> lines = new List<Entities.Line>();
-		private List<Entities.Circle> circles = new List<Entities.Circle>();
-		private List<Entities.Ellipse> ellipses = new List<Entities.Ellipse>();
-		private List<Entities.Arc> arcs = new List<Entities.Arc>();
-		private List<Entities.LwPolyline> polylines = new List<Entities.LwPolyline>();
+		// list contains all objects
+		private List<Entities.EntityObject> entities = new List<Entities.EntityObject>();
 
 		private Vector3 currentPosition;
 		private Vector3 firstPoint;
@@ -104,19 +100,19 @@ namespace DrawingWithC_
 					switch (DrawIndex)
 					{
 						case 0:
-							points.Add(new Entities.Point(currentPosition));
+							entities.Add(new Entities.Point(currentPosition));
 							break;
 						case 1: // line
 							switch (clickNum)
 							{
 								case 1:
 									firstPoint = currentPosition;
-									points.Add(new Entities.Point(currentPosition));
+									entities.Add(new Entities.Point(currentPosition));
 									clickNum++;
 									break;
 								case 2:
-									lines.Add(new Entities.Line(firstPoint, currentPosition));
-									points.Add(new Entities.Point(currentPosition));
+									entities.Add(new Entities.Line(firstPoint, currentPosition));
+									entities.Add(new Entities.Point(currentPosition));
 									firstPoint = currentPosition;
 									clickNum = 1;
 									break;
@@ -131,7 +127,7 @@ namespace DrawingWithC_
 									break;
 								case 2:
 									double r = firstPoint.DistanceFrom(currentPosition);
-									circles.Add(new Entities.Circle(firstPoint, r));
+									entities.Add(new Entities.Circle(firstPoint, r));
 									clickNum = 1;
 									break;
 							}
@@ -149,7 +145,7 @@ namespace DrawingWithC_
 									break;
 								case 3:
 									Entities.Ellipse ellipse = Methods.Method.GetEllipse(firstPoint, secondPoint, currentPosition);
-									ellipses.Add(ellipse);
+									entities.Add(ellipse);
 									clickNum = 1;
 									break;
 							}
@@ -167,7 +163,7 @@ namespace DrawingWithC_
 									break;
 								case 3:
 									Entities.Arc a = Methods.Method.GetArcWith3Points(firstPoint, secondPoint, currentPosition);
-									arcs.Add(a);
+									entities.Add(a);
 									clickNum = 1;
 									break;
 							}
@@ -185,7 +181,7 @@ namespace DrawingWithC_
 									clickNum++;
 									break;
 								case 2:
-									polylines.Add(Methods.Method.PointToRect(firstPoint, currentPosition, out direction));
+									entities.Add(Methods.Method.PointToRect(firstPoint, currentPosition, out direction));
 									clickNum = 1;
 									break;
 							}
@@ -198,7 +194,7 @@ namespace DrawingWithC_
 									clickNum++;
 									break;
 								case 2:
-									polylines.Add(Methods.Method.GetPolygon(firstPoint, currentPosition, sidesQty, inscribed)); ;
+									entities.Add(Methods.Method.GetPolygon(firstPoint, currentPosition, sidesQty, inscribed)); ;
 									clickNum = 1;
 									break;
 							}
@@ -213,21 +209,12 @@ namespace DrawingWithC_
 		{
 			e.Graphics.SetParameters(XScroll, YScroll, ScaleFactor, PixelToMl(drawing.Height));
 
-			// draw all points in list points
-			if (points.Count > 0)
+			// draw all entities
+			if (entities.Count > 0)
 			{
-				foreach (Entities.Point p in points)
+				foreach (Entities.EntityObject entity in entities)
 				{
-					e.Graphics.DrawPoint(new Pen(Color.Red, 0), p);
-				}
-			}
-
-			// draw all lines in list lines
-			if (lines.Count > 0)
-			{
-				foreach (Entities.Line line in lines)
-				{
-					e.Graphics.DrawLine(pen, line);
+					e.Graphics.DrawEntity(pen, entity);
 				}
 			}
 
@@ -235,14 +222,14 @@ namespace DrawingWithC_
 			switch (DrawIndex)
 			{
 				case 6: // polyline
-				case 1: // line
+				case 1: // gray line
 					if (clickNum == 2)
 					{
 						Entities.Line line = new Entities.Line(firstPoint, currentPosition);
 						e.Graphics.DrawLine(grayPen, line);
 					}
 					break;
-				case 2:
+				case 2: // gray circle
 					if (clickNum == 2)
 					{
 						Entities.Line line = new Entities.Line(firstPoint, currentPosition);
@@ -252,7 +239,7 @@ namespace DrawingWithC_
 						e.Graphics.DrawCircle(grayPen, circle);
 					}
 					break;
-				case 3:
+				case 3: // gray ellipse
 					switch (clickNum)
 					{
 						case 2:
@@ -268,7 +255,7 @@ namespace DrawingWithC_
 							break;
 					}
 					break;
-				case 5:
+				case 5: // gray arc
 					switch (clickNum)
 					{
 						case 2:
@@ -299,56 +286,7 @@ namespace DrawingWithC_
 					break;
 			}
 
-			// test line line intersection
-			if (lines.Count > 0)
-			{
-				foreach (Entities.Line l1 in lines)
-				{
-					foreach (Entities.Line l2 in lines)
-					{
-						Vector3 v = Methods.Method.LineLineIntersection(l1, l2);
-						Entities.Point p = new Entities.Point(v);
-						e.Graphics.DrawPoint(new Pen(Color.Red, 0), p);
-					}
-				}
-			}
-
-			// draw all circles
-			if (circles.Count > 0)
-			{
-				foreach (Entities.Circle circle in circles)
-				{
-					e.Graphics.DrawCircle(pen, circle);
-				}
-			}
-
-			// draw all ellipses
-			if (ellipses.Count > 0)
-			{
-				foreach (Entities.Ellipse elp in ellipses)
-				{
-					e.Graphics.DrawEllipse(pen, elp);
-				}
-			}
-
-			// draw all arcs
-			if (arcs.Count > 0)
-			{
-				foreach (Entities.Arc arc in arcs)
-				{
-					e.Graphics.DrawArc(pen, arc);
-				}
-			}
-
-			// draw all LwPolyline
-			if (polylines.Count > 0)
-			{
-				foreach (Entities.LwPolyline lw in polylines)
-				{
-					e.Graphics.DrawPolyline(pen, lw);
-				}
-			}
-			// draw tempPolyline
+			//// draw tempPolyline
 			if (tempPolyline.Vertexes.Count > 1)
 			{
 				e.Graphics.DrawPolyline(pen, tempPolyline);
@@ -522,15 +460,15 @@ namespace DrawingWithC_
 					case 1:
 						if (vertexes.Count > 2)
 						{
-							polylines.Add(new Entities.LwPolyline(vertexes, true));
+							entities.Add(new Entities.LwPolyline(vertexes, true));
 						}
 						else
 						{
-							polylines.Add(new Entities.LwPolyline(vertexes, false));
+							entities.Add(new Entities.LwPolyline(vertexes, false));
 						}
 						break;
 					case 2:
-						polylines.Add(new Entities.LwPolyline(vertexes, true));
+						entities.Add(new Entities.LwPolyline(vertexes, true));
 						break;
 				}
 			}

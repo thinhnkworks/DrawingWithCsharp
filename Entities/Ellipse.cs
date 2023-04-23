@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DrawingWithC_.Entities
 {
-	public class Ellipse
+	public class Ellipse : EntityObject
 	{
 		private Vector3 center;
 		private double majorAxis;
@@ -16,7 +16,9 @@ namespace DrawingWithC_.Entities
 		private double endAngle;
 		private double thickness;
 
-		public Ellipse(Vector3 center, double majorAxis, double minorAxis)
+		public Ellipse() : this(Vector3.Zero, 1.0, 0.5) { }
+
+		public Ellipse(Vector3 center, double majorAxis, double minorAxis) : base(EntityType.Ellipse)
 		{
 			this.Center = center;
 			this.MajorAxis = majorAxis;
@@ -70,5 +72,20 @@ namespace DrawingWithC_.Entities
 			set { center = value; }
 		}
 
+		public override object Clone()
+		{
+			return new Ellipse
+			{
+				Center = center,
+				MajorAxis = majorAxis,
+				MinorAxis = minorAxis,
+				Rotation = rotation,
+				Thickness = thickness,
+				StartAngle = startAngle,
+				EndAngle = endAngle,
+				// entity object properties
+				IsVisible = this.IsVisible
+			};
+		}
 	}
 }

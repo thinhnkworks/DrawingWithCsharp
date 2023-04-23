@@ -90,5 +90,30 @@ namespace DrawingWithC_
 			g.DrawLines(pen, vertexes);
 			g.ResetTransform();
 		}
+
+		public static void DrawEntity(this Graphics g, Pen pen, Entities.EntityObject entity)
+		{
+			switch (entity.Type)
+			{
+				case Entities.EntityType.Arc:
+					g.DrawArc(pen, entity as Entities.Arc);
+					break;
+				case Entities.EntityType.Circle:
+					g.DrawCircle(pen, entity as Entities.Circle);
+					break;
+				case Entities.EntityType.Ellipse:
+					g.DrawEllipse(pen, entity as Entities.Ellipse);
+					break;
+				case Entities.EntityType.Line:
+					g.DrawLine(pen, entity as Entities.Line);
+					break;
+				case Entities.EntityType.LwPolyline:
+					g.DrawPolyline(pen, entity as Entities.LwPolyline);
+					break;
+				case Entities.EntityType.Point:
+					g.DrawPoint(pen, entity as Entities.Point);
+					break;
+			}
+		}
 	}
 }

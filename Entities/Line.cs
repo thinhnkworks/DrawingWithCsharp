@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DrawingWithC_.Entities
 {
-	public class Line
+	public class Line : EntityObject
 	{
 		private Vector3 startPoint;
 		private Vector3 endPoint;
@@ -20,7 +20,7 @@ namespace DrawingWithC_.Entities
 		public Line() : this(Vector3.Zero, Vector3.Zero)
 		{
 		}
-		public Line(Vector3 start, Vector3 end)
+		public Line(Vector3 start, Vector3 end) : base(EntityType.Line)
 		{
 			this.StartPoint = start;
 			this.EndPoint = end;
@@ -48,6 +48,18 @@ namespace DrawingWithC_.Entities
 
 				return Math.Sqrt(dx * dx + dy * dy + dz * dz);
 			}
+		}
+
+		public override object Clone()
+		{
+			return new Line
+			{
+				StartPoint = this.StartPoint,
+				EndPoint = this.EndPoint,
+				Thickness = this.Thickness,
+				// entity object properties
+				IsVisible = this.IsVisible
+			};
 		}
 	}
 }
