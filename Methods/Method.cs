@@ -128,6 +128,12 @@ namespace DrawingWithC_.Methods
 			}
 			return false;
 		}
+		private static bool IsPointInPolyline(PointF[] cursor_rect, Vector3 point)
+		{
+			System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
+			path.AddPolygon(cursor_rect);
+			return path.IsVisible(point.ToPointF);
+		}
 
 		#region Comparision
 
@@ -567,9 +573,6 @@ namespace DrawingWithC_.Methods
 			}
 			return angle;
 		}
-
-		#endregion
-
 		public static int GetSegmentIndex(List<EntityObject> entities, Vector3 mousePosition, PointF[] cursor_rect, out Vector3 PointOnSegment)
 		{
 			bool flags = false;
@@ -609,11 +612,7 @@ namespace DrawingWithC_.Methods
 			return -1;
 		}
 
-		private static bool IsPointInPolyline(PointF[] cursor_rect, Vector3 point)
-		{
-			System.Drawing.Drawing2D.GraphicsPath path = new System.Drawing.Drawing2D.GraphicsPath();
-			path.AddPolygon(cursor_rect);
-			return path.IsVisible(point.ToPointF);
-		}
+		#endregion
+
 	}
 }
