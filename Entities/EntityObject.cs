@@ -10,13 +10,13 @@ namespace DrawingWithC_.Entities
 	{
 		private readonly EntityType type;
 		protected bool isVisible;
-		protected bool selected;
+		protected bool isSelected;
 
 		public EntityObject(EntityType type)
 		{
 			this.type = type;
 			this.isVisible = true;
-			this.selected = false;
+			this.isSelected = false;
 		}
 
 		public EntityType Type
@@ -29,17 +29,17 @@ namespace DrawingWithC_.Entities
 			get { return this.isVisible; }
 			set { this.isVisible = value; }
 		}
-		public bool Selected
+		public bool IsSelected
 		{
-			get { return this.selected; }
+			get { return this.isSelected; }
 		}
 		public void Select()
 		{
-			this.selected = true;
+			this.isSelected = true;
 		}
 		public void DeSelect()
 		{
-			this.selected = false;
+			this.isSelected = false;
 		}
 		public abstract object Clone();
 	}

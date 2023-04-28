@@ -12,6 +12,8 @@ namespace DrawingWithC_
 		private static float XScroll;
 		private static float YScroll;
 		private static float ScaleFactor;
+		private static Pen extpen = new Pen(Color.Gray, 0);
+
 
 		public static void SetParameters(this Graphics g, float xscroll, float yscroll, float scalefactor, float height)
 		{
@@ -19,6 +21,7 @@ namespace DrawingWithC_
 			YScroll = yscroll;
 			ScaleFactor = scalefactor;
 			Height = height;
+			extpen.DashPattern = new float[] { 1.5f / ScaleFactor, 2.0f / ScaleFactor };
 		}
 		public static void SetTransform(this Graphics g)
 		{
@@ -38,7 +41,14 @@ namespace DrawingWithC_
 		public static void DrawLine(this Graphics g, Pen pen, Entities.Line line)
 		{
 			g.SetTransform();
-			g.DrawLine(pen, line.StartPoint.ToPointF, line.EndPoint.ToPointF);
+			if (!line.IsSelected)
+			{
+				g.DrawLine(pen, line.StartPoint.ToPointF, line.EndPoint.ToPointF);
+			}
+			else
+			{
+				g.DrawLine(extpen, line.StartPoint.ToPointF, line.EndPoint.ToPointF);
+			}
 			g.ResetTransform();
 		}
 		public static void DrawCircle(this Graphics g, Pen pen, Entities.Circle circle)
@@ -48,7 +58,14 @@ namespace DrawingWithC_
 			float d = (float)(circle.Diameter);
 
 			g.SetTransform();
-			g.DrawEllipse(pen, x, y, d, d);
+			if (!circle.IsSelected)
+			{
+				g.DrawEllipse(pen, x, y, d, d);
+			}
+			else
+			{
+				g.DrawEllipse(extpen, x, y, d, d);
+			}
 			g.ResetTransform();
 		}
 		public static void DrawEllipse(this Graphics g, Pen pen, Entities.Ellipse ellipse)
@@ -56,7 +73,14 @@ namespace DrawingWithC_
 			SetTransform(g);
 			g.TranslateTransform(ellipse.Center.ToPointF.X, ellipse.Center.ToPointF.Y);
 			g.RotateTransform((float)(ellipse.Rotation));
-			g.DrawEllipse(pen, -(float)ellipse.MajorAxis, -(float)ellipse.MinorAxis, (float)ellipse.MajorAxis * 2, (float)ellipse.MinorAxis * 2);
+			if (!ellipse.IsSelected)
+			{
+				g.DrawEllipse(pen, -(float)ellipse.MajorAxis, -(float)ellipse.MinorAxis, (float)ellipse.MajorAxis * 2, (float)ellipse.MinorAxis * 2);
+			}
+			else
+			{
+				g.DrawEllipse(extpen, -(float)ellipse.MajorAxis, -(float)ellipse.MinorAxis, (float)ellipse.MajorAxis * 2, (float)ellipse.MinorAxis * 2);
+			}
 			g.ResetTransform();
 		}
 		public static void DrawArc(this Graphics g, Pen pen, Entities.Arc arc)
@@ -68,14 +92,28 @@ namespace DrawingWithC_
 			System.Drawing.RectangleF rect = new System.Drawing.RectangleF(x, y, d, d);
 
 			g.SetTransform();
-			g.DrawArc(pen, rect, (float)arc.StartAngle, (float)arc.EndAngle);
+			if (!arc.IsSelected)
+			{
+				g.DrawArc(pen, rect, (float)arc.StartAngle, (float)arc.EndAngle);
+			}
+			else
+			{
+				g.DrawArc(extpen, rect, (float)arc.StartAngle, (float)arc.EndAngle);
+			}
 			g.ResetTransform();
 		}
 		public static void DrawPolyline(this Graphics g, Pen pen, Entities.LwPolyline polyline)
 		{
 			foreach (Entities.EntityObject entity in polyline.Explode())
 			{
-				g.DrawEntity(pen, entity);
+				if (!polyline.IsSelected)
+				{
+					g.DrawEntity(pen, entity);
+				}
+				else
+				{
+					g.DrawEntity(extpen, entity);
+				}
 			}
 		}
 
