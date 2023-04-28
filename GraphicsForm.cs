@@ -36,6 +36,8 @@ namespace DrawingWithC_
 		private int DrawIndex = -1;
 		private bool active_drawing = false;
 		private int clickNum = 1;
+		private int ModifyIndex = -1;
+		private bool active_modify = false;
 
 		// scroll settings
 		private float XScroll;
@@ -49,6 +51,10 @@ namespace DrawingWithC_
 
 		// canvas size
 		private SizeF drawingSize = new SizeF(290, 123);
+
+		// cursor
+		private float edit_cursorSize = 2.5f;
+		private float draw_cursorSize = 12;
 
 		#region DRAWING PANEL EVENTS
 
@@ -86,7 +92,7 @@ namespace DrawingWithC_
 							break;
 					}
 				}
-				if (active_drawing && !active_zoom)
+				if (active_drawing && !active_zoom && !active_modify)
 				{
 					// 0: for drawing point
 					// 1: for drawing line
@@ -99,20 +105,15 @@ namespace DrawingWithC_
 					// 8: for drawing polygon
 					switch (DrawIndex)
 					{
-						case 0:
-							entities.Add(new Entities.Point(currentPosition));
-							break;
 						case 1: // line
 							switch (clickNum)
 							{
 								case 1:
 									firstPoint = currentPosition;
-									entities.Add(new Entities.Point(currentPosition));
 									clickNum++;
 									break;
 								case 2:
 									entities.Add(new Entities.Line(firstPoint, currentPosition));
-									entities.Add(new Entities.Point(currentPosition));
 									firstPoint = currentPosition;
 									clickNum = 1;
 									break;
@@ -200,9 +201,20 @@ namespace DrawingWithC_
 							}
 							break;
 					}
-					// refresh drawing panel after mouse left-click
-					drawing.Refresh();
+
 				}
+				if (active_modify)
+				{
+					int segmentIndex = Methods.Method.GetSegmentIndex(entities, currentPosition, CursorRect(currentPosition), out Vector3 clickPoint);
+					switch (ModifyIndex)
+					{
+						case 0: // copy
+							MessageBox.Show(segmentIndex.ToString());
+							break;
+					}
+				}
+				// refresh drawing panel after mouse left-click
+				drawing.Refresh();
 			}
 		}
 		private void drawing_Paint(object sender, PaintEventArgs e)
@@ -286,7 +298,7 @@ namespace DrawingWithC_
 					break;
 			}
 
-			//// draw tempPolyline
+			// draw tempPolyline
 			if (tempPolyline.Vertexes.Count > 1)
 			{
 				e.Graphics.DrawPolyline(pen, tempPolyline);
@@ -325,61 +337,70 @@ namespace DrawingWithC_
 			// index 0 for drawing point
 			DrawIndex = 0;
 			active_drawing = true;
-			ActiveCursor(1);
+			active_modify = false;
+			ActiveCursor(1, draw_cursorSize);
 		}
 		private void btnLine_Click(object sender, EventArgs e)
 		{
 			// index 1 for drawing line
 			DrawIndex = 1;
 			active_drawing = true;
-			ActiveCursor(1);
+			active_modify = false;
+			ActiveCursor(1, draw_cursorSize);
 		}
 		private void btnCircle_Click(object sender, EventArgs e)
 		{
 			// index 2 for drawing circle
 			DrawIndex = 2;
 			active_drawing = true;
-			ActiveCursor(1);
+			active_modify = false;
+			ActiveCursor(1, draw_cursorSize);
 		}
 		private void btnEllipse_Click(object sender, EventArgs e)
 		{
 			// index 3 for drawing ellipse
 			DrawIndex = 3;
 			active_drawing = true;
-			ActiveCursor(1);
+			active_modify = false;
+			ActiveCursor(1, draw_cursorSize);
 		}
 		private void btnArc_Click(object sender, EventArgs e)
 		{
 			// index 5 for drawing arc
 			DrawIndex = 5;
 			active_drawing = true;
-			ActiveCursor(1);
+			active_modify = false;
+			ActiveCursor(1, draw_cursorSize);
 		}
 		private void btnPolyline_Click(object sender, EventArgs e)
 		{
 			// index 6 for drawing polyline
 			DrawIndex = 6;
 			active_drawing = true;
-			ActiveCursor(1);
+			active_modify = false;
+			ActiveCursor(1, draw_cursorSize);
 		}
 		private void btnRectangle_Click(object sender, EventArgs e)
 		{
 			// index 7 for drawing rectangle
 			DrawIndex = 7;
 			active_drawing = true;
-			ActiveCursor(1);
+			active_modify = false;
+			ActiveCursor(1, draw_cursorSize);
 		}
 		private void btnPolygon_Click(object sender, EventArgs e)
 		{
 			// index 8 for drawing polygon
 			DrawIndex = 8;
 			active_drawing = true;
-			ActiveCursor(1);
+			active_modify = false;
+			ActiveCursor(1, draw_cursorSize);
 		}
 		private void btnSettings_Click(object sender, EventArgs e)
 		{
 			var settings = new SettingsForm();
 			settings.Show();
+			active_modify = false;
 		}
 
 		#endregion
@@ -418,7 +439,7 @@ namespace DrawingWithC_
 		{
 			DrawIndex = -1;
 			active_drawing = false;
-			ActiveCursor(0);
+			ActiveCursor(0, 0);
 			clickNum = 1;
 			LwPolylineCloseStatus(index);
 		}
@@ -497,6 +518,20 @@ namespace DrawingWithC_
 			}
 			catch { }
 			drawing.Refresh();
+		}
+		private PointF[] CursorRect(Vector3 mousePosition)
+		{
+			float l = edit_cursorSize * 0.5f;
+			float x = mousePosition.ToPointF.X;
+			float y = mousePosition.ToPointF.Y;
+
+			return new PointF[]
+			{
+				new PointF(x-1, y-1),
+				new PointF(x+1, y-1),
+				new PointF(x+1, y+1),
+				new PointF(x-1, y+1)
+			};
 		}
 
 		#endregion
@@ -583,5 +618,11 @@ namespace DrawingWithC_
 		#endregion
 
 
+		private void btnCopy_Click(object sender, EventArgs e)
+		{
+			ModifyIndex = 0;
+			active_modify = true;
+			ActiveCursor(2, edit_cursorSize);
+		}
 	}
 }

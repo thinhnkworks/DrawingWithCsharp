@@ -274,7 +274,7 @@
 			// cbbPolygonStatus
 			// 
 			cbbPolygonStatus.FormattingEnabled = true;
-			cbbPolygonStatus.Items.AddRange(new object[] { "Noi tiep", "Ngoai tiep" });
+			cbbPolygonStatus.Items.AddRange(new object[] { "Noi tiep hinh tron", "Ngoai tiep hinh tron" });
 			cbbPolygonStatus.Location = new Point(295, 417);
 			cbbPolygonStatus.Name = "cbbPolygonStatus";
 			cbbPolygonStatus.Size = new Size(221, 33);

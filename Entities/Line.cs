@@ -50,6 +50,19 @@ namespace DrawingWithC_.Entities
 			}
 		}
 
+		public double Angle
+		{
+			get
+			{
+				double angle = Math.Atan2((endPoint.Y - startPoint.Y), (endPoint.X - startPoint.X)) * 180.0 / Math.PI;
+				if (angle < 0)
+				{
+					angle += 360.0;
+				}
+				return angle;
+			}
+		}
+
 		public override object Clone()
 		{
 			return new Line
