@@ -108,7 +108,7 @@ namespace DrawingWithC_.Methods
 		}
 		private static bool IsPointOnArc(Arc arc, Vector3 v)
 		{
-			Line line = new Line(arc.Center, v);
+			Entities.Line line = new Entities.Line(arc.Center, v);
 
 			double angle = line.Angle;
 			double start = arc.StartAngle;
