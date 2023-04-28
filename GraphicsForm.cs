@@ -209,7 +209,7 @@ namespace DrawingWithC_
 					switch (ModifyIndex)
 					{
 						case 0: // copy
-							MessageBox.Show(segmentIndex.ToString());
+								//MessageBox.Show(segmentIndex.ToString());
 							break;
 					}
 				}

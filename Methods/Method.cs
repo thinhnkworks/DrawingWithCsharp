@@ -604,6 +604,7 @@ namespace DrawingWithC_.Methods
 					{
 						PointOnSegment = poSegment;
 						flags = true;
+						entities[i].Select();
 						return i;
 					}
 				}
