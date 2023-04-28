@@ -72,5 +72,83 @@ namespace DrawingWithC_.Entities
 				IsVisible = this.IsVisible
 			};
 		}
+
+		public List<EntityObject> Explode()
+		{
+			List<EntityObject> entities = new List<EntityObject>();
+			int index = 0;
+			foreach (LwPolylineVertex vertex in this.vertexes)
+			{
+				double bulge = vertex.Bulge;
+				Vector2 p1, p2;
+				if (index == this.vertexes.Count - 1)
+				{
+					if (!this.IsClosed)
+					{
+						break;
+					}
+					p1 = new Vector2(vertex.Position.X, vertex.Position.Y);
+					p2 = new Vector2(this.vertexes[0].Position.X, this.vertexes[0].Position.Y);
+				}
+				else
+				{
+					p1 = new Vector2(vertex.Position.X, vertex.Position.Y);
+					p2 = new Vector2(this.vertexes[index + 1].Position.X, this.vertexes[index + 1].Position.Y);
+				}
+				if (Methods.Method.IsZero(bulge))
+				{
+					entities.Add(new Line
+					{
+						StartPoint = new Vector3(p1.X, p1.Y),
+						EndPoint = new Vector3(p2.X, p2.Y),
+						Thickness = this.thickness
+					});
+				}
+				else
+				{
+					double theta = 4 * Math.Atan(Math.Abs(bulge));
+					double c = p1.DistanceFrom(p2);
+					double r = c / 2 / Math.Sin(theta / 2);
+
+					if (Methods.Method.IsZero(r))
+					{
+						entities.Add(new Line
+						{
+							StartPoint = new Vector3(p1.X, p1.Y),
+							EndPoint = new Vector3(p2.X, p2.Y),
+							Thickness = this.thickness
+						});
+					}
+					else
+					{
+						double gamma = (Math.PI - theta) / 2;
+						double phi = p1.AngleWith(p2) + Math.Sign(bulge) * gamma;
+						Vector2 center = new Vector2(p1.X + r * Math.Cos(phi), p1.Y + r * Math.Sin(phi));
+						double startAngle, endAngle;
+
+						if (bulge > 0)
+						{
+							startAngle = Vector2.Angle(p1 - center) * Methods.Method.DegToRad;
+							endAngle = startAngle + theta * Methods.Method.DegToRad;
+						}
+						else
+						{
+							endAngle = Vector2.Angle(p1 - center) * Methods.Method.DegToRad;
+							startAngle = endAngle - theta * Methods.Method.DegToRad;
+						}
+						entities.Add(new Arc
+						{
+							Center = new Vector3(center.X, center.Y),
+							Radius = r,
+							StartAngle = startAngle,
+							EndAngle = endAngle,
+							Thickness = this.thickness
+						});
+					}
+				}
+				index++;
+			}
+			return entities;
+		}
 	}
 }

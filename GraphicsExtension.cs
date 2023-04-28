@@ -20,7 +20,6 @@ namespace DrawingWithC_
 			ScaleFactor = scalefactor;
 			Height = height;
 		}
-
 		public static void SetTransform(this Graphics g)
 		{
 			g.PageUnit = GraphicsUnit.Millimeter;
@@ -28,6 +27,7 @@ namespace DrawingWithC_
 			g.ScaleTransform(ScaleFactor, -ScaleFactor);
 			g.TranslateTransform(-XScroll / ScaleFactor, YScroll / ScaleFactor);
 		}
+
 		public static void DrawPoint(this Graphics g, Pen pen, Entities.Point point)
 		{
 			g.SetTransform();
@@ -73,22 +73,10 @@ namespace DrawingWithC_
 		}
 		public static void DrawPolyline(this Graphics g, Pen pen, Entities.LwPolyline polyline)
 		{
-			PointF[] vertexes = new PointF[polyline.Vertexes.Count];
-
-			if (polyline.IsClosed)
+			foreach (Entities.EntityObject entity in polyline.Explode())
 			{
-				vertexes = new PointF[polyline.Vertexes.Count + 1];
-				vertexes[polyline.Vertexes.Count] = polyline.Vertexes[0].Position.ToPointF;
+				g.DrawEntity(pen, entity);
 			}
-
-			for (int i = 0; i < polyline.Vertexes.Count; i++)
-			{
-				vertexes[i] = polyline.Vertexes[i].Position.ToPointF;
-			}
-
-			g.SetTransform();
-			g.DrawLines(pen, vertexes);
-			g.ResetTransform();
 		}
 
 		public static void DrawEntity(this Graphics g, Pen pen, Entities.EntityObject entity)

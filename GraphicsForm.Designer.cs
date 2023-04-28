@@ -45,8 +45,7 @@
 			btnRectangle = new Button();
 			btnPolygon = new Button();
 			btnSettings = new Button();
-			btnZoomIn = new Button();
-			btnZoomOut = new Button();
+			btnCopy = new Button();
 			((System.ComponentModel.ISupportInitialize)drawing).BeginInit();
 			menuStrip.SuspendLayout();
 			SuspendLayout();
@@ -65,7 +64,7 @@
 			drawing.Paint += drawing_Paint;
 			drawing.MouseDown += drawing_MouseDown;
 			drawing.MouseMove += drawing_MouseMove;
-			drawing.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.drawing_MouseWheel);
+			drawing.MouseWheel += drawing_MouseWheel;
 			// 
 			// menuStrip
 			// 
@@ -101,7 +100,7 @@
 			// btnPoint
 			// 
 			btnPoint.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-			btnPoint.Location = new Point(48, 42);
+			btnPoint.Location = new Point(0, 42);
 			btnPoint.Margin = new Padding(4, 5, 4, 5);
 			btnPoint.Name = "btnPoint";
 			btnPoint.Size = new Size(100, 100);
@@ -114,7 +113,7 @@
 			// 
 			btnLine.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 			btnLine.Image = Properties.Resources.line;
-			btnLine.Location = new Point(187, 42);
+			btnLine.Location = new Point(108, 42);
 			btnLine.Margin = new Padding(4, 5, 4, 5);
 			btnLine.Name = "btnLine";
 			btnLine.Size = new Size(100, 100);
@@ -126,7 +125,7 @@
 			// 
 			btnCircle.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 			btnCircle.Image = Properties.Resources.circle;
-			btnCircle.Location = new Point(326, 42);
+			btnCircle.Location = new Point(216, 42);
 			btnCircle.Margin = new Padding(4, 5, 4, 5);
 			btnCircle.Name = "btnCircle";
 			btnCircle.Size = new Size(100, 100);
@@ -138,7 +137,7 @@
 			// 
 			btnEllipse.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 			btnEllipse.Image = Properties.Resources.ellipse;
-			btnEllipse.Location = new Point(473, 42);
+			btnEllipse.Location = new Point(324, 42);
 			btnEllipse.Margin = new Padding(4, 5, 4, 5);
 			btnEllipse.Name = "btnEllipse";
 			btnEllipse.Size = new Size(100, 100);
@@ -150,7 +149,7 @@
 			// 
 			btnArc.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 			btnArc.Image = Properties.Resources.arc;
-			btnArc.Location = new Point(619, 42);
+			btnArc.Location = new Point(432, 42);
 			btnArc.Margin = new Padding(4, 5, 4, 5);
 			btnArc.Name = "btnArc";
 			btnArc.Size = new Size(100, 100);
@@ -180,7 +179,7 @@
 			// 
 			btnPolyline.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 			btnPolyline.Image = Properties.Resources.polyline;
-			btnPolyline.Location = new Point(772, 42);
+			btnPolyline.Location = new Point(540, 42);
 			btnPolyline.Margin = new Padding(4, 5, 4, 5);
 			btnPolyline.Name = "btnPolyline";
 			btnPolyline.Size = new Size(100, 100);
@@ -192,7 +191,7 @@
 			// 
 			btnRectangle.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 			btnRectangle.Image = Properties.Resources.rectangle;
-			btnRectangle.Location = new Point(925, 42);
+			btnRectangle.Location = new Point(648, 42);
 			btnRectangle.Margin = new Padding(4, 5, 4, 5);
 			btnRectangle.Name = "btnRectangle";
 			btnRectangle.Size = new Size(100, 100);
@@ -204,7 +203,7 @@
 			// 
 			btnPolygon.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 			btnPolygon.Image = Properties.Resources.polygon;
-			btnPolygon.Location = new Point(1080, 42);
+			btnPolygon.Location = new Point(756, 42);
 			btnPolygon.Margin = new Padding(4, 5, 4, 5);
 			btnPolygon.Name = "btnPolygon";
 			btnPolygon.Size = new Size(100, 100);
@@ -225,25 +224,15 @@
 			btnSettings.UseVisualStyleBackColor = true;
 			btnSettings.Click += btnSettings_Click;
 			// 
-			// btnZoomIn
+			// btnCopy
 			// 
-			btnZoomIn.Location = new Point(1236, 42);
-			btnZoomIn.Name = "btnZoomIn";
-			btnZoomIn.Size = new Size(112, 34);
-			btnZoomIn.TabIndex = 14;
-			btnZoomIn.Text = "Zoom in";
-			btnZoomIn.UseVisualStyleBackColor = true;
-			btnZoomIn.Click += btnZoomIn_Click;
-			// 
-			// btnZoomOut
-			// 
-			btnZoomOut.Location = new Point(1236, 108);
-			btnZoomOut.Name = "btnZoomOut";
-			btnZoomOut.Size = new Size(112, 34);
-			btnZoomOut.TabIndex = 15;
-			btnZoomOut.Text = "Zoom out";
-			btnZoomOut.UseVisualStyleBackColor = true;
-			btnZoomOut.Click += btnZoomOut_Click;
+			btnCopy.Location = new Point(932, 75);
+			btnCopy.Name = "btnCopy";
+			btnCopy.Size = new Size(112, 34);
+			btnCopy.TabIndex = 14;
+			btnCopy.Text = "Copy";
+			btnCopy.UseVisualStyleBackColor = true;
+			btnCopy.Click += btnCopy_Click;
 			// 
 			// GraphicsForm
 			// 
@@ -251,8 +240,7 @@
 			AutoScaleMode = AutoScaleMode.Font;
 			BackColor = SystemColors.ControlLight;
 			ClientSize = new Size(1678, 912);
-			Controls.Add(btnZoomOut);
-			Controls.Add(btnZoomIn);
+			Controls.Add(btnCopy);
 			Controls.Add(btnSettings);
 			Controls.Add(btnPolygon);
 			Controls.Add(btnRectangle);
@@ -294,7 +282,6 @@
 		private Button btnRectangle;
 		private Button btnPolygon;
 		private Button btnSettings;
-		private Button btnZoomIn;
-		private Button btnZoomOut;
+		private Button btnCopy;
 	}
 }

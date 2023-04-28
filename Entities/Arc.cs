@@ -54,6 +54,25 @@ namespace DrawingWithC_.Entities
 			set { center = value; }
 		}
 
+		public Vector3 StartPoint
+		{
+			get
+			{
+				double x = radius * Math.Cos(startAngle * Methods.Method.DegToRad);
+				double y = radius * Math.Sin(startAngle * Methods.Method.DegToRad);
+				return new Vector3(center.X + x, center.Y + y);
+			}
+		}
+		public Vector3 EndPoint
+		{
+			get
+			{
+				double x = radius * Math.Cos((startAngle + endAngle) * Methods.Method.DegToRad);
+				double y = radius * Math.Sin((startAngle + endAngle) * Methods.Method.DegToRad);
+				return new Vector3(center.X + x, center.Y + y);
+			}
+		}
+
 		public double Diameter
 		{
 			get { return this.Radius * 2; }
