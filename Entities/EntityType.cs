@@ -7,7 +7,6 @@
 		Ellipse,
 		Line,
 		LwPolyline,
-		LwPolylineVertex,
 		Point
 	}
 }

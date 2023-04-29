@@ -41,6 +41,7 @@ namespace DrawingWithC_.Entities
 		{
 			this.isSelected = false;
 		}
+		public abstract object CopyOrMove(Vector3 fromPoint, Vector3 toPoint);
 		public abstract object Clone();
 	}
 }

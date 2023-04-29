@@ -150,5 +150,26 @@ namespace DrawingWithC_.Entities
 			}
 			return entities;
 		}
+
+		public override object CopyOrMove(Vector3 fromPoint, Vector3 toPoint)
+		{
+			List<LwPolylineVertex> vertex = new List<LwPolylineVertex>();
+			foreach (LwPolylineVertex lw in this.vertexes)
+			{
+				LwPolylineVertex lv = new LwPolylineVertex
+				{
+					Position = lw.Position.CopyOrMove(fromPoint.ToVector2, toPoint.ToVector2),
+					Bulge = lw.Bulge,
+				};
+				vertex.Add(lv);
+			}
+			return new LwPolyline
+			{
+				Vertexes = vertex,
+				Flags = this.flags,
+				Thickness = this.thickness,
+				IsVisible = this.isVisible,
+			};
+		}
 	}
 }

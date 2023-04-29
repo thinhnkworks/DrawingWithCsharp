@@ -34,7 +34,6 @@
 			cancelToolStripMenuItem = new ToolStripMenuItem();
 			btnCloseBoundary = new ToolStripMenuItem();
 			label2 = new Label();
-			btnPoint = new Button();
 			btnLine = new Button();
 			btnCircle = new Button();
 			btnEllipse = new Button();
@@ -46,6 +45,7 @@
 			btnPolygon = new Button();
 			btnSettings = new Button();
 			btnCopy = new Button();
+			btnMove = new Button();
 			((System.ComponentModel.ISupportInitialize)drawing).BeginInit();
 			menuStrip.SuspendLayout();
 			SuspendLayout();
@@ -97,23 +97,11 @@
 			label2.TabIndex = 2;
 			label2.Text = "label2";
 			// 
-			// btnPoint
-			// 
-			btnPoint.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-			btnPoint.Location = new Point(0, 42);
-			btnPoint.Margin = new Padding(4, 5, 4, 5);
-			btnPoint.Name = "btnPoint";
-			btnPoint.Size = new Size(100, 100);
-			btnPoint.TabIndex = 3;
-			btnPoint.Text = "Point";
-			btnPoint.UseVisualStyleBackColor = true;
-			btnPoint.Click += btnPoint_Click;
-			// 
 			// btnLine
 			// 
 			btnLine.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 			btnLine.Image = Properties.Resources.line;
-			btnLine.Location = new Point(108, 42);
+			btnLine.Location = new Point(13, 42);
 			btnLine.Margin = new Padding(4, 5, 4, 5);
 			btnLine.Name = "btnLine";
 			btnLine.Size = new Size(100, 100);
@@ -125,7 +113,7 @@
 			// 
 			btnCircle.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 			btnCircle.Image = Properties.Resources.circle;
-			btnCircle.Location = new Point(216, 42);
+			btnCircle.Location = new Point(121, 42);
 			btnCircle.Margin = new Padding(4, 5, 4, 5);
 			btnCircle.Name = "btnCircle";
 			btnCircle.Size = new Size(100, 100);
@@ -137,7 +125,7 @@
 			// 
 			btnEllipse.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 			btnEllipse.Image = Properties.Resources.ellipse;
-			btnEllipse.Location = new Point(324, 42);
+			btnEllipse.Location = new Point(229, 42);
 			btnEllipse.Margin = new Padding(4, 5, 4, 5);
 			btnEllipse.Name = "btnEllipse";
 			btnEllipse.Size = new Size(100, 100);
@@ -149,7 +137,7 @@
 			// 
 			btnArc.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 			btnArc.Image = Properties.Resources.arc;
-			btnArc.Location = new Point(432, 42);
+			btnArc.Location = new Point(337, 42);
 			btnArc.Margin = new Padding(4, 5, 4, 5);
 			btnArc.Name = "btnArc";
 			btnArc.Size = new Size(100, 100);
@@ -179,7 +167,7 @@
 			// 
 			btnPolyline.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 			btnPolyline.Image = Properties.Resources.polyline;
-			btnPolyline.Location = new Point(540, 42);
+			btnPolyline.Location = new Point(445, 42);
 			btnPolyline.Margin = new Padding(4, 5, 4, 5);
 			btnPolyline.Name = "btnPolyline";
 			btnPolyline.Size = new Size(100, 100);
@@ -191,7 +179,7 @@
 			// 
 			btnRectangle.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 			btnRectangle.Image = Properties.Resources.rectangle;
-			btnRectangle.Location = new Point(648, 42);
+			btnRectangle.Location = new Point(553, 42);
 			btnRectangle.Margin = new Padding(4, 5, 4, 5);
 			btnRectangle.Name = "btnRectangle";
 			btnRectangle.Size = new Size(100, 100);
@@ -203,7 +191,7 @@
 			// 
 			btnPolygon.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 			btnPolygon.Image = Properties.Resources.polygon;
-			btnPolygon.Location = new Point(756, 42);
+			btnPolygon.Location = new Point(661, 42);
 			btnPolygon.Margin = new Padding(4, 5, 4, 5);
 			btnPolygon.Name = "btnPolygon";
 			btnPolygon.Size = new Size(100, 100);
@@ -226,7 +214,7 @@
 			// 
 			// btnCopy
 			// 
-			btnCopy.Location = new Point(932, 75);
+			btnCopy.Location = new Point(932, 42);
 			btnCopy.Name = "btnCopy";
 			btnCopy.Size = new Size(112, 34);
 			btnCopy.TabIndex = 14;
@@ -234,12 +222,23 @@
 			btnCopy.UseVisualStyleBackColor = true;
 			btnCopy.Click += btnCopy_Click;
 			// 
+			// btnMove
+			// 
+			btnMove.Location = new Point(932, 108);
+			btnMove.Name = "btnMove";
+			btnMove.Size = new Size(112, 34);
+			btnMove.TabIndex = 15;
+			btnMove.Text = "Move";
+			btnMove.UseVisualStyleBackColor = true;
+			btnMove.Click += btnMove_Click;
+			// 
 			// GraphicsForm
 			// 
 			AutoScaleDimensions = new SizeF(10F, 25F);
 			AutoScaleMode = AutoScaleMode.Font;
 			BackColor = SystemColors.ControlLight;
 			ClientSize = new Size(1678, 912);
+			Controls.Add(btnMove);
 			Controls.Add(btnCopy);
 			Controls.Add(btnSettings);
 			Controls.Add(btnPolygon);
@@ -251,7 +250,6 @@
 			Controls.Add(btnEllipse);
 			Controls.Add(btnCircle);
 			Controls.Add(btnLine);
-			Controls.Add(btnPoint);
 			Controls.Add(label2);
 			Controls.Add(drawing);
 			Margin = new Padding(4, 5, 4, 5);
@@ -268,7 +266,6 @@
 
 		private PictureBox drawing;
 		private Label label2;
-		private Button btnPoint;
 		private Button btnLine;
 		private Button btnCircle;
 		private Button btnEllipse;
@@ -283,5 +280,6 @@
 		private Button btnPolygon;
 		private Button btnSettings;
 		private Button btnCopy;
+		private Button btnMove;
 	}
 }

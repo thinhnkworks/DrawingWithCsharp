@@ -100,7 +100,7 @@ namespace DrawingWithC_
 		public double AngleWith(Vector2 v)
 		{
 			double angle = Math.Atan2((v.Y - this.Y), (v.X - this.X)) * 180.0 / Math.PI;
-			if (angle < 360.0)
+			if (angle < 0)
 			{
 				angle += 360;
 			}
@@ -192,6 +192,14 @@ namespace DrawingWithC_
 		public override string ToString()
 		{
 			return string.Format("{0,0:F3}, {1,0:F3}", this.x, this.y);
+		}
+
+		public Vector2 CopyOrMove(Vector2 fromPoint, Vector2 toPoint)
+		{
+			double dx = toPoint.X - fromPoint.X;
+			double dy = toPoint.Y - fromPoint.Y;
+
+			return new Vector2(this.x + dx, this.y + dy);
 		}
 	}
 }

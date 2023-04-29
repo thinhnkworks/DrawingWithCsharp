@@ -91,5 +91,18 @@ namespace DrawingWithC_.Entities
 				IsVisible = this.IsVisible,
 			};
 		}
+		public override object CopyOrMove(Vector3 fromPoint, Vector3 toPoint)
+		{
+			Vector3 c = this.center.CopyOrMove(fromPoint, toPoint);
+			return new Arc
+			{
+				Center = c,
+				Radius = this.Radius,
+				StartAngle = this.StartAngle,
+				EndAngle = this.EndAngle,
+				Thickness = this.Thickness,
+				IsVisible = this.IsVisible
+			};
+		}
 	}
 }

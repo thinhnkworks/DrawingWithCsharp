@@ -74,5 +74,17 @@ namespace DrawingWithC_.Entities
 				IsVisible = this.IsVisible
 			};
 		}
+		public override object CopyOrMove(Vector3 fromPoint, Vector3 toPoint)
+		{
+			Vector3 startPoint = this.startPoint.CopyOrMove(fromPoint, toPoint);
+			Vector3 endPoint = this.endPoint.CopyOrMove(fromPoint, toPoint);
+			return new Line
+			{
+				StartPoint = startPoint,
+				EndPoint = endPoint,
+				Thickness = this.Thickness,
+				IsVisible = this.IsVisible
+			};
+		}
 	}
 }

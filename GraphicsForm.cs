@@ -36,8 +36,12 @@ namespace DrawingWithC_
 		private int DrawIndex = -1;
 		private bool active_drawing = false;
 		private int clickNum = 1;
-		private int ModifyIndex = -1;
+
+		// modify objects
+		private int Modify1Index = -1;
 		private bool active_modify = false;
+		private bool active_selection = true;
+		private int segmentIndex = -1;
 
 		// scroll settings
 		private float XScroll;
@@ -205,11 +209,27 @@ namespace DrawingWithC_
 				}
 				if (active_modify)
 				{
-					int segmentIndex = Methods.Method.GetSegmentIndex(entities, currentPosition, CursorRect(currentPosition), out Vector3 clickPoint);
-					switch (ModifyIndex)
+					if (active_selection)
 					{
-						case 0: // copy
-								//MessageBox.Show(segmentIndex.ToString());
+						segmentIndex = Methods.Method.GetSegmentIndex(entities, currentPosition, CursorRect(currentPosition), out Vector3 clickPoint);
+					}
+					switch (clickNum)
+					{
+						case 1:
+							firstPoint = currentPosition;
+							clickNum++;
+							break;
+						case 2:
+							switch (Modify1Index)
+							{
+								case 0: // copy
+									Methods.Method.Modify1Selection(Modify1Index, entities, firstPoint, currentPosition);
+									break;
+								case 1: // move
+									Methods.Method.Modify1Selection(Modify1Index, entities, firstPoint, currentPosition);
+									CancelAll();
+									break;
+							}
 							break;
 					}
 				}
@@ -439,9 +459,11 @@ namespace DrawingWithC_
 		{
 			DrawIndex = -1;
 			active_drawing = false;
+			active_selection = true;
 			ActiveCursor(0, 0);
 			clickNum = 1;
 			LwPolylineCloseStatus(index);
+			DeSelectAll();
 		}
 		private void cancelToolStripMenuItem_Click(object sender, EventArgs e)
 		{
@@ -533,7 +555,14 @@ namespace DrawingWithC_
 				new PointF(x-1, y+1)
 			};
 		}
-
+		private void DeSelectAll()
+		{
+			foreach (Entities.EntityObject entity in entities)
+			{
+				entity.DeSelect();
+			}
+			drawing.Refresh();
+		}
 		#endregion
 
 		#region SCROLL SETTINGS
@@ -620,7 +649,16 @@ namespace DrawingWithC_
 
 		private void btnCopy_Click(object sender, EventArgs e)
 		{
-			ModifyIndex = 0;
+			CancelAll();
+			Modify1Index = 0;
+			active_modify = true;
+			ActiveCursor(2, edit_cursorSize);
+		}
+
+		private void btnMove_Click(object sender, EventArgs e)
+		{
+			CancelAll();
+			Modify1Index = 1;
 			active_modify = true;
 			ActiveCursor(2, edit_cursorSize);
 		}
