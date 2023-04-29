@@ -573,6 +573,11 @@ namespace DrawingWithC_.Methods
 			}
 			return angle;
 		}
+
+		#endregion
+
+		#region Selection
+
 		public static int GetSegmentIndex(List<EntityObject> entities, Vector3 mousePosition, PointF[] cursor_rect, out Vector3 PointOnSegment)
 		{
 			bool flags = false;
@@ -612,8 +617,26 @@ namespace DrawingWithC_.Methods
 			PointOnSegment = Vector3.NaN;
 			return -1;
 		}
+		public static void Modify1Selection(int modifyIndex, List<EntityObject> entities, Vector3 fromPoint, Vector3 toPoint)
+		{
+			for (int i = 0; i < entities.Count; i++)
+			{
+				if (entities[i].IsSelected)
+				{
+					switch (modifyIndex)
+					{
+						case 0: // copy
+							entities.Add(entities[i].CopyOrMove(fromPoint, toPoint) as EntityObject);
+							break;
+						case 1: // move
+							entities[i] = entities[i].CopyOrMove(fromPoint, toPoint) as EntityObject;
+							entities[i].DeSelect();
+							break;
+					}
+				}
+			}
+		}
 
 		#endregion
-
 	}
 }

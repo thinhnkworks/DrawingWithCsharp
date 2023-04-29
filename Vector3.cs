@@ -191,6 +191,13 @@ namespace DrawingWithC_
 				Methods.Method.IsEqual(v.X, this.X, threshold) &&
 				Methods.Method.IsEqual(v.X, this.X, threshold));
 		}
+		public Vector3 CopyOrMove(Vector3 fromPoint, Vector3 toPoint)
+		{
+			double dx = toPoint.X - fromPoint.X;
+			double dy = toPoint.Y - fromPoint.Y;
+			double dz = toPoint.Z - fromPoint.Z;
+			return new Vector3(this.x + dx, this.y + dy, this.z + dz);
+		}
 		public override bool Equals(object obj)
 		{
 			if (obj is Vector3)

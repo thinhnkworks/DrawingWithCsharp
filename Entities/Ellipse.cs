@@ -87,5 +87,20 @@ namespace DrawingWithC_.Entities
 				IsVisible = this.IsVisible
 			};
 		}
+		public override object CopyOrMove(Vector3 fromPoint, Vector3 toPoint)
+		{
+			Vector3 c = this.center.CopyOrMove(fromPoint, toPoint);
+			return new Ellipse
+			{
+				Center = c,
+				MajorAxis = majorAxis,
+				MinorAxis = minorAxis,
+				Rotation = rotation,
+				Thickness = thickness,
+				StartAngle = startAngle,
+				EndAngle = endAngle,
+				IsVisible = this.IsVisible
+			};
+		}
 	}
 }
