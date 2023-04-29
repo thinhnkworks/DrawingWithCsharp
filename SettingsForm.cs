@@ -27,6 +27,7 @@ namespace DrawingWithC_
 		public int SidesQty { get; private set; }
 		public int Inscribed { get; private set; }
 
+
 		private void btnPenSettings_Click(object sender, EventArgs e)
 		{
 			panelPenSettings.BringToFront();
@@ -106,6 +107,7 @@ namespace DrawingWithC_
 			GraphicsForm.pen.Color = PenColor;
 			GraphicsForm.pen.Width = PenSize;
 			GraphicsForm.pen.DashStyle = PenStyle;
+			GraphicsForm.picPenColor.BackColor = PenColor;
 
 			if (SidesQty < 3)
 			{

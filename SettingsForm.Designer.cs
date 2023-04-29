@@ -77,6 +77,7 @@
 			// 
 			// btnCancelSettings
 			// 
+			btnCancelSettings.Cursor = Cursors.Hand;
 			btnCancelSettings.Location = new Point(45, 629);
 			btnCancelSettings.Name = "btnCancelSettings";
 			btnCancelSettings.Size = new Size(162, 55);
@@ -87,6 +88,7 @@
 			// 
 			// btnOKSettings
 			// 
+			btnOKSettings.Cursor = Cursors.Hand;
 			btnOKSettings.Location = new Point(45, 546);
 			btnOKSettings.Name = "btnOKSettings";
 			btnOKSettings.Size = new Size(162, 55);

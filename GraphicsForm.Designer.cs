@@ -46,8 +46,27 @@
 			btnSettings = new Button();
 			btnCopy = new Button();
 			btnMove = new Button();
+			panelShapes = new Panel();
+			lbShapes = new Label();
+			panel1 = new Panel();
+			btnFill = new Button();
+			btnDelete = new Button();
+			lbEdit = new Label();
+			lbSettings = new Label();
+			panelPen = new Panel();
+			cbbPenStyle = new ComboBox();
+			lbStyle = new Label();
+			nudPenWidth = new NumericUpDown();
+			lbWidth = new Label();
+			picPenColor = new PictureBox();
+			lbPen = new Label();
 			((System.ComponentModel.ISupportInitialize)drawing).BeginInit();
 			menuStrip.SuspendLayout();
+			panelShapes.SuspendLayout();
+			panel1.SuspendLayout();
+			panelPen.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)nudPenWidth).BeginInit();
+			((System.ComponentModel.ISupportInitialize)picPenColor).BeginInit();
 			SuspendLayout();
 			// 
 			// drawing
@@ -101,10 +120,10 @@
 			// 
 			btnLine.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 			btnLine.Image = Properties.Resources.line;
-			btnLine.Location = new Point(13, 42);
+			btnLine.Location = new Point(16, 5);
 			btnLine.Margin = new Padding(4, 5, 4, 5);
 			btnLine.Name = "btnLine";
-			btnLine.Size = new Size(100, 100);
+			btnLine.Size = new Size(50, 50);
 			btnLine.TabIndex = 4;
 			btnLine.UseVisualStyleBackColor = true;
 			btnLine.Click += btnLine_Click;
@@ -113,10 +132,10 @@
 			// 
 			btnCircle.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 			btnCircle.Image = Properties.Resources.circle;
-			btnCircle.Location = new Point(121, 42);
+			btnCircle.Location = new Point(16, 60);
 			btnCircle.Margin = new Padding(4, 5, 4, 5);
 			btnCircle.Name = "btnCircle";
-			btnCircle.Size = new Size(100, 100);
+			btnCircle.Size = new Size(50, 50);
 			btnCircle.TabIndex = 5;
 			btnCircle.UseVisualStyleBackColor = true;
 			btnCircle.Click += btnCircle_Click;
@@ -125,10 +144,10 @@
 			// 
 			btnEllipse.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 			btnEllipse.Image = Properties.Resources.ellipse;
-			btnEllipse.Location = new Point(229, 42);
+			btnEllipse.Location = new Point(74, 60);
 			btnEllipse.Margin = new Padding(4, 5, 4, 5);
 			btnEllipse.Name = "btnEllipse";
-			btnEllipse.Size = new Size(100, 100);
+			btnEllipse.Size = new Size(50, 50);
 			btnEllipse.TabIndex = 6;
 			btnEllipse.UseVisualStyleBackColor = true;
 			btnEllipse.Click += btnEllipse_Click;
@@ -137,10 +156,10 @@
 			// 
 			btnArc.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 			btnArc.Image = Properties.Resources.arc;
-			btnArc.Location = new Point(337, 42);
+			btnArc.Location = new Point(132, 60);
 			btnArc.Margin = new Padding(4, 5, 4, 5);
 			btnArc.Name = "btnArc";
-			btnArc.Size = new Size(100, 100);
+			btnArc.Size = new Size(50, 50);
 			btnArc.TabIndex = 7;
 			btnArc.UseVisualStyleBackColor = true;
 			btnArc.Click += btnArc_Click;
@@ -167,10 +186,10 @@
 			// 
 			btnPolyline.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 			btnPolyline.Image = Properties.Resources.polyline;
-			btnPolyline.Location = new Point(445, 42);
+			btnPolyline.Location = new Point(132, 5);
 			btnPolyline.Margin = new Padding(4, 5, 4, 5);
 			btnPolyline.Name = "btnPolyline";
-			btnPolyline.Size = new Size(100, 100);
+			btnPolyline.Size = new Size(50, 50);
 			btnPolyline.TabIndex = 10;
 			btnPolyline.UseVisualStyleBackColor = true;
 			btnPolyline.Click += btnPolyline_Click;
@@ -179,10 +198,10 @@
 			// 
 			btnRectangle.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 			btnRectangle.Image = Properties.Resources.rectangle;
-			btnRectangle.Location = new Point(553, 42);
+			btnRectangle.Location = new Point(74, 5);
 			btnRectangle.Margin = new Padding(4, 5, 4, 5);
 			btnRectangle.Name = "btnRectangle";
-			btnRectangle.Size = new Size(100, 100);
+			btnRectangle.Size = new Size(50, 50);
 			btnRectangle.TabIndex = 11;
 			btnRectangle.UseVisualStyleBackColor = true;
 			btnRectangle.Click += btnRectangle_Click;
@@ -191,10 +210,10 @@
 			// 
 			btnPolygon.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 			btnPolygon.Image = Properties.Resources.polygon;
-			btnPolygon.Location = new Point(661, 42);
+			btnPolygon.Location = new Point(190, 5);
 			btnPolygon.Margin = new Padding(4, 5, 4, 5);
 			btnPolygon.Name = "btnPolygon";
-			btnPolygon.Size = new Size(100, 100);
+			btnPolygon.Size = new Size(50, 50);
 			btnPolygon.TabIndex = 12;
 			btnPolygon.UseVisualStyleBackColor = true;
 			btnPolygon.Click += btnPolygon_Click;
@@ -204,7 +223,7 @@
 			btnSettings.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 			btnSettings.Cursor = Cursors.Hand;
 			btnSettings.Image = Properties.Resources.settings;
-			btnSettings.Location = new Point(1551, 42);
+			btnSettings.Location = new Point(1547, 27);
 			btnSettings.Margin = new Padding(4, 5, 4, 5);
 			btnSettings.Name = "btnSettings";
 			btnSettings.Size = new Size(100, 100);
@@ -214,7 +233,7 @@
 			// 
 			// btnCopy
 			// 
-			btnCopy.Location = new Point(932, 42);
+			btnCopy.Location = new Point(10, 15);
 			btnCopy.Name = "btnCopy";
 			btnCopy.Size = new Size(112, 34);
 			btnCopy.TabIndex = 14;
@@ -224,7 +243,7 @@
 			// 
 			// btnMove
 			// 
-			btnMove.Location = new Point(932, 108);
+			btnMove.Location = new Point(138, 15);
 			btnMove.Name = "btnMove";
 			btnMove.Size = new Size(112, 34);
 			btnMove.TabIndex = 15;
@@ -232,24 +251,162 @@
 			btnMove.UseVisualStyleBackColor = true;
 			btnMove.Click += btnMove_Click;
 			// 
+			// panelShapes
+			// 
+			panelShapes.BorderStyle = BorderStyle.FixedSingle;
+			panelShapes.Controls.Add(btnLine);
+			panelShapes.Controls.Add(btnCircle);
+			panelShapes.Controls.Add(btnRectangle);
+			panelShapes.Controls.Add(btnEllipse);
+			panelShapes.Controls.Add(btnPolyline);
+			panelShapes.Controls.Add(btnPolygon);
+			panelShapes.Controls.Add(btnArc);
+			panelShapes.Location = new Point(33, 16);
+			panelShapes.Name = "panelShapes";
+			panelShapes.Size = new Size(256, 117);
+			panelShapes.TabIndex = 16;
+			// 
+			// lbShapes
+			// 
+			lbShapes.AutoSize = true;
+			lbShapes.Location = new Point(118, 137);
+			lbShapes.Name = "lbShapes";
+			lbShapes.Size = new Size(69, 25);
+			lbShapes.TabIndex = 17;
+			lbShapes.Text = "Shapes";
+			// 
+			// panel1
+			// 
+			panel1.BorderStyle = BorderStyle.FixedSingle;
+			panel1.Controls.Add(btnFill);
+			panel1.Controls.Add(btnDelete);
+			panel1.Controls.Add(btnCopy);
+			panel1.Controls.Add(btnMove);
+			panel1.Location = new Point(336, 16);
+			panel1.Name = "panel1";
+			panel1.Size = new Size(264, 117);
+			panel1.TabIndex = 18;
+			// 
+			// btnFill
+			// 
+			btnFill.Location = new Point(138, 69);
+			btnFill.Name = "btnFill";
+			btnFill.Size = new Size(112, 34);
+			btnFill.TabIndex = 17;
+			btnFill.Text = "Fill";
+			btnFill.UseVisualStyleBackColor = true;
+			// 
+			// btnDelete
+			// 
+			btnDelete.Location = new Point(10, 69);
+			btnDelete.Name = "btnDelete";
+			btnDelete.Size = new Size(112, 34);
+			btnDelete.TabIndex = 16;
+			btnDelete.Text = "Delete";
+			btnDelete.UseVisualStyleBackColor = true;
+			// 
+			// lbEdit
+			// 
+			lbEdit.AutoSize = true;
+			lbEdit.Location = new Point(437, 137);
+			lbEdit.Name = "lbEdit";
+			lbEdit.Size = new Size(42, 25);
+			lbEdit.TabIndex = 19;
+			lbEdit.Text = "Edit";
+			// 
+			// lbSettings
+			// 
+			lbSettings.AutoSize = true;
+			lbSettings.Location = new Point(1557, 131);
+			lbSettings.Name = "lbSettings";
+			lbSettings.Size = new Size(76, 25);
+			lbSettings.TabIndex = 20;
+			lbSettings.Text = "Settings";
+			// 
+			// panelPen
+			// 
+			panelPen.BorderStyle = BorderStyle.FixedSingle;
+			panelPen.Controls.Add(cbbPenStyle);
+			panelPen.Controls.Add(lbStyle);
+			panelPen.Controls.Add(nudPenWidth);
+			panelPen.Controls.Add(lbWidth);
+			panelPen.Controls.Add(picPenColor);
+			panelPen.Location = new Point(648, 16);
+			panelPen.Name = "panelPen";
+			panelPen.Size = new Size(391, 117);
+			panelPen.TabIndex = 21;
+			// 
+			// cbbPenStyle
+			// 
+			cbbPenStyle.FormattingEnabled = true;
+			cbbPenStyle.Items.AddRange(new object[] { "Solid", "Dash", "Dash dot" });
+			cbbPenStyle.Location = new Point(209, 62);
+			cbbPenStyle.Name = "cbbPenStyle";
+			cbbPenStyle.Size = new Size(151, 33);
+			cbbPenStyle.TabIndex = 4;
+			cbbPenStyle.SelectedIndexChanged += cbbPenStyle_SelectedIndexChanged;
+			// 
+			// lbStyle
+			// 
+			lbStyle.AutoSize = true;
+			lbStyle.Location = new Point(127, 65);
+			lbStyle.Name = "lbStyle";
+			lbStyle.Size = new Size(49, 25);
+			lbStyle.TabIndex = 3;
+			lbStyle.Text = "Style";
+			// 
+			// nudPenWidth
+			// 
+			nudPenWidth.Location = new Point(209, 18);
+			nudPenWidth.Name = "nudPenWidth";
+			nudPenWidth.Size = new Size(151, 31);
+			nudPenWidth.TabIndex = 2;
+			nudPenWidth.Value = new decimal(new int[] { 1, 0, 0, 0 });
+			nudPenWidth.ValueChanged += nudPenWidth_ValueChanged;
+			// 
+			// lbWidth
+			// 
+			lbWidth.AutoSize = true;
+			lbWidth.Location = new Point(128, 20);
+			lbWidth.Name = "lbWidth";
+			lbWidth.Size = new Size(60, 25);
+			lbWidth.TabIndex = 1;
+			lbWidth.Text = "Width";
+			// 
+			// picPenColor
+			// 
+			picPenColor.BorderStyle = BorderStyle.Fixed3D;
+			picPenColor.Location = new Point(24, 19);
+			picPenColor.Name = "picPenColor";
+			picPenColor.Size = new Size(75, 75);
+			picPenColor.TabIndex = 0;
+			picPenColor.TabStop = false;
+			// 
+			// lbPen
+			// 
+			lbPen.AutoSize = true;
+			lbPen.Location = new Point(820, 137);
+			lbPen.Name = "lbPen";
+			lbPen.Size = new Size(40, 25);
+			lbPen.TabIndex = 22;
+			lbPen.Text = "Pen";
+			// 
 			// GraphicsForm
 			// 
 			AutoScaleDimensions = new SizeF(10F, 25F);
 			AutoScaleMode = AutoScaleMode.Font;
 			BackColor = SystemColors.ControlLight;
 			ClientSize = new Size(1678, 912);
-			Controls.Add(btnMove);
-			Controls.Add(btnCopy);
+			Controls.Add(lbPen);
+			Controls.Add(panelPen);
+			Controls.Add(lbSettings);
+			Controls.Add(lbEdit);
+			Controls.Add(panel1);
+			Controls.Add(lbShapes);
+			Controls.Add(panelShapes);
 			Controls.Add(btnSettings);
-			Controls.Add(btnPolygon);
-			Controls.Add(btnRectangle);
-			Controls.Add(btnPolyline);
 			Controls.Add(hScrollBar);
 			Controls.Add(vScrollBar);
-			Controls.Add(btnArc);
-			Controls.Add(btnEllipse);
-			Controls.Add(btnCircle);
-			Controls.Add(btnLine);
 			Controls.Add(label2);
 			Controls.Add(drawing);
 			Margin = new Padding(4, 5, 4, 5);
@@ -258,6 +415,12 @@
 			Load += Form1_Load;
 			((System.ComponentModel.ISupportInitialize)drawing).EndInit();
 			menuStrip.ResumeLayout(false);
+			panelShapes.ResumeLayout(false);
+			panel1.ResumeLayout(false);
+			panelPen.ResumeLayout(false);
+			panelPen.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)nudPenWidth).EndInit();
+			((System.ComponentModel.ISupportInitialize)picPenColor).EndInit();
 			ResumeLayout(false);
 			PerformLayout();
 		}
@@ -281,5 +444,19 @@
 		private Button btnSettings;
 		private Button btnCopy;
 		private Button btnMove;
+		private Panel panelShapes;
+		private Label lbShapes;
+		private Panel panel1;
+		private Label lbEdit;
+		private Button btnDelete;
+		private Label lbSettings;
+		private Panel panelPen;
+		private Label lbPen;
+		private Button btnFill;
+		private Label lbWidth;
+		private Label lbStyle;
+		private NumericUpDown nudPenWidth;
+		private ComboBox cbbPenStyle;
+		public static PictureBox picPenColor;
 	}
 }

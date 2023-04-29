@@ -12,10 +12,11 @@ namespace DrawingWithC_
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
-
+			picPenColor.BackColor = pen.Color;
+			cbbPenStyle.SelectedIndex = 0;
 		}
 
-		public static Pen pen = new Pen(Color.Blue, 1.0f);
+		public static Pen pen = new Pen(Color.Black, 1.0f);
 		public static Pen grayPen = new Pen(Color.Gray, 1.0f);
 
 		// list contains all objects
@@ -646,7 +647,6 @@ namespace DrawingWithC_
 
 		#endregion
 
-
 		private void btnCopy_Click(object sender, EventArgs e)
 		{
 			CancelAll();
@@ -662,5 +662,28 @@ namespace DrawingWithC_
 			active_modify = true;
 			ActiveCursor(2, edit_cursorSize);
 		}
+
+		private void cbbPenStyle_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (cbbPenStyle.SelectedIndex == 0)
+			{
+
+				pen.DashStyle = DashStyle.Solid;
+			}
+			else if (cbbPenStyle.SelectedIndex == 1)
+			{
+				pen.DashStyle = DashStyle.Dash;
+			}
+			else
+			{
+				pen.DashStyle = DashStyle.DashDot;
+			}
+		}
+
+		private void nudPenWidth_ValueChanged(object sender, EventArgs e)
+		{
+			pen.Width = (float)nudPenWidth.Value;
+		}
+
 	}
 }
