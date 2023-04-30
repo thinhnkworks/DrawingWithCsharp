@@ -324,10 +324,12 @@ namespace DrawingWithC_
 					break;
 			}
 
-			// draw tempPolyline
+			//draw tempPolyline
 			if (tempPolyline.Vertexes.Count > 1)
 			{
-				e.Graphics.DrawPolyline(pen, tempPolyline);
+				Pen p = new Pen(pen.Color, pen.Width);
+				p.DashStyle = pen.DashStyle;
+				e.Graphics.DrawPolyline(p, tempPolyline);
 			}
 
 		}
