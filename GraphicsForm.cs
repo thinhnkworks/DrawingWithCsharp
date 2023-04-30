@@ -220,7 +220,7 @@ namespace DrawingWithC_
 					{
 						segmentIndex = Methods.Method.GetSegmentIndex(entities, currentPosition, CursorRect(currentPosition), out Vector3 clickPoint);
 					}
-					if (active_delete)
+					if (active_delete && segmentIndex != -1)
 					{
 						entities.RemoveAt(segmentIndex);
 					}
