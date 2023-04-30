@@ -12,9 +12,9 @@ namespace DrawingWithC_.Entities
 		private PolylineTypeFlags flags;
 		private double thickness;
 
-		public LwPolyline() : this(new List<LwPolylineVertex>(), false) { }
+		public LwPolyline() : this(new List<LwPolylineVertex>(), false, new Pen(Color.Black, 1.0f)) { }
 
-		public LwPolyline(List<LwPolylineVertex> vertexes, bool IsClosed) : base(EntityType.LwPolyline)
+		public LwPolyline(List<LwPolylineVertex> vertexes, bool IsClosed, Pen pen) : base(EntityType.LwPolyline, pen)
 		{
 			if (vertexes == null)
 			{
@@ -69,7 +69,8 @@ namespace DrawingWithC_.Entities
 				Flags = this.flags,
 				Thickness = this.thickness,
 				// entity object properties
-				IsVisible = this.IsVisible
+				IsVisible = this.IsVisible,
+				Pen = this.Pen,
 			};
 		}
 

@@ -14,8 +14,8 @@ namespace DrawingWithC_.Entities
 		private double endAngle;
 		private double thickness;
 
-		public Arc() : this(Vector3.Zero, 1.0, 0.0, 180.0) { }
-		public Arc(Vector3 center, double radius, double startAngle, double endAngle) : base(EntityType.Arc)
+		public Arc() : this(Vector3.Zero, 1.0, 0.0, 180.0, new Pen(Color.Black, 1.0f)) { }
+		public Arc(Vector3 center, double radius, double startAngle, double endAngle, Pen pen) : base(EntityType.Arc, pen)
 		{
 			this.Center = center;
 			this.Radius = radius;
@@ -89,6 +89,7 @@ namespace DrawingWithC_.Entities
 				Thickness = this.Thickness,
 				// entity object properties
 				IsVisible = this.IsVisible,
+				Pen = this.Pen
 			};
 		}
 		public override object CopyOrMove(Vector3 fromPoint, Vector3 toPoint)
@@ -101,7 +102,8 @@ namespace DrawingWithC_.Entities
 				StartAngle = this.StartAngle,
 				EndAngle = this.EndAngle,
 				Thickness = this.Thickness,
-				IsVisible = this.IsVisible
+				IsVisible = this.IsVisible,
+				Pen = this.Pen
 			};
 		}
 	}

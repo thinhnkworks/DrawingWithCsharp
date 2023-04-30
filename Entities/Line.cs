@@ -17,10 +17,10 @@ namespace DrawingWithC_.Entities
 			get { return thickness; }
 			set { thickness = value; }
 		}
-		public Line() : this(Vector3.Zero, Vector3.Zero)
+		public Line() : this(Vector3.Zero, Vector3.Zero, new Pen(Color.Black, 1.0f))
 		{
 		}
-		public Line(Vector3 start, Vector3 end) : base(EntityType.Line)
+		public Line(Vector3 start, Vector3 end, Pen pen) : base(EntityType.Line, pen)
 		{
 			this.StartPoint = start;
 			this.EndPoint = end;
@@ -71,7 +71,8 @@ namespace DrawingWithC_.Entities
 				EndPoint = this.EndPoint,
 				Thickness = this.Thickness,
 				// entity object properties
-				IsVisible = this.IsVisible
+				IsVisible = this.IsVisible,
+				Pen = this.Pen
 			};
 		}
 		public override object CopyOrMove(Vector3 fromPoint, Vector3 toPoint)
@@ -83,7 +84,8 @@ namespace DrawingWithC_.Entities
 				StartPoint = startPoint,
 				EndPoint = endPoint,
 				Thickness = this.Thickness,
-				IsVisible = this.IsVisible
+				IsVisible = this.IsVisible,
+				Pen = this.Pen
 			};
 		}
 	}

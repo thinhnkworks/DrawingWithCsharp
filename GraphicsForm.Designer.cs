@@ -60,6 +60,18 @@
 			lbWidth = new Label();
 			picPenColor = new PictureBox();
 			lbPen = new Label();
+			panelColor = new Panel();
+			btnColorWheel = new Button();
+			btnColorWhite = new Button();
+			btnColorBlack = new Button();
+			btnColorOrange = new Button();
+			btnColorYellow = new Button();
+			btnColorRed = new Button();
+			btnColorPink = new Button();
+			btnColorGreen = new Button();
+			btnColorBlue = new Button();
+			lbColor = new Label();
+			colorDialog1 = new ColorDialog();
 			((System.ComponentModel.ISupportInitialize)drawing).BeginInit();
 			menuStrip.SuspendLayout();
 			panelShapes.SuspendLayout();
@@ -67,6 +79,7 @@
 			panelPen.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)nudPenWidth).BeginInit();
 			((System.ComponentModel.ISupportInitialize)picPenColor).BeginInit();
+			panelColor.SuspendLayout();
 			SuspendLayout();
 			// 
 			// drawing
@@ -119,6 +132,7 @@
 			// btnLine
 			// 
 			btnLine.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			btnLine.Cursor = Cursors.Hand;
 			btnLine.Image = Properties.Resources.line;
 			btnLine.Location = new Point(16, 5);
 			btnLine.Margin = new Padding(4, 5, 4, 5);
@@ -131,6 +145,7 @@
 			// btnCircle
 			// 
 			btnCircle.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			btnCircle.Cursor = Cursors.Hand;
 			btnCircle.Image = Properties.Resources.circle;
 			btnCircle.Location = new Point(16, 60);
 			btnCircle.Margin = new Padding(4, 5, 4, 5);
@@ -143,6 +158,7 @@
 			// btnEllipse
 			// 
 			btnEllipse.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			btnEllipse.Cursor = Cursors.Hand;
 			btnEllipse.Image = Properties.Resources.ellipse;
 			btnEllipse.Location = new Point(74, 60);
 			btnEllipse.Margin = new Padding(4, 5, 4, 5);
@@ -155,6 +171,7 @@
 			// btnArc
 			// 
 			btnArc.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			btnArc.Cursor = Cursors.Hand;
 			btnArc.Image = Properties.Resources.arc;
 			btnArc.Location = new Point(132, 60);
 			btnArc.Margin = new Padding(4, 5, 4, 5);
@@ -185,6 +202,7 @@
 			// btnPolyline
 			// 
 			btnPolyline.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			btnPolyline.Cursor = Cursors.Hand;
 			btnPolyline.Image = Properties.Resources.polyline;
 			btnPolyline.Location = new Point(132, 5);
 			btnPolyline.Margin = new Padding(4, 5, 4, 5);
@@ -197,6 +215,7 @@
 			// btnRectangle
 			// 
 			btnRectangle.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			btnRectangle.Cursor = Cursors.Hand;
 			btnRectangle.Image = Properties.Resources.rectangle;
 			btnRectangle.Location = new Point(74, 5);
 			btnRectangle.Margin = new Padding(4, 5, 4, 5);
@@ -209,6 +228,7 @@
 			// btnPolygon
 			// 
 			btnPolygon.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+			btnPolygon.Cursor = Cursors.Hand;
 			btnPolygon.Image = Properties.Resources.polygon;
 			btnPolygon.Location = new Point(190, 5);
 			btnPolygon.Margin = new Padding(4, 5, 4, 5);
@@ -223,7 +243,7 @@
 			btnSettings.Anchor = AnchorStyles.Top | AnchorStyles.Right;
 			btnSettings.Cursor = Cursors.Hand;
 			btnSettings.Image = Properties.Resources.settings;
-			btnSettings.Location = new Point(1547, 27);
+			btnSettings.Location = new Point(1547, 22);
 			btnSettings.Margin = new Padding(4, 5, 4, 5);
 			btnSettings.Name = "btnSettings";
 			btnSettings.Size = new Size(100, 100);
@@ -233,6 +253,7 @@
 			// 
 			// btnCopy
 			// 
+			btnCopy.Cursor = Cursors.Hand;
 			btnCopy.Location = new Point(10, 15);
 			btnCopy.Name = "btnCopy";
 			btnCopy.Size = new Size(112, 34);
@@ -243,6 +264,7 @@
 			// 
 			// btnMove
 			// 
+			btnMove.Cursor = Cursors.Hand;
 			btnMove.Location = new Point(138, 15);
 			btnMove.Name = "btnMove";
 			btnMove.Size = new Size(112, 34);
@@ -289,6 +311,7 @@
 			// 
 			// btnFill
 			// 
+			btnFill.Cursor = Cursors.Hand;
 			btnFill.Location = new Point(138, 69);
 			btnFill.Name = "btnFill";
 			btnFill.Size = new Size(112, 34);
@@ -298,6 +321,7 @@
 			// 
 			// btnDelete
 			// 
+			btnDelete.Cursor = Cursors.Hand;
 			btnDelete.Location = new Point(10, 69);
 			btnDelete.Name = "btnDelete";
 			btnDelete.Size = new Size(112, 34);
@@ -391,12 +415,159 @@
 			lbPen.TabIndex = 22;
 			lbPen.Text = "Pen";
 			// 
+			// panelColor
+			// 
+			panelColor.BorderStyle = BorderStyle.FixedSingle;
+			panelColor.Controls.Add(btnColorWheel);
+			panelColor.Controls.Add(btnColorWhite);
+			panelColor.Controls.Add(btnColorBlack);
+			panelColor.Controls.Add(btnColorOrange);
+			panelColor.Controls.Add(btnColorYellow);
+			panelColor.Controls.Add(btnColorRed);
+			panelColor.Controls.Add(btnColorPink);
+			panelColor.Controls.Add(btnColorGreen);
+			panelColor.Controls.Add(btnColorBlue);
+			panelColor.Location = new Point(1080, 16);
+			panelColor.Name = "panelColor";
+			panelColor.Size = new Size(390, 117);
+			panelColor.TabIndex = 23;
+			// 
+			// btnColorWheel
+			// 
+			btnColorWheel.Cursor = Cursors.Hand;
+			btnColorWheel.FlatAppearance.BorderSize = 0;
+			btnColorWheel.FlatStyle = FlatStyle.Flat;
+			btnColorWheel.Image = Properties.Resources.colorwheel1;
+			btnColorWheel.Location = new Point(260, 1);
+			btnColorWheel.Name = "btnColorWheel";
+			btnColorWheel.Size = new Size(112, 112);
+			btnColorWheel.TabIndex = 8;
+			btnColorWheel.UseVisualStyleBackColor = true;
+			btnColorWheel.Click += btnColorWheel_Click;
+			// 
+			// btnColorWhite
+			// 
+			btnColorWhite.BackColor = SystemColors.ControlLight;
+			btnColorWhite.Cursor = Cursors.Hand;
+			btnColorWhite.FlatAppearance.BorderSize = 0;
+			btnColorWhite.FlatStyle = FlatStyle.Flat;
+			btnColorWhite.Image = Properties.Resources.whitecircle;
+			btnColorWhite.Location = new Point(13, 60);
+			btnColorWhite.Name = "btnColorWhite";
+			btnColorWhite.Size = new Size(50, 50);
+			btnColorWhite.TabIndex = 7;
+			btnColorWhite.UseVisualStyleBackColor = false;
+			btnColorWhite.Click += btnColorWhite_Click;
+			// 
+			// btnColorBlack
+			// 
+			btnColorBlack.BackColor = SystemColors.ControlLight;
+			btnColorBlack.Cursor = Cursors.Hand;
+			btnColorBlack.FlatAppearance.BorderSize = 0;
+			btnColorBlack.FlatStyle = FlatStyle.Flat;
+			btnColorBlack.Image = Properties.Resources.blackcircle;
+			btnColorBlack.Location = new Point(13, 4);
+			btnColorBlack.Name = "btnColorBlack";
+			btnColorBlack.Size = new Size(50, 50);
+			btnColorBlack.TabIndex = 6;
+			btnColorBlack.UseVisualStyleBackColor = false;
+			btnColorBlack.Click += btnColorBlack_Click;
+			// 
+			// btnColorOrange
+			// 
+			btnColorOrange.Cursor = Cursors.Hand;
+			btnColorOrange.FlatAppearance.BorderSize = 0;
+			btnColorOrange.FlatStyle = FlatStyle.Flat;
+			btnColorOrange.Image = Properties.Resources.orangecircle;
+			btnColorOrange.Location = new Point(189, 60);
+			btnColorOrange.Name = "btnColorOrange";
+			btnColorOrange.Size = new Size(50, 50);
+			btnColorOrange.TabIndex = 5;
+			btnColorOrange.UseVisualStyleBackColor = true;
+			btnColorOrange.Click += btnColorOrange_Click;
+			// 
+			// btnColorYellow
+			// 
+			btnColorYellow.Cursor = Cursors.Hand;
+			btnColorYellow.FlatAppearance.BorderSize = 0;
+			btnColorYellow.FlatStyle = FlatStyle.Flat;
+			btnColorYellow.Image = Properties.Resources.yellowcircle;
+			btnColorYellow.Location = new Point(72, 60);
+			btnColorYellow.Name = "btnColorYellow";
+			btnColorYellow.Size = new Size(50, 50);
+			btnColorYellow.TabIndex = 4;
+			btnColorYellow.UseVisualStyleBackColor = true;
+			btnColorYellow.Click += btnColorYellow_Click;
+			// 
+			// btnColorRed
+			// 
+			btnColorRed.Cursor = Cursors.Hand;
+			btnColorRed.FlatAppearance.BorderSize = 0;
+			btnColorRed.FlatStyle = FlatStyle.Flat;
+			btnColorRed.Image = Properties.Resources.redcircle;
+			btnColorRed.Location = new Point(131, 60);
+			btnColorRed.Name = "btnColorRed";
+			btnColorRed.Size = new Size(50, 50);
+			btnColorRed.TabIndex = 3;
+			btnColorRed.UseVisualStyleBackColor = true;
+			btnColorRed.Click += btnColorRed_Click;
+			// 
+			// btnColorPink
+			// 
+			btnColorPink.Cursor = Cursors.Hand;
+			btnColorPink.FlatAppearance.BorderSize = 0;
+			btnColorPink.FlatStyle = FlatStyle.Flat;
+			btnColorPink.Image = Properties.Resources.pinkcircle;
+			btnColorPink.Location = new Point(189, 5);
+			btnColorPink.Name = "btnColorPink";
+			btnColorPink.Size = new Size(50, 50);
+			btnColorPink.TabIndex = 2;
+			btnColorPink.UseVisualStyleBackColor = true;
+			btnColorPink.Click += btnColorPink_Click;
+			// 
+			// btnColorGreen
+			// 
+			btnColorGreen.Cursor = Cursors.Hand;
+			btnColorGreen.FlatAppearance.BorderSize = 0;
+			btnColorGreen.FlatStyle = FlatStyle.Flat;
+			btnColorGreen.Image = Properties.Resources.greencircle;
+			btnColorGreen.Location = new Point(131, 5);
+			btnColorGreen.Name = "btnColorGreen";
+			btnColorGreen.Size = new Size(50, 50);
+			btnColorGreen.TabIndex = 1;
+			btnColorGreen.UseVisualStyleBackColor = true;
+			btnColorGreen.Click += btnColorGreen_Click;
+			// 
+			// btnColorBlue
+			// 
+			btnColorBlue.Cursor = Cursors.Hand;
+			btnColorBlue.FlatAppearance.BorderSize = 0;
+			btnColorBlue.FlatStyle = FlatStyle.Flat;
+			btnColorBlue.Image = Properties.Resources.bluecircle;
+			btnColorBlue.Location = new Point(72, 5);
+			btnColorBlue.Name = "btnColorBlue";
+			btnColorBlue.Size = new Size(50, 50);
+			btnColorBlue.TabIndex = 0;
+			btnColorBlue.UseVisualStyleBackColor = true;
+			btnColorBlue.Click += btnColorBlue_Click;
+			// 
+			// lbColor
+			// 
+			lbColor.AutoSize = true;
+			lbColor.Location = new Point(1270, 137);
+			lbColor.Name = "lbColor";
+			lbColor.Size = new Size(55, 25);
+			lbColor.TabIndex = 24;
+			lbColor.Text = "Color";
+			// 
 			// GraphicsForm
 			// 
 			AutoScaleDimensions = new SizeF(10F, 25F);
 			AutoScaleMode = AutoScaleMode.Font;
 			BackColor = SystemColors.ControlLight;
 			ClientSize = new Size(1678, 912);
+			Controls.Add(lbColor);
+			Controls.Add(panelColor);
 			Controls.Add(lbPen);
 			Controls.Add(panelPen);
 			Controls.Add(lbSettings);
@@ -421,6 +592,7 @@
 			panelPen.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)nudPenWidth).EndInit();
 			((System.ComponentModel.ISupportInitialize)picPenColor).EndInit();
+			panelColor.ResumeLayout(false);
 			ResumeLayout(false);
 			PerformLayout();
 		}
@@ -457,6 +629,18 @@
 		private Label lbStyle;
 		private NumericUpDown nudPenWidth;
 		private ComboBox cbbPenStyle;
+		private Panel panelColor;
+		private Button btnColorBlue;
+		private Button btnColorOrange;
+		private Button btnColorYellow;
+		private Button btnColorRed;
+		private Button btnColorPink;
+		private Button btnColorGreen;
+		private Button btnColorWhite;
+		private Button btnColorBlack;
+		private Button btnColorWheel;
+		private Label lbColor;
 		public static PictureBox picPenColor;
+		private ColorDialog colorDialog1;
 	}
 }

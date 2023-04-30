@@ -12,8 +12,8 @@ namespace DrawingWithC_.Entities
 		private double radius;
 		private double thickness;
 
-		public Circle() : this(Vector3.Zero, 1.0) { }
-		public Circle(Vector3 center, double radius) : base(EntityType.Circle)
+		public Circle() : this(Vector3.Zero, 1.0, new Pen(Color.Black, 1.0f)) { }
+		public Circle(Vector3 center, double radius, Pen pen) : base(EntityType.Circle, pen)
 		{
 			this.Center = center;
 			this.Radius = radius;
@@ -63,6 +63,7 @@ namespace DrawingWithC_.Entities
 				Radius = this.Radius,
 				Thickness = this.Thickness,
 				IsVisible = this.IsVisible,
+				Pen = this.Pen,
 			};
 
 		}

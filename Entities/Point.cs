@@ -10,10 +10,11 @@ namespace DrawingWithC_.Entities
 	{
 		private Vector3 vector3;
 		private double thickness;
-		public Point() : this(Vector3.Zero)
+
+		public Point() : this(Vector3.Zero, new Pen(Color.Black, 1.0f))
 		{
 		}
-		public Point(Vector3 position) : base(EntityType.Point)
+		public Point(Vector3 position, Pen pen) : base(EntityType.Point, pen)
 		{
 			this.Position = position;
 			this.Thickness = 0.0;
@@ -37,7 +38,8 @@ namespace DrawingWithC_.Entities
 				Position = this.Position,
 				Thickness = this.Thickness,
 				// entity object properties
-				IsVisible = this.IsVisible
+				IsVisible = this.IsVisible,
+				Pen = this.Pen
 			};
 		}
 		public override object CopyOrMove(Vector3 fromPoint, Vector3 toPoint)
@@ -47,7 +49,8 @@ namespace DrawingWithC_.Entities
 			{
 				Position = p,
 				Thickness = this.Thickness,
-				IsVisible = this.IsVisible
+				IsVisible = this.IsVisible,
+				Pen = this.Pen
 			};
 		}
 	}
