@@ -43,6 +43,7 @@ namespace DrawingWithC_
 		private bool active_modify = false;
 		private bool active_selection = true;
 		private int segmentIndex = -1;
+		private bool active_delete = false;
 
 		// scroll settings
 		private float XScroll;
@@ -219,24 +220,31 @@ namespace DrawingWithC_
 					{
 						segmentIndex = Methods.Method.GetSegmentIndex(entities, currentPosition, CursorRect(currentPosition), out Vector3 clickPoint);
 					}
-					switch (clickNum)
+					if (active_delete)
 					{
-						case 1:
-							firstPoint = currentPosition;
-							clickNum++;
-							break;
-						case 2:
-							switch (Modify1Index)
-							{
-								case 0: // copy
-									Methods.Method.Modify1Selection(Modify1Index, entities, firstPoint, currentPosition);
-									break;
-								case 1: // move
-									Methods.Method.Modify1Selection(Modify1Index, entities, firstPoint, currentPosition);
-									CancelAll();
-									break;
-							}
-							break;
+						entities.RemoveAt(segmentIndex);
+					}
+					else
+					{
+						switch (clickNum)
+						{
+							case 1:
+								firstPoint = currentPosition;
+								clickNum++;
+								break;
+							case 2:
+								switch (Modify1Index)
+								{
+									case 0: // copy
+										Methods.Method.Modify1Selection(Modify1Index, entities, firstPoint, currentPosition);
+										break;
+									case 1: // move
+										Methods.Method.Modify1Selection(Modify1Index, entities, firstPoint, currentPosition);
+										CancelAll();
+										break;
+								}
+								break;
+						}
 					}
 				}
 				// refresh drawing panel after mouse left-click
@@ -468,6 +476,8 @@ namespace DrawingWithC_
 			DrawIndex = -1;
 			active_drawing = false;
 			active_selection = true;
+			active_delete = false;
+			active_modify = false;
 			ActiveCursor(0, 0);
 			clickNum = 1;
 			LwPolylineCloseStatus(index);
@@ -655,6 +665,8 @@ namespace DrawingWithC_
 
 		#endregion
 
+		#region EDIT FUNCTIONS
+
 		private void btnCopy_Click(object sender, EventArgs e)
 		{
 			CancelAll();
@@ -662,7 +674,6 @@ namespace DrawingWithC_
 			active_modify = true;
 			ActiveCursor(2, edit_cursorSize);
 		}
-
 		private void btnMove_Click(object sender, EventArgs e)
 		{
 			CancelAll();
@@ -670,7 +681,6 @@ namespace DrawingWithC_
 			active_modify = true;
 			ActiveCursor(2, edit_cursorSize);
 		}
-
 		private void cbbPenStyle_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (cbbPenStyle.SelectedIndex == 0)
@@ -686,60 +696,62 @@ namespace DrawingWithC_
 				pen.DashStyle = DashStyle.DashDot;
 			}
 		}
-
 		private void nudPenWidth_ValueChanged(object sender, EventArgs e)
 		{
 			pen.Width = (float)nudPenWidth.Value;
 		}
+		private void btnDelete_Click(object sender, EventArgs e)
+		{
+			CancelAll();
+			active_modify = true;
+			active_delete = true;
+			ActiveCursor(2, edit_cursorSize);
+		}
+
+		#endregion
+
+		#region COLOR BUTTONS
 
 		private void btnColorBlack_Click(object sender, EventArgs e)
 		{
 			pen.Color = Color.Black;
 			picPenColor.BackColor = Color.Black;
 		}
-
 		private void btnColorWhite_Click(object sender, EventArgs e)
 		{
 			pen.Color = Color.White;
 			picPenColor.BackColor = Color.White;
 		}
-
 		private void btnColorBlue_Click(object sender, EventArgs e)
 		{
 			pen.Color = Color.Blue;
 			picPenColor.BackColor = Color.Blue;
 		}
-
 		private void btnColorYellow_Click(object sender, EventArgs e)
 		{
 			pen.Color = Color.Yellow;
 			picPenColor.BackColor = Color.Yellow;
 		}
-
 		private void btnColorGreen_Click(object sender, EventArgs e)
 		{
 			pen.Color = Color.Green;
 			picPenColor.BackColor = Color.Green;
 		}
-
 		private void btnColorRed_Click(object sender, EventArgs e)
 		{
 			pen.Color = Color.Red;
 			picPenColor.BackColor = Color.Red;
 		}
-
 		private void btnColorPink_Click(object sender, EventArgs e)
 		{
 			pen.Color = Color.Pink;
 			picPenColor.BackColor = Color.Pink;
 		}
-
 		private void btnColorOrange_Click(object sender, EventArgs e)
 		{
 			pen.Color = Color.Orange;
 			picPenColor.BackColor = Color.Orange;
 		}
-
 		private void btnColorWheel_Click(object sender, EventArgs e)
 		{
 			ColorDialog colorDialog = new ColorDialog();
@@ -750,5 +762,7 @@ namespace DrawingWithC_
 				pen.Color = colorDialog.Color;
 			}
 		}
+
+		#endregion
 	}
 }

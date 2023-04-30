@@ -107,7 +107,7 @@ namespace DrawingWithC_
 			GraphicsForm.pen.Color = PenColor;
 			GraphicsForm.pen.Width = PenSize;
 			GraphicsForm.pen.DashStyle = PenStyle;
-			GraphicsForm.picPenColor.BackColor = PenColor;
+			//GraphicsForm.picPenColor.BackColor = PenColor;
 
 			if (SidesQty < 3)
 			{

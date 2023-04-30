@@ -161,6 +161,7 @@ namespace DrawingWithC_.Entities
 				{
 					Position = lw.Position.CopyOrMove(fromPoint.ToVector2, toPoint.ToVector2),
 					Bulge = lw.Bulge,
+					Pen = pen
 				};
 				vertex.Add(lv);
 			}
@@ -170,6 +171,7 @@ namespace DrawingWithC_.Entities
 				Flags = this.flags,
 				Thickness = this.thickness,
 				IsVisible = this.isVisible,
+				Pen = this.pen
 			};
 		}
 	}

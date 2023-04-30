@@ -328,6 +328,7 @@
 			btnDelete.TabIndex = 16;
 			btnDelete.Text = "Delete";
 			btnDelete.UseVisualStyleBackColor = true;
+			btnDelete.Click += btnDelete_Click;
 			// 
 			// lbEdit
 			// 
@@ -640,7 +641,7 @@
 		private Button btnColorBlack;
 		private Button btnColorWheel;
 		private Label lbColor;
-		public static PictureBox picPenColor;
 		private ColorDialog colorDialog1;
+		public PictureBox picPenColor;
 	}
 }
