@@ -16,9 +16,9 @@ namespace DrawingWithC_.Entities
 		private double endAngle;
 		private double thickness;
 
-		public Ellipse() : this(Vector3.Zero, 1.0, 0.5) { }
+		public Ellipse() : this(Vector3.Zero, 1.0, 0.5, new Pen(Color.Black, 1.0f)) { }
 
-		public Ellipse(Vector3 center, double majorAxis, double minorAxis) : base(EntityType.Ellipse)
+		public Ellipse(Vector3 center, double majorAxis, double minorAxis, Pen pen) : base(EntityType.Ellipse, pen)
 		{
 			this.Center = center;
 			this.MajorAxis = majorAxis;
@@ -84,7 +84,8 @@ namespace DrawingWithC_.Entities
 				StartAngle = startAngle,
 				EndAngle = endAngle,
 				// entity object properties
-				IsVisible = this.IsVisible
+				IsVisible = this.IsVisible,
+				Pen = Pen,
 			};
 		}
 		public override object CopyOrMove(Vector3 fromPoint, Vector3 toPoint)
@@ -99,7 +100,8 @@ namespace DrawingWithC_.Entities
 				Thickness = thickness,
 				StartAngle = startAngle,
 				EndAngle = endAngle,
-				IsVisible = this.IsVisible
+				IsVisible = this.IsVisible,
+				Pen = this.Pen,
 			};
 		}
 	}

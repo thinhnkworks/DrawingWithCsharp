@@ -9,16 +9,16 @@ namespace DrawingWithC_.Methods
 {
 	public class Method
 	{
-		public static Ellipse GetEllipse(Vector3 center, Vector3 firstPoint, Vector3 secondPoint)
+		public static Ellipse GetEllipse(Vector3 center, Vector3 firstPoint, Vector3 secondPoint, Pen pen)
 		{
 			double major = center.DistanceFrom(firstPoint);
 			double minor = center.DistanceFrom(secondPoint);
 			double angle = LineAngle(center, firstPoint);
-			Ellipse elp = new Ellipse(center, major, minor);
+			Ellipse elp = new Ellipse(center, major, minor, pen);
 			elp.Rotation = angle;
 			return elp;
 		}
-		public static LwPolyline GetPolygon(Vector3 center, Vector3 secondPoint, int sidesQty, int inscribed)
+		public static LwPolyline GetPolygon(Vector3 center, Vector3 secondPoint, int sidesQty, int inscribed, Pen pen)
 		{
 			List<Entities.LwPolylineVertex> vertexes = new List<Entities.LwPolylineVertex>();
 			double sides_angle = 360.0 / sidesQty;
@@ -40,7 +40,7 @@ namespace DrawingWithC_.Methods
 				lineAngle += sides_angle;
 			}
 
-			return new Entities.LwPolyline(vertexes, true);
+			return new Entities.LwPolyline(vertexes, true, pen);
 		}
 		public static Circle GetCircleWith3Points(Vector3 p1, Vector3 p2, Vector3 p3)
 		{
@@ -54,8 +54,8 @@ namespace DrawingWithC_.Methods
 			double dx2 = p3.X - p2.X;
 			double dy2 = p3.Y - p2.Y;
 
-			Line line1 = new Line(new Vector3(x1, y1), new Vector3(x1 - dy1, y1 + dx1));
-			Line line2 = new Line(new Vector3(x2, y2), new Vector3(x2 - dy2, y2 + dx2));
+			Line line1 = new Line(new Vector3(x1, y1), new Vector3(x1 - dy1, y1 + dx1), new Pen(Color.Black, 1.0f));
+			Line line2 = new Line(new Vector3(x2, y2), new Vector3(x2 - dy2, y2 + dx2), new Pen(Color.Black, 1.0f));
 
 			Vector3 center = LineLineIntersection(line1, line2, true);
 
@@ -64,9 +64,9 @@ namespace DrawingWithC_.Methods
 
 			double radius = Math.Sqrt(dx * dx + dy * dy);
 
-			return new Circle(center, radius);
+			return new Circle(center, radius, new Pen(Color.Black, 1.0f));
 		}
-		public static Arc GetArcWith3Points(Vector3 p1, Vector3 p2, Vector3 p3)
+		public static Arc GetArcWith3Points(Vector3 p1, Vector3 p2, Vector3 p3, Pen pen)
 		{
 			double start, end;
 			Arc result = new Arc();
@@ -75,7 +75,7 @@ namespace DrawingWithC_.Methods
 
 			if (c.Radius > 0)
 			{
-				if (DeterminePointOfLine(new Line(p1, p3), p2) < 0)
+				if (DeterminePointOfLine(new Line(p1, p3, new Pen(Color.Black, 1.0f)), p2) < 0)
 				{
 					start = LineAngle(c.Center, p3);
 					end = LineAngle(c.Center, p1);
@@ -93,7 +93,7 @@ namespace DrawingWithC_.Methods
 				{
 					end += 360 - start;
 				}
-				result = new Arc(c.Center, c.Radius, start, end);
+				result = new Arc(c.Center, c.Radius, start, end, pen);
 			}
 			return result;
 		}
@@ -108,7 +108,7 @@ namespace DrawingWithC_.Methods
 		}
 		private static bool IsPointOnArc(Arc arc, Vector3 v)
 		{
-			Entities.Line line = new Entities.Line(arc.Center, v);
+			Entities.Line line = new Entities.Line(arc.Center, v, new Pen(Color.Black, 1.0f));
 
 			double angle = line.Angle;
 			double start = arc.StartAngle;
@@ -306,7 +306,7 @@ namespace DrawingWithC_.Methods
 		public static List<Vector3> LineArcIntersection(Line line, Arc arc)
 		{
 			List<Vector3> result = new List<Vector3>();
-			List<Vector3> list = LineCircleIntersection(line, new Circle(arc.Center, arc.Radius));
+			List<Vector3> list = LineCircleIntersection(line, new Circle(arc.Center, arc.Radius, new Pen(Color.Black, 1.0f)));
 			foreach (Vector3 v in list)
 			{
 				if (IsPointOnArc(arc, v))
@@ -539,7 +539,7 @@ namespace DrawingWithC_.Methods
 		}
 		public static double Epsilon = 1e-12;
 		public static double DegToRad = Math.PI / 180.0f;
-		public static Entities.LwPolyline PointToRect(Vector3 firstCorner, Vector3 secondCorner, out int dir)
+		public static Entities.LwPolyline PointToRect(Vector3 firstCorner, Vector3 secondCorner, out int dir, Pen pen)
 		{
 			double x = Math.Min(firstCorner.X, secondCorner.X);
 			double y = Math.Min(firstCorner.Y, secondCorner.Y);
@@ -562,7 +562,7 @@ namespace DrawingWithC_.Methods
 			else
 				dir = -1;
 
-			return new LwPolyline(vertexes, true);
+			return new LwPolyline(vertexes, true, pen);
 		}
 		public static double LineAngle(Vector3 start, Vector3 end)
 		{

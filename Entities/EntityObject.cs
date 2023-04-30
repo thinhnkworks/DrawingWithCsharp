@@ -11,12 +11,14 @@ namespace DrawingWithC_.Entities
 		private readonly EntityType type;
 		protected bool isVisible;
 		protected bool isSelected;
+		protected Pen pen;
 
-		public EntityObject(EntityType type)
+		public EntityObject(EntityType type, Pen pen)
 		{
 			this.type = type;
 			this.isVisible = true;
 			this.isSelected = false;
+			this.Pen = pen;
 		}
 
 		public EntityType Type
@@ -32,6 +34,11 @@ namespace DrawingWithC_.Entities
 		public bool IsSelected
 		{
 			get { return this.isSelected; }
+		}
+		public Pen Pen
+		{
+			get { return this.pen; }
+			set { this.pen = value; }
 		}
 		public void Select()
 		{

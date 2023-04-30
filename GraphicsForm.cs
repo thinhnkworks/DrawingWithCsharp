@@ -99,18 +99,11 @@ namespace DrawingWithC_
 				}
 				if (active_drawing && !active_zoom && !active_modify)
 				{
-					// 0: for drawing point
-					// 1: for drawing line
-					// 2: for drawing circle
-					// 3: for drawing ellipse
-					// 4: for drawing circle with 3 points
-					// 5: for drawing arc
-					// 6: for drawing polyline
-					// 7: for drawing rectangle
-					// 8: for drawing polygon
 					switch (DrawIndex)
 					{
 						case 1: // line
+							Pen p = new Pen(pen.Color, pen.Width);
+							p.DashStyle = pen.DashStyle;
 							switch (clickNum)
 							{
 								case 1:
@@ -118,13 +111,15 @@ namespace DrawingWithC_
 									clickNum++;
 									break;
 								case 2:
-									entities.Add(new Entities.Line(firstPoint, currentPosition));
+									entities.Add(new Entities.Line(firstPoint, currentPosition, p));
 									firstPoint = currentPosition;
 									clickNum = 1;
 									break;
 							}
 							break;
 						case 2: // circle
+							p = new Pen(pen.Color, pen.Width);
+							p.DashStyle = pen.DashStyle;
 							switch (clickNum)
 							{
 								case 1:
@@ -133,12 +128,14 @@ namespace DrawingWithC_
 									break;
 								case 2:
 									double r = firstPoint.DistanceFrom(currentPosition);
-									entities.Add(new Entities.Circle(firstPoint, r));
+									entities.Add(new Entities.Circle(firstPoint, r, p));
 									clickNum = 1;
 									break;
 							}
 							break;
 						case 3: // ellipse
+							p = new Pen(pen.Color, pen.Width);
+							p.DashStyle = pen.DashStyle;
 							switch (clickNum)
 							{
 								case 1:
@@ -150,13 +147,15 @@ namespace DrawingWithC_
 									clickNum++;
 									break;
 								case 3:
-									Entities.Ellipse ellipse = Methods.Method.GetEllipse(firstPoint, secondPoint, currentPosition);
+									Entities.Ellipse ellipse = Methods.Method.GetEllipse(firstPoint, secondPoint, currentPosition, p);
 									entities.Add(ellipse);
 									clickNum = 1;
 									break;
 							}
 							break;
 						case 5: // arc
+							p = new Pen(pen.Color, pen.Width);
+							p.DashStyle = pen.DashStyle;
 							switch (clickNum)
 							{
 								case 1:
@@ -168,18 +167,22 @@ namespace DrawingWithC_
 									clickNum++;
 									break;
 								case 3:
-									Entities.Arc a = Methods.Method.GetArcWith3Points(firstPoint, secondPoint, currentPosition);
+									Entities.Arc a = Methods.Method.GetArcWith3Points(firstPoint, secondPoint, currentPosition, p);
 									entities.Add(a);
 									clickNum = 1;
 									break;
 							}
 							break;
 						case 6: // polyline
+							p = new Pen(pen.Color, pen.Width);
+							p.DashStyle = pen.DashStyle;
 							firstPoint = currentPosition;
-							tempPolyline.Vertexes.Add(new Entities.LwPolylineVertex(firstPoint.ToVector2));
+							tempPolyline.Vertexes.Add(new Entities.LwPolylineVertex(firstPoint.ToVector2, p));
 							clickNum = 2;
 							break;
 						case 7: // rectangle
+							p = new Pen(pen.Color, pen.Width);
+							p.DashStyle = pen.DashStyle;
 							switch (clickNum)
 							{
 								case 1:
@@ -187,12 +190,14 @@ namespace DrawingWithC_
 									clickNum++;
 									break;
 								case 2:
-									entities.Add(Methods.Method.PointToRect(firstPoint, currentPosition, out direction));
+									entities.Add(Methods.Method.PointToRect(firstPoint, currentPosition, out direction, p));
 									clickNum = 1;
 									break;
 							}
 							break;
 						case 8: // polygon
+							p = new Pen(pen.Color, pen.Width);
+							p.DashStyle = pen.DashStyle;
 							switch (clickNum)
 							{
 								case 1:
@@ -200,7 +205,7 @@ namespace DrawingWithC_
 									clickNum++;
 									break;
 								case 2:
-									entities.Add(Methods.Method.GetPolygon(firstPoint, currentPosition, sidesQty, inscribed)); ;
+									entities.Add(Methods.Method.GetPolygon(firstPoint, currentPosition, sidesQty, inscribed, p));
 									clickNum = 1;
 									break;
 							}
@@ -247,7 +252,7 @@ namespace DrawingWithC_
 			{
 				foreach (Entities.EntityObject entity in entities)
 				{
-					e.Graphics.DrawEntity(pen, entity);
+					e.Graphics.DrawEntity(entity.Pen, entity);
 				}
 			}
 
@@ -258,17 +263,17 @@ namespace DrawingWithC_
 				case 1: // gray line
 					if (clickNum == 2)
 					{
-						Entities.Line line = new Entities.Line(firstPoint, currentPosition);
+						Entities.Line line = new Entities.Line(firstPoint, currentPosition, grayPen);
 						e.Graphics.DrawLine(grayPen, line);
 					}
 					break;
 				case 2: // gray circle
 					if (clickNum == 2)
 					{
-						Entities.Line line = new Entities.Line(firstPoint, currentPosition);
+						Entities.Line line = new Entities.Line(firstPoint, currentPosition, grayPen);
 						e.Graphics.DrawLine(grayPen, line);
 						double r = firstPoint.DistanceFrom(currentPosition);
-						Entities.Circle circle = new Entities.Circle(firstPoint, r);
+						Entities.Circle circle = new Entities.Circle(firstPoint, r, grayPen);
 						e.Graphics.DrawCircle(grayPen, circle);
 					}
 					break;
@@ -276,14 +281,14 @@ namespace DrawingWithC_
 					switch (clickNum)
 					{
 						case 2:
-							Entities.Line line = new Entities.Line(firstPoint, currentPosition);
+							Entities.Line line = new Entities.Line(firstPoint, currentPosition, grayPen);
 							e.Graphics.DrawLine(grayPen, line);
 							break;
 						case 3:
-							Entities.Line line1 = new Entities.Line(firstPoint, currentPosition);
+							Entities.Line line1 = new Entities.Line(firstPoint, currentPosition, grayPen);
 							e.Graphics.DrawLine(grayPen, line1);
 
-							Entities.Ellipse elp = Methods.Method.GetEllipse(firstPoint, secondPoint, currentPosition);
+							Entities.Ellipse elp = Methods.Method.GetEllipse(firstPoint, secondPoint, currentPosition, grayPen);
 							e.Graphics.DrawEllipse(grayPen, elp);
 							break;
 					}
@@ -292,11 +297,11 @@ namespace DrawingWithC_
 					switch (clickNum)
 					{
 						case 2:
-							Entities.Line line = new Entities.Line(firstPoint, currentPosition);
+							Entities.Line line = new Entities.Line(firstPoint, currentPosition, grayPen);
 							e.Graphics.DrawLine(grayPen, line);
 							break;
 						case 3:
-							Entities.Arc a = Methods.Method.GetArcWith3Points(firstPoint, secondPoint, currentPosition);
+							Entities.Arc a = Methods.Method.GetArcWith3Points(firstPoint, secondPoint, currentPosition, grayPen);
 							e.Graphics.DrawArc(grayPen, a);
 							break;
 					}
@@ -304,16 +309,16 @@ namespace DrawingWithC_
 				case 7: // rect
 					if (clickNum == 2)
 					{
-						Entities.LwPolyline lw = Methods.Method.PointToRect(firstPoint, currentPosition, out direction);
+						Entities.LwPolyline lw = Methods.Method.PointToRect(firstPoint, currentPosition, out direction, grayPen);
 						e.Graphics.DrawPolyline(grayPen, lw);
 					}
 					break;
 				case 8: // polygon
 					if (clickNum == 2)
 					{
-						Entities.Line line = new Entities.Line(firstPoint, currentPosition);
+						Entities.Line line = new Entities.Line(firstPoint, currentPosition, grayPen);
 						e.Graphics.DrawLine(grayPen, line);
-						Entities.LwPolyline lw = Methods.Method.GetPolygon(firstPoint, currentPosition, sidesQty, inscribed);
+						Entities.LwPolyline lw = Methods.Method.GetPolygon(firstPoint, currentPosition, sidesQty, inscribed, grayPen);
 						e.Graphics.DrawPolyline(grayPen, lw);
 					}
 					break;
@@ -493,6 +498,7 @@ namespace DrawingWithC_
 		private void LwPolylineCloseStatus(int index)
 		{
 			List<Entities.LwPolylineVertex> vertexes = new List<Entities.LwPolylineVertex>();
+			Pen p = new Pen(pen.Color, pen.Width);
 			foreach (Entities.LwPolylineVertex lw in tempPolyline.Vertexes)
 			{
 				vertexes.Add(lw);
@@ -504,15 +510,15 @@ namespace DrawingWithC_
 					case 1:
 						if (vertexes.Count > 2)
 						{
-							entities.Add(new Entities.LwPolyline(vertexes, true));
+							entities.Add(new Entities.LwPolyline(vertexes, true, p));
 						}
 						else
 						{
-							entities.Add(new Entities.LwPolyline(vertexes, false));
+							entities.Add(new Entities.LwPolyline(vertexes, false, p));
 						}
 						break;
 					case 2:
-						entities.Add(new Entities.LwPolyline(vertexes, true));
+						entities.Add(new Entities.LwPolyline(vertexes, true, p));
 						break;
 				}
 			}
@@ -667,7 +673,6 @@ namespace DrawingWithC_
 		{
 			if (cbbPenStyle.SelectedIndex == 0)
 			{
-
 				pen.DashStyle = DashStyle.Solid;
 			}
 			else if (cbbPenStyle.SelectedIndex == 1)
@@ -685,5 +690,63 @@ namespace DrawingWithC_
 			pen.Width = (float)nudPenWidth.Value;
 		}
 
+		private void btnColorBlack_Click(object sender, EventArgs e)
+		{
+			pen.Color = Color.Black;
+			picPenColor.BackColor = Color.Black;
+		}
+
+		private void btnColorWhite_Click(object sender, EventArgs e)
+		{
+			pen.Color = Color.White;
+			picPenColor.BackColor = Color.White;
+		}
+
+		private void btnColorBlue_Click(object sender, EventArgs e)
+		{
+			pen.Color = Color.Blue;
+			picPenColor.BackColor = Color.Blue;
+		}
+
+		private void btnColorYellow_Click(object sender, EventArgs e)
+		{
+			pen.Color = Color.Yellow;
+			picPenColor.BackColor = Color.Yellow;
+		}
+
+		private void btnColorGreen_Click(object sender, EventArgs e)
+		{
+			pen.Color = Color.Green;
+			picPenColor.BackColor = Color.Green;
+		}
+
+		private void btnColorRed_Click(object sender, EventArgs e)
+		{
+			pen.Color = Color.Red;
+			picPenColor.BackColor = Color.Red;
+		}
+
+		private void btnColorPink_Click(object sender, EventArgs e)
+		{
+			pen.Color = Color.Pink;
+			picPenColor.BackColor = Color.Pink;
+		}
+
+		private void btnColorOrange_Click(object sender, EventArgs e)
+		{
+			pen.Color = Color.Orange;
+			picPenColor.BackColor = Color.Orange;
+		}
+
+		private void btnColorWheel_Click(object sender, EventArgs e)
+		{
+			ColorDialog colorDialog = new ColorDialog();
+			colorDialog.AllowFullOpen = true;
+			if (colorDialog.ShowDialog() == DialogResult.OK)
+			{
+				picPenColor.BackColor = colorDialog.Color;
+				pen.Color = colorDialog.Color;
+			}
+		}
 	}
 }

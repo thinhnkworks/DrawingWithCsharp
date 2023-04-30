@@ -14,7 +14,6 @@ namespace DrawingWithC_
 		private static float ScaleFactor;
 		private static Pen extpen = new Pen(Color.Gray, 0);
 
-
 		public static void SetParameters(this Graphics g, float xscroll, float yscroll, float scalefactor, float height)
 		{
 			XScroll = xscroll;
